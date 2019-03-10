@@ -1,7 +1,8 @@
-package net.proselyte.springsecurityapp.dao;
+package com.tsystems.railway.dao;
 
-import net.proselyte.springsecurityapp.model.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RoleDao extends JpaRepository<Role, Long> {
+import com.tsystems.railway.model.Role;
+
+public interface RoleDao  {
+    public Role getRoleById(Long id);
 }

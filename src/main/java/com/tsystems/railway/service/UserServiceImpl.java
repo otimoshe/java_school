@@ -1,22 +1,17 @@
-package net.proselyte.springsecurityapp.service;
+package com.tsystems.railway.service;
 
-import net.proselyte.springsecurityapp.dao.RoleDao;
-import net.proselyte.springsecurityapp.dao.UserDao;
-import net.proselyte.springsecurityapp.model.Role;
-import net.proselyte.springsecurityapp.model.User;
+import com.tsystems.railway.dao.RoleDao;
+import com.tsystems.railway.dao.UserDao;
+import com.tsystems.railway.model.Role;
+import com.tsystems.railway.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Implementation of {@link UserService} interface.
- *
- * @author Eugene Suleimanov
- * @version 1.0
- */
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,12 +26,11 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void save(User user) {
+    @Transactional
+    public void addUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleDao.getOne(1L));
-        user.setRoles(roles);
-        userDao.save(user);
+        user.setRole(roleDao.getRoleById( (long) 2)); // set role "user"
+        userDao.addUser(user);
     }
 
     @Override

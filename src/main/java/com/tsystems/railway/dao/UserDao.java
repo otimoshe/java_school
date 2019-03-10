@@ -1,8 +1,9 @@
-package net.proselyte.springsecurityapp.dao;
+package com.tsystems.railway.dao;
 
-import net.proselyte.springsecurityapp.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.tsystems.railway.model.User;
 
-public interface UserDao extends JpaRepository<User, Long> {
+
+public interface UserDao  {
     User findByUsername(String username);
+    public void addUser(User user);
 }
