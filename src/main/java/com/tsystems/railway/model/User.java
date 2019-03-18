@@ -1,6 +1,6 @@
 package com.tsystems.railway.model;
 
-import org.hibernate.annotations.JoinColumnOrFormula;
+
 
 import javax.persistence.*;
 import java.util.Set;

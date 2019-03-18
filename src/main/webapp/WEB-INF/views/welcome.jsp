@@ -17,7 +17,8 @@
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
+<a href = "/trains" > Train list </a>
+<a href = "/stations" > Station list </a>
 <div class="container">
 
     <c:if test="${pageContext.request.userPrincipal.name != null}">

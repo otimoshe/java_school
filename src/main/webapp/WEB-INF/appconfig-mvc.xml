@@ -64,6 +64,7 @@
                   value="jdbc:mysql://localhost:3306/mydb"/>
         <property name="username" value="root"/>
         <property name="password" value="123456"/>
+
     </bean>
 
     <!-- Hibernate 4 SessionFactory Bean definition -->
@@ -77,6 +78,8 @@
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
                 </prop>
                 <prop key="hibernate.show_sql">true</prop>
+                <prop key="current_session_context_class">thread</prop>
+                <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
             </props>
         </property>
     </bean>
@@ -92,6 +95,7 @@
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+
     </bean>
 
     <mvc:default-servlet-handler/>
