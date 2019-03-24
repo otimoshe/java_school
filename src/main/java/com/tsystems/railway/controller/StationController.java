@@ -29,7 +29,7 @@ public class StationController {
     }
 
     @RequestMapping(value = "/stations", method = RequestMethod.POST)
-    public String addTrain(@ModelAttribute("station") Station station){
+    public String addStation(@ModelAttribute("station") Station station){
         if (station.getId() == 0){
 
             stationService.addStation(station);

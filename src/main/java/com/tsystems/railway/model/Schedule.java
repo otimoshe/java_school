@@ -1,10 +1,7 @@
 package com.tsystems.railway.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
@@ -15,8 +12,9 @@ public class Schedule {
     @Column(name = "schedule_id")
     private long id;
 
-  //  @Column(name = "train_id")
-  //  private Train train;
+    @ManyToOne
+    @JoinColumn(name = "trip_id")
+    private Trip trip;
 
     @Column(name = "date_of_arrival")
     private Date arrivalDate;
@@ -24,14 +22,17 @@ public class Schedule {
     @Column(name = "departure_date")
     private Date departureDate;
 
-  //  @Column(name = "station_id")
-   // private Station currentStation;
+    @ManyToOne
+    @JoinColumn(name = "station_id")
+    private Station currentStation;
 
-   // @Column(name = "next_station_id")
-   // private Station nextStation;
+    @ManyToOne
+    @JoinColumn(name = "next_station_id")
+    private Station nextStation;
 
-    //@Column(name = "previous_station_id")
-    //private Station prevStation;
+    @ManyToOne
+    @JoinColumn(name = "previous_station_id")
+    private Station prevStation;
 
     public long getId() {
         return id;

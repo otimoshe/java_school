@@ -1,14 +1,15 @@
-package com.tsystems.railway.service;
+package com.tsystems.railway.service.impl;
 
-import com.tsystems.railway.dao.StationDao;
+import com.tsystems.railway.DAO.StationDao;
 import com.tsystems.railway.model.Station;
+import com.tsystems.railway.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class StationServiceImpl implements StationService{
+public class StationServiceImpl implements StationService {
 
     @Autowired
     private StationDao stationDao;

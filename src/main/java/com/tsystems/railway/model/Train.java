@@ -4,8 +4,8 @@ package com.tsystems.railway.model;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
+
 
 @Entity
 //@Proxy(lazy=false)
@@ -20,17 +20,21 @@ public class Train {
     @Column(name = "number_of_seats")
     private int numberOfSeats;
 
-    @ManyToMany
-    @JoinTable(name = "schedule",
-            joinColumns = @JoinColumn(name = "train_id"),
-            inverseJoinColumns = @JoinColumn(name = "departure_station_id"))
-    private Set<Station> stations;
+    @ManyToOne
+    @JoinColumn(name = "model_id")
+    private TrainModel trainModel;
 
-    @ManyToMany
-    @JoinTable(name = "tickets",
-            joinColumns = @JoinColumn(name = "train_id"),
-            inverseJoinColumns = @JoinColumn(name = "passenger_id"))
-    private List<Passenger> passengers;
+    @OneToMany
+    private Set<Trip> trips;
+
+
+    public TrainModel getTrainModel() {
+        return trainModel;
+    }
+
+    public void setTrainModel(TrainModel trainModel) {
+        this.trainModel = trainModel;
+    }
 
     public long getId() {
         return id;
@@ -49,21 +53,9 @@ public class Train {
     }
 
 
-    public Set<Station> getStations() {
-        return stations;
-    }
 
-    public void setStations(Set<Station> stations) {
-        this.stations = stations;
-    }
 
-    public List<Passenger> getPassengers() {
-        return passengers;
-    }
 
-    public void setPassengers(List<Passenger> passengers) {
-        this.passengers = passengers;
-    }
 
     @Override
     public String toString() {

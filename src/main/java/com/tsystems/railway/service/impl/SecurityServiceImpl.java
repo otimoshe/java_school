@@ -1,6 +1,7 @@
-package com.tsystems.railway.service;
+package com.tsystems.railway.service.impl;
 
 
+import com.tsystems.railway.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

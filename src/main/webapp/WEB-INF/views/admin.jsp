@@ -29,10 +29,11 @@
         <h2>Admin Page ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
         </h2>
     </c:if>
-    <a href ="/trains"> Trains</a>
-    <a href="/stations"> Station</a>
-
-
+    <p> <a href ="/trains"> Trains</a></p>
+    <p><a href="/stations"> Station</a></p>
+    <p><a href="/trainModels"> TrainModels</a></p>
+    <p><a href="/paths"> Paths</a></p>
+    <p><a href="/routes"> Routes</a></p>
 </div>
 
 

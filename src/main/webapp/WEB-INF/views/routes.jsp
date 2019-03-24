@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: otimoshe
-  Date: 10.03.2019
-  Time: 21:33
+  Date: 23.03.2019
+  Time: 15:56
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -61,43 +61,33 @@
 <br/>
 <br/>
 
-<h1>Train List</h1>
+<h1>Route List</h1>
 
-<c:if test="${!empty listTrains}">
+<c:if test="${!empty listRoutes}">
     <table class="tg">
         <tr>
             <th width="80">ID</th>
-            <th width="80">Seats</th>
-            <th width="80">Model</th>
-            <th width="60">Edit</th>
-            <th width="60">Delete</th>
+            <th width="80">Name</th>
+
+            <th >Stations</th>
+      <%--      <c:forEach items="${listRoutes.route.stationList}" var="station">
+                <th width="80">Station</th>
+            </c:forEach>  --%>
         </tr>
-        <c:forEach items="${listTrains}" var="train">
+        <c:forEach items="${listRoutes}" var="route">
             <tr>
-                <td>${train.id}</td>
-                <td><a href="/traindata/${train.id}" target="_blank">${train.numberOfSeats}</a></td>
-                <td>${train.trainModel.name}</td>
-                <td><a href="<c:url value='/edit/${train.id}'/>">Edit</a></td>
-                <td><a href="<c:url value='/remove/${train.id}'/>">Delete</a></td>
+                <td>${route.id}</td>
+                <td>${route.name}</td>
+                <c:forEach items="${route.stationList}" var="station">
+                <td>${station.name}</td>
+                </c:forEach>
             </tr>
         </c:forEach>
     </table>
 </c:if>
 
 
-<h1>Add a Train</h1>
-
-<form:form action="/trains"  modelAttribute ="train" method="post">
-    <p>NumberOfSeats:<form:input path="numberOfSeats" value = ""/></p>
-    <p>Model:
-        <form:select path="trainModel.id">
-    <c:forEach items="${listTrainModels}" var="model">
-        <option value="${model.id}">${model.name}</option>
-    </c:forEach>
-</form:select>
-    <p><input type="submit" value="Submit" /> </p>
-    <sec:csrfInput/>
-</form:form>
+<h1>Add a Route</h1>
 
 
 

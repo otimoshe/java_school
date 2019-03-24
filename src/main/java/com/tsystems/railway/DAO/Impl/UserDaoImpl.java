@@ -1,6 +1,7 @@
-package com.tsystems.railway.dao;
+package com.tsystems.railway.DAO.Impl;
 
 
+import com.tsystems.railway.DAO.UserDao;
 import com.tsystems.railway.model.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = false)
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
 
     @Autowired
     private SessionFactory sessionFactory;

@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: otimoshe
-  Date: 10.03.2019
-  Time: 21:33
+  Date: 22.03.2019
+  Time: 16:56
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -13,7 +13,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-    <title>Train Page</title>
+    <title>Path Page</title>
 
     <style type="text/css">
         .tg {
@@ -56,53 +56,54 @@
 </head>
 <body>
 
-<a href="/">Back to main menu</a>
+<a href="/admin">Back to admin page</a>
 
 <br/>
 <br/>
 
-<h1>Train List</h1>
+<h1>Paths List</h1>
 
-<c:if test="${!empty listTrains}">
-    <table class="tg">
+<c:if test="${!empty listPaths}">
+<table class="tg">
+    <tr>
+        <th width="80">ID</th>
+        <th width="80">Station </th>
+        <th width="80">Station </th>
+        <th width="60">Distance</th>
+        <th width="60">Delete</th>
+    </tr>
+    <c:forEach items="${listPaths}" var="path">
         <tr>
-            <th width="80">ID</th>
-            <th width="80">Seats</th>
-            <th width="80">Model</th>
-            <th width="60">Edit</th>
-            <th width="60">Delete</th>
+            <td>${path.id}</td>
+            <td>${path.station.name}</td>
+            <td>${path.nextStation.name}</td>
+            <td>${path.distance}</td>
+            <td><a href="<c:url value='/paths/remove/${path.id}'/>">Delete</a></td>
         </tr>
-        <c:forEach items="${listTrains}" var="train">
-            <tr>
-                <td>${train.id}</td>
-                <td><a href="/traindata/${train.id}" target="_blank">${train.numberOfSeats}</a></td>
-                <td>${train.trainModel.name}</td>
-                <td><a href="<c:url value='/edit/${train.id}'/>">Edit</a></td>
-                <td><a href="<c:url value='/remove/${train.id}'/>">Delete</a></td>
-            </tr>
-        </c:forEach>
-    </table>
+    </c:forEach>
+</table>
 </c:if>
 
 
-<h1>Add a Train</h1>
+<h1>Add a Path</h1>
 
-<form:form action="/trains"  modelAttribute ="train" method="post">
-    <p>NumberOfSeats:<form:input path="numberOfSeats" value = ""/></p>
-    <p>Model:
-        <form:select path="trainModel.id">
-    <c:forEach items="${listTrainModels}" var="model">
-        <option value="${model.id}">${model.name}</option>
+<spring:url value="/paths" var="pathUrl"></spring:url>
+<form:form action="${pathUrl}" modelAttribute ="path" method="post">
+
+<p>Distance:<form:input path="distance" value = ""/> </p>
+
+<p>Stations:
+    <form:select path="station.id">
+    <c:forEach items="${listStations}" var="station">
+    <option value="${station.id}">${station.name}</option>
     </c:forEach>
-</form:select>
-    <p><input type="submit" value="Submit" /> </p>
+    </form:select>
+    <form:select path="nextStation.id">
+    <c:forEach items="${listStations}" var="nextStation">
+    <option value="${nextStation.id}">${nextStation.name}</option>
+    </c:forEach>
+    </form:select>
+
+<p><input type="submit" value="Submit" /> </p>
     <sec:csrfInput/>
 </form:form>
-
-
-
-
-
-
-</body>
-</html>

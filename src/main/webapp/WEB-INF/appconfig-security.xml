@@ -28,10 +28,10 @@
 </authentication-manager>
 
     <beans:bean id="myAuthenticationSuccessHandler"
-                class="com.tsystems.railway.service.MySimpleUrlAuthenticationSuccessHandler" />
+                class="com.tsystems.railway.service.impl.MySimpleUrlAuthenticationSuccessHandler" />
 
 <beans:bean id="userDetailsServiceImpl"
-            class="com.tsystems.railway.service.UserDetailsServiceImpl"></beans:bean>
+            class="com.tsystems.railway.service.impl.UserDetailsServiceImpl"></beans:bean>
 
 <beans:bean id="encoder"
             class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

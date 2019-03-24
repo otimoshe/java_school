@@ -1,6 +1,6 @@
-package com.tsystems.railway.service;
+package com.tsystems.railway.service.impl;
 
-import com.tsystems.railway.dao.UserDao;
+import com.tsystems.railway.DAO.UserDao;
 import com.tsystems.railway.model.Role;
 import com.tsystems.railway.model.User;
 import org.springframework.beans.factory.annotation.Autowired;

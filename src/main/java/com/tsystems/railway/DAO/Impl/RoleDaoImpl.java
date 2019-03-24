@@ -1,5 +1,6 @@
-package com.tsystems.railway.dao;
+package com.tsystems.railway.DAO.Impl;
 
+import com.tsystems.railway.DAO.RoleDao;
 import com.tsystems.railway.model.Role;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional(readOnly = false)
-public class RoleDaoImpl  implements RoleDao{
+public class RoleDaoImpl  implements RoleDao {
 
     @Autowired
     private SessionFactory sessionFactory;

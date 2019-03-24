@@ -1,17 +1,24 @@
 package com.tsystems.railway.controller;
 
 import com.tsystems.railway.model.Train;
+import com.tsystems.railway.model.TrainModel;
+import com.tsystems.railway.service.TrainModelService;
 import com.tsystems.railway.service.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.GeneratedValue;
+
 @Controller
 public class TrainControler {
 
     @Autowired
     private TrainService trainService;
+
+    @Autowired
+    private TrainModelService trainModelService;
 
     public void setTrainService(TrainService trainService) {
         this.trainService = trainService;
@@ -20,7 +27,10 @@ public class TrainControler {
     @RequestMapping(value = "trains",method = RequestMethod.GET)
     public String listTrains(Model model){
         model.addAttribute("train",new Train());
+
         model.addAttribute("listTrains",this.trainService.listTrains());
+        model.addAttribute("listTrainModels",this.trainModelService.listTrainModels());
+        System.out.println(model);
         return "trains";
     }
 
@@ -36,7 +46,7 @@ public class TrainControler {
     }
 
     @RequestMapping("/remove/{id}")
-    public String removeBook(@PathVariable("id") int id){
+    public String removeTrain(@PathVariable("id") int id){
         this.trainService.removeTrain(id);
 
         return "redirect:/trains";
