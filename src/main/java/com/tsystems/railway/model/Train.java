@@ -15,7 +15,7 @@ public class Train {
     @Id
     @GeneratedValue
     @Column(name = "train_id")
-    private long id;
+    private int id;
 
     @Column(name = "number_of_seats")
     private int numberOfSeats;
@@ -44,11 +44,11 @@ public class Train {
         this.trainModel = trainModel;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -11,7 +11,7 @@ public class Station {
     @Id
     @GeneratedValue
     @Column(name = "station_id")
-    private long id;
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -23,11 +23,16 @@ public class Station {
     public Station() {
     }
 
-    public long getId() {
+    public Station(int id, String name) {
+        this.name = name;
+        this.id = id;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -12,12 +12,13 @@ import java.util.List;
 public class StationMapperImpl implements StationMapper {
 
     public Station dtoToEntity(StationDTO stationDTO){
+        int id = stationDTO.getId();
         String name = stationDTO.getName();
-        return new Station(name);
+        return new Station(id,name);
     }
 
     public StationDTO entityToDto(Station station){
-       long id = station.getId();
+       int id = station.getId();
        String name = station.getName();
         return new StationDTO(id,name);
     }

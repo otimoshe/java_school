@@ -20,7 +20,7 @@ public class PathDaoImpl implements PathDao {
     @Override
     public void addPath(Path path) {
         Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate (path);
+        session.persist (path);
     }
 
     @Override

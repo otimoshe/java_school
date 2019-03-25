@@ -20,6 +20,7 @@ public class TrainMapperImpl implements TrainMapper {
 
     @Override
     public Train dtoToEntity(TrainDTO trainDTO) {
+        int id = trainDTO.getId();
         TrainModel trainModel = trainModelMapper.dtoToEntity(trainDTO.getTrainModelDTO());
         int numberOfSeats = trainDTO.getNumberOfSeats();
         return new Train(numberOfSeats, trainModel);
@@ -27,7 +28,7 @@ public class TrainMapperImpl implements TrainMapper {
 
     @Override
     public TrainDTO entityToDto(Train train) {
-       long id = train.getId();
+       int id = train.getId();
        TrainModelDTO trainModelDTO = trainModelMapper.entityToDto(train.getTrainModel());
        int numberOfSeats = train.getNumberOfSeats();
         return new TrainDTO(id,numberOfSeats,trainModelDTO);

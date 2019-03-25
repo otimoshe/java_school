@@ -26,11 +26,12 @@ public class RouteMapperImpl implements RouteMapper {
 
     @Override
     public Route dtoToEntity(RouteDTO routeDTO) {
+        int id = routeDTO.getId();
         String name = routeDTO.getName();
         BigDecimal price = routeDTO.getPrice();
         StationDTO stationDTO = routeDTO.getFirst_station();
         Set<PathDTO> pathDTOS = routeDTO.getPathsDTOSet();
-        return new Route(name,price,stationMapper.dtoToEntity(stationDTO),pathMapper.dtoSetToEntitySet(pathDTOS));
+        return new Route(id,name,price,stationMapper.dtoToEntity(stationDTO),pathMapper.dtoSetToEntitySet(pathDTOS));
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.tsystems.railway.service.impl;
 
 import com.tsystems.railway.DAO.RouteDao;
+import com.tsystems.railway.DTO.RouteDTO;
+import com.tsystems.railway.mappers.RouteMapper;
 import com.tsystems.railway.model.Route;
 import com.tsystems.railway.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ public class RouteServiceImpl implements RouteService {
 
     @Autowired
     private RouteDao routeDao;
+
+    @Autowired
+    private RouteMapper routeMapper;
 
     @Override
     public void addRoute(Route route) {
@@ -35,11 +40,21 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
+    public RouteDTO getRouteDTOById(int id) {
+        return routeMapper.entityToDto(routeDao.getRouteById(id));
+    }
+
+    @Override
     public List<Route> getRouteList() {
         return routeDao.getRouteList();
     }
 
-   /* @Override
+    @Override
+    public List<RouteDTO> getDtoRouteList() {
+        return this.routeMapper.listEntityToDtoList(this.getRouteList());
+    }
+
+    /* @Override
     public List<Station> getStationList(Route route) {
         Set<Path> paths = route.getPaths();
         List<Station> stationList = new ArrayList<Station>();

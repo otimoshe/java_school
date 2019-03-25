@@ -1,19 +1,22 @@
 package com.tsystems.railway.DTO;
 
 public class TrainDTO {
-    private long id;
+    private int id;
     private int numberOfSeats;
     private TrainModelDTO trainModelDTO;
 
 
 
-    public TrainDTO(long id, int numberOfSeats, TrainModelDTO trainModelDTO) {
+    public TrainDTO(int id, int numberOfSeats, TrainModelDTO trainModelDTO) {
         this.id = id;
         this.numberOfSeats = numberOfSeats;
         this.trainModelDTO = trainModelDTO;
     }
 
-    public long getId() {
+    public TrainDTO() {
+    }
+
+    public int getId() {
         return id;
     }
 

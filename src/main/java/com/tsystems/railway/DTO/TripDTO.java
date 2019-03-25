@@ -1,8 +1,9 @@
 package com.tsystems.railway.DTO;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TripDTO {
+public class TripDTO implements Serializable {
 
     private int id;
 

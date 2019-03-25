@@ -47,9 +47,10 @@ public class PathMapperImpl implements PathMapper {
 
     @Override
     public Path dtoToEntity(PathDTO pathDTO) {
+        int id = pathDTO.getId();
         Station station = stationMapper.dtoToEntity( pathDTO.getStation());
         Station nextStation = stationMapper.dtoToEntity( pathDTO.getNextStation());
         double distance = pathDTO.getDistance();
-        return new Path(station,nextStation,distance);
+        return new Path(id,station,nextStation,distance);
     }
 }

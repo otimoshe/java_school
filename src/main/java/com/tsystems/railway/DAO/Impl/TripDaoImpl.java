@@ -48,7 +48,7 @@ public class TripDaoImpl implements TripDao {
     @Override
     public List<Trip> listTrips() {
         Session session = sessionFactory.getCurrentSession();
-        List<Trip> trips = session.createQuery("from Trips").list();
+        List<Trip> trips = session.createQuery("from Trip").list();
         return trips;
     }
 }

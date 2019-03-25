@@ -53,6 +53,15 @@ public class Route {
     public Route() {
     }
 
+    public Route(int id, String name, BigDecimal price, Station dtoToEntity, Set<Path> dtoSetToEntitySet) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.firstStation = firstStation;
+        this.paths = paths;
+        this.trips = trips;
+    }
+
     //  @ElementCollection(targetClass = Station.class)
   //  private List<Station> stations = this.getStationList();
 

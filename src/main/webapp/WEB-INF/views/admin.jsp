@@ -34,6 +34,7 @@
     <p><a href="/trainModels"> TrainModels</a></p>
     <p><a href="/paths"> Paths</a></p>
     <p><a href="/routes"> Routes</a></p>
+    <p> <a href ="/trips">Trips</a></p>
 </div>
 
 

@@ -36,7 +36,6 @@ public class TrainControler {
     @RequestMapping(value = "/trains", method = RequestMethod.POST)
     public String addTrain(@ModelAttribute("train") Train train){
         if (train.getId() == 0){
-
             trainService.addTrain(train);
         }else {
             trainService.updateTtain(train);

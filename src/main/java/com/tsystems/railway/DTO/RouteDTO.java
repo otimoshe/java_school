@@ -13,6 +13,10 @@ public class RouteDTO {
     private StationDTO first_station;
     private Set<PathDTO> pathsDTOSet;
 
+    public RouteDTO(int routeID) {
+        this.id = id;
+    }
+
     public Set<PathDTO> getPathsDTOSet() {
         return pathsDTOSet;
     }
@@ -29,7 +33,10 @@ public class RouteDTO {
         this.first_station = first_station;
     }
 
-    public RouteDTO(int id, BigDecimal price, String name, StationDTO first_station,Set<PathDTO> pathsDTOSet) {
+    public RouteDTO() {
+    }
+
+    public RouteDTO(int id, BigDecimal price, String name, StationDTO first_station, Set<PathDTO> pathsDTOSet) {
         this.id = id;
         this.price = price;
         this.name = name;
