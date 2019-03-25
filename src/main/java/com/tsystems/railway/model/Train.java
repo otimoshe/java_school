@@ -15,7 +15,7 @@ public class Train {
     @Id
     @GeneratedValue
     @Column(name = "train_id")
-    public long id;
+    private long id;
 
     @Column(name = "number_of_seats")
     private int numberOfSeats;
@@ -24,9 +24,17 @@ public class Train {
     @JoinColumn(name = "model_id")
     private TrainModel trainModel;
 
-    @OneToMany
+    @OneToMany(mappedBy = "train")
     private Set<Trip> trips;
 
+    public Train(int numberOfSeats, TrainModel trainModel) {
+        this.numberOfSeats = numberOfSeats;
+        this.trainModel = trainModel;
+    }
+
+    public Train() {
+        trainModel = new TrainModel();
+    }
 
     public TrainModel getTrainModel() {
         return trainModel;

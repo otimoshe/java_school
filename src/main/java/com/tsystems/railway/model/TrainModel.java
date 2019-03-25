@@ -13,11 +13,18 @@ public class TrainModel {
     @Column(name = "model_id")
     private int id;
 
-    @Column(name = "")
+    @Column(name = "name")
     private String name;
 
     @OneToMany(mappedBy = "trainModel")
     Set<Train> trains;
+
+    public TrainModel(String name) {
+        this.name = name;
+    }
+
+    public TrainModel() {
+    }
 
     public int getId() {
         return id;

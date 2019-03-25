@@ -1,18 +1,15 @@
 package com.tsystems.railway.DTO;
 
-import com.tsystems.railway.model.Station;
-
-public class StationDTO {
-    private long id;
-
+public class TrainModelDTO {
+    private int id;
     private String name;
 
-    public StationDTO(long id, String name) {
+    public TrainModelDTO(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -27,6 +24,4 @@ public class StationDTO {
     public void setName(String name) {
         this.name = name;
     }
-
-
 }

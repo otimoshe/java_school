@@ -19,21 +19,21 @@ public class TripController {
     @RequestMapping(value = "trips",method = RequestMethod.GET)
     public String listTrips(Model model){
         model.addAttribute("trip",new TripDTO());
-        model.addAttribute("listTrips",this.tripService.listTrips());
-        return "stations";
+        model.addAttribute("listTrips",this.tripService.listTripDTOs());
+        return "trips";
     }
 
     @RequestMapping(value = "/trips", method = RequestMethod.POST)
     public String addTrip(@ModelAttribute("station") TripDTO tripDTO){
         tripService.addTrip(tripDTO);
-        return "redirect:/stations";
+        return "redirect:/trips";
     }
 
     @RequestMapping("/removeTrip/{id}")
     public String removeBook(@PathVariable("id") int id){
         this.tripService.deleteTrip(id);
 
-        return "redirect:/stations";
+        return "redirect:/trips";
     }
 
 }

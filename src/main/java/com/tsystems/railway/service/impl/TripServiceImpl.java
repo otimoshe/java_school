@@ -3,6 +3,9 @@ package com.tsystems.railway.service.impl;
 
 import com.tsystems.railway.DAO.TripDao;
 import com.tsystems.railway.DTO.TripDTO;
+import com.tsystems.railway.mappers.RouteMapper;
+import com.tsystems.railway.mappers.TrainMapper;
+import com.tsystems.railway.mappers.TripMapper;
 import com.tsystems.railway.model.Trip;
 import com.tsystems.railway.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +22,22 @@ public class TripServiceImpl implements TripService {
     private TripDao tripDao;
 
     @Autowired
-    private Trip
+    private TripMapper tripMapper;
+
+    @Autowired
+    private RouteMapper routeMapper;
+
+    @Autowired
+    private TrainMapper trainMapper;
 
     @Override
     public void addTrip(TripDTO trip) {
-        tripDao.addtrip(trip);
+        tripDao.addtrip(tripMapper.dtoToEntity(trip));
     }
 
     @Override
-    public void updateTrip(Trip trip) {
-        tripDao.updateTrip(trip);
+    public void updateTrip(TripDTO trip) {
+        tripDao.updateTrip(tripMapper.dtoToEntity(trip));
     }
 
     @Override
@@ -37,20 +46,15 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public List<Trip> listTrips() {
-        return tripDao.listTrips();
+    public List<TripDTO> listTripDTOs() {
+        return tripMapper.listEntityToDtoList(tripDao.listTrips());
     }
 
     @Override
-    public Trip getTripById(int id) {
-       return tripDao.getTripById(id);
+    public TripDTO getTripById(int id) {
+       return tripMapper.entityToDto(tripDao.getTripById(id));
     }
 
-    public List<TripDTO> listTripDTO(){
-        List<TripDTO> dtoList = new ArrayList<>();
-        List<Trip> tripList = tripDao.listTrips();
-        for(Trip trip:tripList){
 
-        }
-    }
+
 }

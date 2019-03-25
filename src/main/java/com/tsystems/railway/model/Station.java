@@ -16,7 +16,12 @@ public class Station {
     @Column(name = "name")
     private String name;
 
+    public Station(String name) {
+        this.name = name;
+    }
 
+    public Station() {
+    }
 
     public long getId() {
         return id;

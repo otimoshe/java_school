@@ -1,8 +1,11 @@
-package com.tsystems.railway.mappers;
+package com.tsystems.railway.mappers.Impl;
 
 import com.tsystems.railway.DTO.PathDTO;
 import com.tsystems.railway.DTO.RouteDTO;
 import com.tsystems.railway.DTO.StationDTO;
+import com.tsystems.railway.mappers.PathMapper;
+import com.tsystems.railway.mappers.RouteMapper;
+import com.tsystems.railway.mappers.StationMapper;
 import com.tsystems.railway.model.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @Component
-public class RouteMapperImpl implements RouteMapper{
+public class RouteMapperImpl implements RouteMapper {
 
     @Autowired
     private StationMapper stationMapper;

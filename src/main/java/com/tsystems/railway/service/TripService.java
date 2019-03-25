@@ -13,7 +13,7 @@ public interface TripService {
 
     public void updateTrip(TripDTO trip);
 
-    public List<TripDTO> listTrips();
+    public List<TripDTO> listTripDTOs();
 
     public TripDTO getTripById(int id);
 }

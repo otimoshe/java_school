@@ -27,10 +27,9 @@ public class TrainControler {
     @RequestMapping(value = "trains",method = RequestMethod.GET)
     public String listTrains(Model model){
         model.addAttribute("train",new Train());
-
         model.addAttribute("listTrains",this.trainService.listTrains());
         model.addAttribute("listTrainModels",this.trainModelService.listTrainModels());
-        System.out.println(model);
+
         return "trains";
     }
 

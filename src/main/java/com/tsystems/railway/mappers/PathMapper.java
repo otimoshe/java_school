@@ -7,5 +7,10 @@ import java.util.Set;
 
 public interface PathMapper {
     Set<Path> dtoSetToEntitySet(Set<PathDTO> pathDTOS);
+
     Set<PathDTO> entitySetTodtoSet(Set<Path> paths);
+
+    PathDTO entitytoDto(Path path);
+
+    Path dtoToEntity(PathDTO pathDTO);
 }

@@ -2,8 +2,7 @@ package com.tsystems.railway.controller;
 
 
 import com.tsystems.railway.model.Path;
-import com.tsystems.railway.model.Station;
-import com.tsystems.railway.model.Train;
+
 import com.tsystems.railway.service.PathService;
 import com.tsystems.railway.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;

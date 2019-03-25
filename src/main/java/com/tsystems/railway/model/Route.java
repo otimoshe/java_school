@@ -50,6 +50,9 @@ public class Route {
         this.trips = trips;
     }
 
+    public Route() {
+    }
+
     //  @ElementCollection(targetClass = Station.class)
   //  private List<Station> stations = this.getStationList();
 
@@ -57,7 +60,7 @@ public class Route {
 
     public List<Station> getStationList(){
         Set<Path> paths = this.getPaths();
-        List<Station> stationList = new ArrayList<Station>();
+        List<Station> stationList = new ArrayList<>();
         Station firstStation = this.getFirstStation();
         stationList.add(firstStation);
         Station currentStation = firstStation;
