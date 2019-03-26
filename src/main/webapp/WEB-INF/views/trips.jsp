@@ -100,11 +100,11 @@
         <form:input type="date"  path="departureDate"/></p>
         </spring:bind>
     <p>Train
-        <form:select path="train.id">
+        <select name = "trainId"   >
             <c:forEach items="${trainList}" var="train">
                 <option value="${train.id}">${train.id}</option>
             </c:forEach>
-        </form:select></p>
+        </select></p>
     <p><input type="submit" value="Submit" /> </p>
     <sec:csrfInput/>
 </form:form>

@@ -23,7 +23,7 @@ public class TrainMapperImpl implements TrainMapper {
         int id = trainDTO.getId();
         TrainModel trainModel = trainModelMapper.dtoToEntity(trainDTO.getTrainModelDTO());
         int numberOfSeats = trainDTO.getNumberOfSeats();
-        return new Train(numberOfSeats, trainModel);
+        return new Train(id,numberOfSeats, trainModel);
     }
 
     @Override

@@ -34,7 +34,7 @@ public class TrainDaoImpl implements TrainDao {
     }
 
     @Override
-    public void removeTrain(long id) {
+    public void removeTrain(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         Train train = (Train) session.load(Train.class,id);
 
@@ -44,7 +44,7 @@ public class TrainDaoImpl implements TrainDao {
     }
 
     @Override
-    public Train getTrainById(long id) {
+    public Train getTrainById(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         Train train = (Train) session.load(Train.class,id);
         return train;

@@ -11,9 +11,11 @@ public interface TrainService {
 
      void updateTtain(Train train);
 
-     void removeTrain(long id);
+     void removeTrain(int id);
 
-     Train getTrainById(long id);
+     Train getTrainById(int id);
+
+     TrainDTO getTrainDtoById(int id);
 
      List<Train> listTrains();
 

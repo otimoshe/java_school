@@ -62,7 +62,7 @@ public class TrainControler {
 
 
     @RequestMapping(value ="traindata/{id}",method = RequestMethod.GET)
-    public String trainData(@PathVariable("id") long id,Model model){
+    public String trainData(@PathVariable("id") int id,Model model){
         model.addAttribute("train",this.trainService.getTrainById(id));
 
         return "traindata";

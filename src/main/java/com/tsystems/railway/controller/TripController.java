@@ -32,6 +32,7 @@ public class TripController {
         model.addAttribute("train", new TrainDTO());
         model.addAttribute("route",new RouteDTO());
         model.addAttribute("routeId",new Integer(0));
+        model.addAttribute("trainId",new Long(0));
         model.addAttribute("listTrips",this.tripService.listTripDTOs());
         model.addAttribute("routeList",this.routeService.getDtoRouteList());
         model.addAttribute("trainList",this.trainService.listTrainDTOs());
@@ -42,11 +43,11 @@ public class TripController {
 
     @RequestMapping(value = "/trips", method = RequestMethod.POST)
     public String addTrip(@ModelAttribute("trip") TripDTO tripDTO ,
-                          @ModelAttribute("routeId") Integer routeID){
-                      //    @ModelAttribute("route") RouteDTO routeDTO){
+                          @ModelAttribute("routeId") Integer routeID,
+                          @ModelAttribute("trainId") Integer trainId){
 
        tripDTO.setRoute( routeService.getRouteDTOById(routeID));
-     //   tripDTO.setTrain(trainDTO);
+       tripDTO.setTrain(trainService.getTrainDtoById(trainId));
 
         tripService.addTrip(tripDTO);
         return "redirect:/trips";

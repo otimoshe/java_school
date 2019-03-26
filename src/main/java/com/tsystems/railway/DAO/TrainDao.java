@@ -10,9 +10,9 @@ public interface TrainDao {
 
     public void updateTtain(Train train);
 
-    public void removeTrain(long id);
+    public void removeTrain(int id);
 
-    public Train getTrainById(long id);
+    public Train getTrainById(int id);
 
     public List<Train> listTrains();
 }

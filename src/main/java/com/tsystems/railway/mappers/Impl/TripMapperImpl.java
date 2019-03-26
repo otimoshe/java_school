@@ -12,8 +12,9 @@ import com.tsystems.railway.model.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 
@@ -29,7 +30,7 @@ public class TripMapperImpl implements TripMapper {
     @Override
     public Trip dtoToEntity(TripDTO dto) {
         Route route = routeMapper.dtoToEntity(dto.getRoute());
-        Date  date =  dto.getDepartureDate();
+        Date date =  dto.getDepartureDate();
         Train train = trainMapper.dtoToEntity(dto.getTrain());
 
         return new Trip (route,date,train);

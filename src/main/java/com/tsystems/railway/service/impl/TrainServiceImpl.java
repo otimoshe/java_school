@@ -39,13 +39,13 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
 
-    public void removeTrain(long id) {
+    public void removeTrain(int id) {
         this.trainDao.removeTrain(id);
     }
 
     @Override
 
-    public Train getTrainById(long id) {
+    public Train getTrainById(int id) {
         return this.trainDao.getTrainById(id);
     }
 
@@ -53,6 +53,11 @@ public class TrainServiceImpl implements TrainService {
 
     public List<Train> listTrains() {
         return this.trainDao.listTrains();
+    }
+
+    @Override
+    public TrainDTO getTrainDtoById(int id) {
+        return trainMapper.entityToDto(this.trainDao.getTrainById(id));
     }
 
     @Override

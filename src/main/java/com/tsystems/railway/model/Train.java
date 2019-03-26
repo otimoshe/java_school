@@ -1,7 +1,6 @@
 package com.tsystems.railway.model;
 
-
-import org.hibernate.annotations.Proxy;
+;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -28,6 +27,12 @@ public class Train {
     private Set<Trip> trips;
 
     public Train(int numberOfSeats, TrainModel trainModel) {
+        this.numberOfSeats = numberOfSeats;
+        this.trainModel = trainModel;
+    }
+
+    public Train(int id,int numberOfSeats, TrainModel trainModel) {
+        this.id = id;
         this.numberOfSeats = numberOfSeats;
         this.trainModel = trainModel;
     }
