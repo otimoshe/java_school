@@ -2,6 +2,7 @@ package com.tsystems.railway.DTO;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 public class TripDTO implements Serializable {
 
@@ -12,6 +13,7 @@ public class TripDTO implements Serializable {
     private Date departureDate;
 
     private TrainDTO train;
+
 
 
     public TripDTO(int id, RouteDTO route, Date departureDate, TrainDTO trainId) {

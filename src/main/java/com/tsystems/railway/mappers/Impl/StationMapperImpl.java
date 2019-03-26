@@ -2,7 +2,7 @@ package com.tsystems.railway.mappers.Impl;
 
 import com.tsystems.railway.DTO.StationDTO;
 import com.tsystems.railway.mappers.StationMapper;
-import com.tsystems.railway.model.Station;
+import com.tsystems.railway.entity.Station;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

@@ -2,7 +2,7 @@ package com.tsystems.railway.DAO.Impl;
 
 
 import com.tsystems.railway.DAO.UserDao;
-import com.tsystems.railway.model.User;
+import com.tsystems.railway.entity.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

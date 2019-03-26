@@ -1,7 +1,7 @@
 package com.tsystems.railway.DAO.Impl;
 
 import com.tsystems.railway.DAO.TrainModelDao;
-import com.tsystems.railway.model.TrainModel;
+import com.tsystems.railway.entity.TrainModel;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

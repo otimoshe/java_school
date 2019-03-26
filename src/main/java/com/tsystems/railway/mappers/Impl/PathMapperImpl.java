@@ -4,8 +4,8 @@ import com.tsystems.railway.DTO.PathDTO;
 import com.tsystems.railway.DTO.StationDTO;
 import com.tsystems.railway.mappers.PathMapper;
 import com.tsystems.railway.mappers.StationMapper;
-import com.tsystems.railway.model.Path;
-import com.tsystems.railway.model.Station;
+import com.tsystems.railway.entity.Path;
+import com.tsystems.railway.entity.Station;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

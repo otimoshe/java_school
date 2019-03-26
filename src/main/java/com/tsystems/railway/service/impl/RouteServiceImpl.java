@@ -3,7 +3,7 @@ package com.tsystems.railway.service.impl;
 import com.tsystems.railway.DAO.RouteDao;
 import com.tsystems.railway.DTO.RouteDTO;
 import com.tsystems.railway.mappers.RouteMapper;
-import com.tsystems.railway.model.Route;
+import com.tsystems.railway.entity.Route;
 import com.tsystems.railway.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

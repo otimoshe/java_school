@@ -1,7 +1,7 @@
 package com.tsystems.railway.service;
 
 import com.tsystems.railway.DTO.TrainDTO;
-import com.tsystems.railway.model.Train;
+import com.tsystems.railway.entity.Train;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package com.tsystems.railway.controller;
 
 import com.tsystems.railway.service.SecurityService;
 import com.tsystems.railway.service.UserService;
-import com.tsystems.railway.model.User;
+import com.tsystems.railway.entity.User;
 import com.tsystems.railway.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

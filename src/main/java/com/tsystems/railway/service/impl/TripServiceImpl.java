@@ -6,13 +6,11 @@ import com.tsystems.railway.DTO.TripDTO;
 import com.tsystems.railway.mappers.RouteMapper;
 import com.tsystems.railway.mappers.TrainMapper;
 import com.tsystems.railway.mappers.TripMapper;
-import com.tsystems.railway.model.Trip;
 import com.tsystems.railway.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

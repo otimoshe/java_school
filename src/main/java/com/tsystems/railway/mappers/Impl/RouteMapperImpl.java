@@ -6,7 +6,7 @@ import com.tsystems.railway.DTO.StationDTO;
 import com.tsystems.railway.mappers.PathMapper;
 import com.tsystems.railway.mappers.RouteMapper;
 import com.tsystems.railway.mappers.StationMapper;
-import com.tsystems.railway.model.Route;
+import com.tsystems.railway.entity.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -41,8 +41,8 @@ public class RouteMapperImpl implements RouteMapper {
         BigDecimal price = route.getPrice();
         StationDTO stationDTO = stationMapper.entityToDto(route.getFirstStation());
         Set<PathDTO> pathDTOS = pathMapper.entitySetTodtoSet(route.getPaths());
-
-        return new RouteDTO(id,price,name,stationDTO,pathDTOS);
+        List<StationDTO> stationDTOList = stationMapper.listEntityToDtoList(route.getStationList());
+        return new RouteDTO(id,price,name,stationDTO,pathDTOS,stationDTOList);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.tsystems.railway.model;
+package com.tsystems.railway.entity;
 
 
 import javax.persistence.*;
@@ -9,6 +9,7 @@ import java.sql.Date;
 public class Schedule {
 
     @Id
+    @GeneratedValue
     @Column(name = "schedule_id")
     private long id;
 
@@ -24,15 +25,25 @@ public class Schedule {
 
     @ManyToOne
     @JoinColumn(name = "station_id")
-    private Station currentStation;
+    private Station station;
 
-    @ManyToOne
-    @JoinColumn(name = "next_station_id")
-    private Station nextStation;
 
-    @ManyToOne
-    @JoinColumn(name = "previous_station_id")
-    private Station prevStation;
+
+
+    public Schedule() {
+
+    }
+
+    public Schedule(long id, Trip trip, Date arrivalDate, Date departureDate, Station currentStation) {
+        this.id = id;
+        this.trip = trip;
+        this.arrivalDate = arrivalDate;
+        this.departureDate = departureDate;
+        this.station = currentStation;
+       ;
+    }
+
+
 
     public long getId() {
         return id;
@@ -42,7 +53,13 @@ public class Schedule {
         this.id = id;
     }
 
+    public Trip getTrip() {
+        return trip;
+    }
 
+    public void setTrip(Trip trip) {
+        this.trip = trip;
+    }
 
     public Date getArrivalDate() {
         return arrivalDate;
@@ -60,18 +77,13 @@ public class Schedule {
         this.departureDate = departureDate;
     }
 
-
-
-    @Override
-    public String toString() {
-        return "Schedule{" +
-                "id=" + id +
-            //    ", train=" + train +
-                ", arrivalDate=" + arrivalDate +
-                ", departureDate=" + departureDate +
-             //   ", currentStation=" + currentStation +
-            //    ", nextStation=" + nextStation +
-            //    ", prevStation=" + prevStation +
-                '}';
+    public Station getStation() {
+        return station;
     }
+
+    public void setStation(Station currentStation) {
+        this.station = currentStation;
+    }
+
+
 }

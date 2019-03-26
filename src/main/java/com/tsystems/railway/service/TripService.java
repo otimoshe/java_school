@@ -1,7 +1,6 @@
 package com.tsystems.railway.service;
 
 import com.tsystems.railway.DTO.TripDTO;
-import com.tsystems.railway.model.Trip;
 
 import java.util.List;
 

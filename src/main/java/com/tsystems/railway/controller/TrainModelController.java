@@ -1,7 +1,6 @@
 package com.tsystems.railway.controller;
 
-import com.tsystems.railway.model.Train;
-import com.tsystems.railway.model.TrainModel;
+import com.tsystems.railway.entity.TrainModel;
 import com.tsystems.railway.service.TrainModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,8 +50,8 @@ public class TrainModelController {
     }
 
   //  @RequestMapping(value ="modeldata/{id}",method = RequestMethod.GET)
- //   public String trainData(@PathVariable("id") int id,Model model){
-  //      model.addAttribute("model",this.trainModelService.getTrainModelById(id));
+ //   public String trainData(@PathVariable("id") int id,Model entity){
+  //      entity.addAttribute("entity",this.trainModelService.getTrainModelById(id));
 
    //     return "traindata";
   //  }

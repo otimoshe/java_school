@@ -1,7 +1,6 @@
 package com.tsystems.railway.controller;
 
-import com.tsystems.railway.model.Route;
-import com.tsystems.railway.model.Train;
+import com.tsystems.railway.entity.Route;
 import com.tsystems.railway.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

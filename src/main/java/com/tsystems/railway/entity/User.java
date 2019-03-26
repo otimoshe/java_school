@@ -1,10 +1,8 @@
-package com.tsystems.railway.model;
+package com.tsystems.railway.entity;
 
 
 
 import javax.persistence.*;
-import java.util.Set;
-
 
 
 @Entity

@@ -1,7 +1,7 @@
 package com.tsystems.railway.DAO;
 
-import com.tsystems.railway.model.Path;
-import com.tsystems.railway.model.Route;
+import com.tsystems.railway.entity.Path;
+import com.tsystems.railway.entity.Route;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.tsystems.railway.service.impl;
 
 import com.tsystems.railway.DAO.PathDao;
-import com.tsystems.railway.model.Path;
+import com.tsystems.railway.entity.Path;
 import com.tsystems.railway.service.PathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

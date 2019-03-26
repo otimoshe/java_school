@@ -1,8 +1,8 @@
 package com.tsystems.railway.DAO.Impl;
 
 import com.tsystems.railway.DAO.RouteDao;
-import com.tsystems.railway.model.Path;
-import com.tsystems.railway.model.Route;
+import com.tsystems.railway.entity.Path;
+import com.tsystems.railway.entity.Route;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

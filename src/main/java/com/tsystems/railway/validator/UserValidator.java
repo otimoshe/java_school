@@ -1,7 +1,7 @@
 package com.tsystems.railway.validator;
 
 import com.tsystems.railway.service.UserService;
-import com.tsystems.railway.model.User;
+import com.tsystems.railway.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

@@ -1,4 +1,4 @@
-package com.tsystems.railway.model;
+package com.tsystems.railway.entity;
 
 
 import javax.persistence.Column;
@@ -19,7 +19,7 @@ public class Passenger {
     private String name;
 
     @Column(name = "lastname")
-    private String lastname;
+    private String lastName;
 
     @Column(name = "date_of_birth")
     private Date birhtDate;
@@ -29,7 +29,7 @@ public class Passenger {
         return "Passenger{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", lastname='" + lastname + '\'' +
+                ", lastname='" + lastName + '\'' +
                 ", birhtDate=" + birhtDate +
                 '}';
     }
@@ -50,12 +50,12 @@ public class Passenger {
         this.name = name;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastname) {
+        this.lastName = lastname;
     }
 
     public Date getBirhtDate() {

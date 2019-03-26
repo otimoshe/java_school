@@ -1,9 +1,7 @@
 package com.tsystems.railway.mappers;
 
-import com.tsystems.railway.DTO.RouteDTO;
 import com.tsystems.railway.DTO.TripDTO;
-import com.tsystems.railway.model.Route;
-import com.tsystems.railway.model.Trip;
+import com.tsystems.railway.entity.Trip;
 
 import java.util.List;
 

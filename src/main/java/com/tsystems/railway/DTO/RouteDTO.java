@@ -1,9 +1,7 @@
 package com.tsystems.railway.DTO;
 
-
-
-
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 public class RouteDTO {
@@ -12,6 +10,27 @@ public class RouteDTO {
     private String name;
     private StationDTO first_station;
     private Set<PathDTO> pathsDTOSet;
+    private List<StationDTO> stationList;
+
+    public List<StationDTO> getStationList() {
+        return stationList;
+    }
+
+    public void setStationList(List<StationDTO> stationList) {
+        this.stationList = stationList;
+    }
+
+    public RouteDTO(int id, BigDecimal price, String name, StationDTO first_station, Set<PathDTO> pathsDTOSet, List<StationDTO> stationList) {
+        this.id = id;
+        this.price = price;
+        this.name = name;
+        this.first_station = first_station;
+        this.pathsDTOSet = pathsDTOSet;
+        this.stationList = stationList;
+    }
+
+    //TODO delete  pathsDTOSet ????
+
 
     public RouteDTO(int routeID) {
         this.id = id;

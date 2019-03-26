@@ -1,6 +1,6 @@
 package com.tsystems.railway.DAO;
 
-import com.tsystems.railway.model.TrainModel;
+import com.tsystems.railway.entity.TrainModel;
 
 import java.util.List;
 

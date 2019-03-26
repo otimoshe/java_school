@@ -1,8 +1,8 @@
 package com.tsystems.railway.service.impl;
 
 import com.tsystems.railway.DAO.UserDao;
-import com.tsystems.railway.model.Role;
-import com.tsystems.railway.model.User;
+import com.tsystems.railway.entity.Role;
+import com.tsystems.railway.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

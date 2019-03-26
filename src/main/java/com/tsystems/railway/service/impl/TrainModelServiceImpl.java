@@ -1,7 +1,7 @@
 package com.tsystems.railway.service.impl;
 
 import com.tsystems.railway.DAO.TrainModelDao;
-import com.tsystems.railway.model.TrainModel;
+import com.tsystems.railway.entity.TrainModel;
 import com.tsystems.railway.service.TrainModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

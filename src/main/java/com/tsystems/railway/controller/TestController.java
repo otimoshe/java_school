@@ -1,7 +1,7 @@
 package com.tsystems.railway.controller;
 
 
-import com.tsystems.railway.model.Train;
+import com.tsystems.railway.entity.Train;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,7 +24,7 @@ public class TestController {
     }
 
    // @RequestMapping(value = "/result")
-  //  public String result(@ModelAttribute Train train, Model model){
+  //  public String result(@ModelAttribute Train train, Model entity){
    //     return "result";
    // }
 

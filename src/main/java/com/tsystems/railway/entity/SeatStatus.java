@@ -1,13 +1,23 @@
-package com.tsystems.railway.DTO;
+package com.tsystems.railway.entity;
 
-public class StationDTO {
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "seat_status")
+public class SeatStatus {
+
+    @Id
+    @GeneratedValue
+    @Column(name = "seat_status_id")
     private int id;
 
+    @Column(name = " seat_status_name")
     private String name;
 
-    public StationDTO(int id, String name) {
-        this.id = id;
+    public SeatStatus(int id,String name) {
         this.name = name;
+        this.id = id;
     }
 
     public int getId() {
@@ -25,6 +35,4 @@ public class StationDTO {
     public void setName(String name) {
         this.name = name;
     }
-
-
 }

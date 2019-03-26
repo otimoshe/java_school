@@ -1,6 +1,6 @@
 package com.tsystems.railway.service;
 
-import com.tsystems.railway.model.User;
+import com.tsystems.railway.entity.User;
 
 
 public interface UserService {

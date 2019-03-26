@@ -1,15 +1,12 @@
 package com.tsystems.railway.controller;
 
-import com.tsystems.railway.model.Train;
-import com.tsystems.railway.model.TrainModel;
+import com.tsystems.railway.entity.Train;
 import com.tsystems.railway.service.TrainModelService;
 import com.tsystems.railway.service.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.GeneratedValue;
 
 @Controller
 public class TrainControler {

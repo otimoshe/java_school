@@ -1,7 +1,7 @@
 package com.tsystems.railway.controller;
 
 
-import com.tsystems.railway.model.Path;
+import com.tsystems.railway.entity.Path;
 
 import com.tsystems.railway.service.PathService;
 import com.tsystems.railway.service.StationService;

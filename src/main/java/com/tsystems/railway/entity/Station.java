@@ -1,4 +1,4 @@
-package com.tsystems.railway.model;
+package com.tsystems.railway.entity;
 
 
 import javax.persistence.*;
@@ -15,6 +15,9 @@ public class Station {
 
     @Column(name = "name")
     private String name;
+
+
+
 
     public Station(String name) {
         this.name = name;

@@ -1,13 +1,13 @@
 package com.tsystems.railway.controller;
 
-import com.tsystems.railway.DTO.RouteDTO;
-import com.tsystems.railway.DTO.TrainDTO;
-import com.tsystems.railway.DTO.TripDTO;
+import com.tsystems.railway.DTO.*;
 import com.tsystems.railway.service.RouteService;
+import com.tsystems.railway.service.ScheduleService;
 import com.tsystems.railway.service.TrainService;
 import com.tsystems.railway.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,11 +26,12 @@ public class TripController {
     @Autowired
     private TrainService trainService;
 
+    @Autowired
+    private ScheduleService scheduleService;
+
     @RequestMapping(value = "trips",method = RequestMethod.GET)
     public String listTrips(Model model){
         model.addAttribute("trip",new TripDTO());
-        model.addAttribute("train", new TrainDTO());
-        model.addAttribute("route",new RouteDTO());
         model.addAttribute("routeId",new Integer(0));
         model.addAttribute("trainId",new Long(0));
         model.addAttribute("listTrips",this.tripService.listTripDTOs());
@@ -40,25 +41,28 @@ public class TripController {
         return "trips";
     }
 
-
+    @Transactional
     @RequestMapping(value = "/trips", method = RequestMethod.POST)
     public String addTrip(@ModelAttribute("trip") TripDTO tripDTO ,
                           @ModelAttribute("routeId") Integer routeID,
                           @ModelAttribute("trainId") Integer trainId){
 
-       tripDTO.setRoute( routeService.getRouteDTOById(routeID));
-       tripDTO.setTrain(trainService.getTrainDtoById(trainId));
 
-        tripService.addTrip(tripDTO);
-        return "redirect:/trips";
+       tripDTO.setRoute(routeService.getRouteDTOById(routeID));
+       tripDTO.setTrain(trainService.getTrainDtoById(trainId));
+       tripService.addTrip(tripDTO);
+
+       return "redirect:/trips";
     }
 
     @RequestMapping("/removeTrip/{id}")
-    public String removeBook(@PathVariable("id") int id){
+    public String removeTrip(@PathVariable("id") int id){
         this.tripService.deleteTrip(id);
 
         return "redirect:/trips";
     }
+
+
 
 }
 

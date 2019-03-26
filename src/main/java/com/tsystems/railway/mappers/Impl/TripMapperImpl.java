@@ -6,9 +6,9 @@ import com.tsystems.railway.DTO.TripDTO;
 import com.tsystems.railway.mappers.RouteMapper;
 import com.tsystems.railway.mappers.TrainMapper;
 import com.tsystems.railway.mappers.TripMapper;
-import com.tsystems.railway.model.Route;
-import com.tsystems.railway.model.Train;
-import com.tsystems.railway.model.Trip;
+import com.tsystems.railway.entity.Route;
+import com.tsystems.railway.entity.Train;
+import com.tsystems.railway.entity.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +32,7 @@ public class TripMapperImpl implements TripMapper {
         Route route = routeMapper.dtoToEntity(dto.getRoute());
         Date date =  dto.getDepartureDate();
         Train train = trainMapper.dtoToEntity(dto.getTrain());
-
+        //TODO add after_insert triiger for creation schedules for this trip
         return new Trip (route,date,train);
     }
 

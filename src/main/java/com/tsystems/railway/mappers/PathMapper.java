@@ -1,7 +1,7 @@
 package com.tsystems.railway.mappers;
 
 import com.tsystems.railway.DTO.PathDTO;
-import com.tsystems.railway.model.Path;
+import com.tsystems.railway.entity.Path;
 
 import java.util.Set;
 
