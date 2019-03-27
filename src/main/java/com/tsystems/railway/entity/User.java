@@ -3,6 +3,7 @@ package com.tsystems.railway.entity;
 
 
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -23,9 +24,16 @@ public class User {
     @Transient
     private String confirmPassword;
 
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @ManyToMany
+    @JoinTable(name = "user_passenger",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "passenger_id"))
+    private Set<Passenger> passengers;
 
     public Role getRole() {
         return role;

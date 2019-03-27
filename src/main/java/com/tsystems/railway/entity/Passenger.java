@@ -1,11 +1,9 @@
 package com.tsystems.railway.entity;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "passengers")
@@ -23,6 +21,9 @@ public class Passenger {
 
     @Column(name = "date_of_birth")
     private Date birhtDate;
+
+    @ManyToMany(mappedBy = "passengers")
+    private Set<User> users;
 
     @Override
     public String toString() {
