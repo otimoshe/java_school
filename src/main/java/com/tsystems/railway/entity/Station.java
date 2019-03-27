@@ -3,6 +3,7 @@ package com.tsystems.railway.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name ="stations")
@@ -16,6 +17,8 @@ public class Station {
     @Column(name = "name")
     private String name;
 
+    @OneToMany(mappedBy = "station")
+    private Set<SeatStatus> seatStatuses;
 
 
 

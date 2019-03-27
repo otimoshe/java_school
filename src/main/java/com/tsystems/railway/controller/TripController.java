@@ -45,6 +45,7 @@ public class TripController {
         model.addAttribute("routeList", this.routeService.getDtoRouteList());
         model.addAttribute("trainList", this.trainService.listTrainDTOs());
 
+
         return "trips";
     }
 

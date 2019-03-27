@@ -2,37 +2,77 @@ package com.tsystems.railway.entity;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "seat_status")
+@IdClass(SeatStatus.SeatStatusKey.class)
 public class SeatStatus {
 
     @Id
-    @GeneratedValue
-    @Column(name = "seat_status_id")
-    private int id;
+    @ManyToOne
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
 
-    @Column(name = " seat_status_name")
-    private String name;
+    @Id
+    @ManyToOne
+    @JoinColumn( name = " station_id")
+    private Station station;
 
-    public SeatStatus(int id,String name) {
-        this.name = name;
-        this.id = id;
+    @Column(name = "available", nullable = false, columnDefinition = "TINYINT(1)")
+    private Boolean available;
+
+
+
+
+
+    public Seat getSeat() {
+        return seat;
     }
 
-    public int getId() {
-        return id;
+    public void setSeat(Seat seat) {
+        this.seat = seat;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Station getStation() {
+        return station;
     }
 
-    public String getName() {
-        return name;
+    public void setStation(Station station) {
+        this.station = station;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public class SeatStatusKey implements Serializable {
+
+        static final long serialVersionUID = 1L;
+
+        private Seat seat;
+        private Station station;
+
+        public Seat getSeat() {
+            return seat;
+        }
+
+        public void setSeat(Seat seat) {
+            this.seat = seat;
+        }
+
+        public Station getStation() {
+            return station;
+        }
+
+        public void setStation(Station station) {
+            this.station = station;
+        }
+
+
     }
 }

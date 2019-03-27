@@ -1,6 +1,8 @@
 package com.tsystems.railway.entity;
 
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 
 import java.sql.Date;
@@ -28,6 +30,7 @@ public class Trip {
     private Train train;
 
     @OneToMany(mappedBy = "trip")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Set<Schedule> schedules;
 
     @OneToMany(mappedBy = "trip")

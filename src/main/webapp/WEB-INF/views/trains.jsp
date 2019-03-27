@@ -88,7 +88,7 @@
 <h1>Add a Train</h1>
 
 <form:form action="/trains"  modelAttribute ="train" method="post">
-    <p>NumberOfSeats:<form:input path="numberOfSeats" value = ""/></p>
+    <p>NumberOfSeats:<form:input type ="number" path="numberOfSeats" value = ""/></p>
     <p>Model:
         <form:select path="trainModel.id">
     <c:forEach items="${listTrainModels}" var="model">
