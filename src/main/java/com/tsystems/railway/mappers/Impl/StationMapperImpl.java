@@ -20,7 +20,7 @@ public class StationMapperImpl implements StationMapper {
     public StationDTO entityToDto(Station station){
        int id = station.getId();
        String name = station.getName();
-        return new StationDTO(id,name);
+       return new StationDTO(id,name);
     }
 
     @Override

@@ -4,6 +4,7 @@ package com.tsystems.railway.entity;
 import javax.persistence.*;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,6 +29,16 @@ public class Trip {
 
     @OneToMany(mappedBy = "trip")
     private Set<Schedule> schedules;
+
+    @OneToMany(mappedBy = "trip")
+    private List<Seat> seats;
+
+    public Trip(int id,Route route, Date departure_date, Train train) {
+        this.id = id;
+        this.route = route;
+        this.departure_date = departure_date;
+        this.train = train;
+    }
 
     public Trip(Route route, Date departure_date, Train train) {
         this.route = route;

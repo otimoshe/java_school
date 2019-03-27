@@ -42,6 +42,7 @@ public class RouteMapperImpl implements RouteMapper {
         StationDTO stationDTO = stationMapper.entityToDto(route.getFirstStation());
         Set<PathDTO> pathDTOS = pathMapper.entitySetTodtoSet(route.getPaths());
         List<StationDTO> stationDTOList = stationMapper.listEntityToDtoList(route.getStationList());
+
         return new RouteDTO(id,price,name,stationDTO,pathDTOS,stationDTOList);
     }
 

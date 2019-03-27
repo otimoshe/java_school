@@ -10,7 +10,7 @@ public class RouteDTO {
     private String name;
     private StationDTO first_station;
     private Set<PathDTO> pathsDTOSet;
-    private List<StationDTO> stationList;
+    private List<StationDTO> stationList  ;
 
     public List<StationDTO> getStationList() {
         return stationList;
@@ -32,9 +32,7 @@ public class RouteDTO {
     //TODO delete  pathsDTOSet ????
 
 
-    public RouteDTO(int routeID) {
-        this.id = id;
-    }
+
 
     public Set<PathDTO> getPathsDTOSet() {
         return pathsDTOSet;

@@ -11,6 +11,7 @@ public class Seat {
     @Column(name = "seat_id")
     private int id;
 
-    @Column(name = "trip_id")
+    @ManyToOne
+    @JoinColumn(name = "trip_id")
     private Trip trip;
 }

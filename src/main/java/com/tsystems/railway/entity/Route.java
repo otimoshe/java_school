@@ -53,13 +53,13 @@ public class Route {
     public Route() {
     }
 
-    public Route(int id, String name, BigDecimal price, Station dtoToEntity, Set<Path> dtoSetToEntitySet) {
+    public Route(int id, String name, BigDecimal price, Station firstStation, Set<Path> paths) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.firstStation = firstStation;
         this.paths = paths;
-        this.trips = trips;
+       // this.trips = trips;
     }
 
     //  @ElementCollection(targetClass = Station.class)
@@ -68,7 +68,7 @@ public class Route {
 
 
     public List<Station> getStationList(){
-        Set<Path> paths = this.getPaths();
+        Set<Path> paths =  new HashSet<>(this.getPaths());
         List<Station> stationList = new ArrayList<>();
         Station firstStation = this.getFirstStation();
         stationList.add(firstStation);

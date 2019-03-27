@@ -29,11 +29,12 @@ public class TripMapperImpl implements TripMapper {
 
     @Override
     public Trip dtoToEntity(TripDTO dto) {
+        int id = dto.getId();
         Route route = routeMapper.dtoToEntity(dto.getRoute());
         Date date =  dto.getDepartureDate();
         Train train = trainMapper.dtoToEntity(dto.getTrain());
         //TODO add after_insert triiger for creation schedules for this trip
-        return new Trip (route,date,train);
+        return new Trip (id,route,date,train);
     }
 
     @Override

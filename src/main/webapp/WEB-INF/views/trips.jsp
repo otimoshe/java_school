@@ -70,6 +70,7 @@
             <th width="80">Route name</th>
             <th width="80">Departure Date</th>
             <th width="60">Train id</th>
+            <th width="60">Schedule</th>
             <th width="60">Delete</th>
         </tr>
         <c:forEach items="${listTrips}" var="trip">
@@ -78,6 +79,7 @@
                 <td>${trip.route.name}</td>
                 <td>${trip.departureDate}</td>
                 <td>${trip.train.id}</td>
+                <td> <a href="/tripSchedule/${trip.id}" target="_blank"> Schedule</a></td>
                 <td><a href="<c:url value='/removeTrip/${trip.id}'/>">Delete</a></td>
             </tr>
         </c:forEach>
