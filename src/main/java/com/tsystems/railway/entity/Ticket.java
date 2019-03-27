@@ -1,9 +1,6 @@
 package com.tsystems.railway.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
@@ -13,17 +10,21 @@ public class Ticket {
     @Column(name = "ticket_id")
     private long id;
 
- //   @Column(name = "passenger_id")
-  //  private Passenger passenger;
+    @OneToOne
+    @JoinColumn(name = "passenger_id")
+    private Passenger passenger;
 
-  //  @Column(name = "train_id")
-  //  private Train train;
+    @ManyToOne
+    @JoinColumn(name = "trip_id")
+    private Trip trip;
 
-  //  @Column(name = "departure_station_id")
- //   private Station departureStation;
+    @ManyToOne
+    @JoinColumn (name = "departure_station_id")
+    private Station departureStation;
 
- //   @Column(name = "arrival_station_id")
- //   private Station arrivalStation;
+    @ManyToOne
+    @JoinColumn(name = "arrival_station_id")
+    private Station arrivalStation;
 
     @Column(name = "departure_date")
     private Date departureDate;
@@ -31,18 +32,10 @@ public class Ticket {
     @Column(name = "arrival_date")
     private Date arrivalDate;
 
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "id=" + id +
-           //     ", passenger=" + passenger +
-          //      ", train=" + train +
-          //      ", departureStation=" + departureStation +
-          //      ", arrivalStation=" + arrivalStation +
-                ", departureDate=" + departureDate +
-                ", arrivalDate=" + arrivalDate +
-                '}';
-    }
+    @OneToOne
+    @JoinColumn(name = "seat_id")
+    Seat seat;
+
 
     public long getId() {
         return id;
@@ -51,8 +44,6 @@ public class Ticket {
     public void setId(long id) {
         this.id = id;
     }
-
-
 
 
     public Date getDepartureDate() {

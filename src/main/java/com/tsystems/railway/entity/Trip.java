@@ -34,7 +34,10 @@ public class Trip {
     private Set<Schedule> schedules;
 
     @OneToMany(mappedBy = "trip")
-    private List<Seat> seats;
+    private Set<Seat> seats;
+
+    @OneToMany(mappedBy = "trip")
+    private Set<Ticket>tickets;
 
     public Trip(int id,Route route, Date departure_date, Train train) {
         this.id = id;
