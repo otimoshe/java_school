@@ -25,8 +25,7 @@ public class PathController {
     @Autowired
     StationService stationService;
 
-    @Autowired
-    StationMapper stationMapper;
+
 
     @RequestMapping(value = "paths",method = RequestMethod.GET)
     public String listPaths(Model model){
@@ -45,8 +44,8 @@ public class PathController {
                           @ModelAttribute("nextStationId") Integer nextStationId){
 
 
-        path.setStation( stationMapper.entityToDto(stationService.getStationById(stationId)));
-        path.setNextStation( stationMapper.entityToDto(stationService.getStationById(nextStationId)));
+        path.setStation(stationService.getStationById(stationId));
+        path.setNextStation( stationService.getStationById(nextStationId));
         pathService.addPath(path);
 
         return "redirect:/paths";

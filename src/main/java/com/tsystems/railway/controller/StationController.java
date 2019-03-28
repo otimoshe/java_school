@@ -1,6 +1,7 @@
 package com.tsystems.railway.controller;
 
 
+import com.tsystems.railway.DTO.StationDTO;
 import com.tsystems.railway.entity.Station;
 import com.tsystems.railway.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,13 @@ public class StationController {
 
     @RequestMapping(value = "stations",method = RequestMethod.GET)
     public String listStations(Model model){
-        model.addAttribute("station",new Station());
+        model.addAttribute("station",new StationDTO());
         model.addAttribute("listStations",this.stationService.listStations());
         return "stations";
     }
 
     @RequestMapping(value = "/stations", method = RequestMethod.POST)
-    public String addStation(@ModelAttribute("station") Station station){
+    public String addStation(@ModelAttribute("station") StationDTO station){
         if (station.getId() == 0){
 
             stationService.addStation(station);

@@ -1,7 +1,9 @@
 package com.tsystems.railway.service.impl;
 
 import com.tsystems.railway.DAO.StationDao;
+import com.tsystems.railway.DTO.StationDTO;
 import com.tsystems.railway.entity.Station;
+import com.tsystems.railway.mappers.StationMapper;
 import com.tsystems.railway.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,12 @@ public class StationServiceImpl implements StationService {
     @Autowired
     private StationDao stationDao;
 
+    @Autowired
+    private StationMapper stationMapper;
+
     @Override
-    public void addStation(Station station){
-        this.stationDao.addStation(station);
+    public void addStation(StationDTO station){
+        this.stationDao.addStation(stationMapper.dtoToEntity(station));
     }
 
     @Override
@@ -25,18 +30,18 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public void updateStation(Station station) {
-        this.stationDao.updateStation(station);
+    public void updateStation(StationDTO station) {
+        this.stationDao.updateStation(stationMapper.dtoToEntity(station));
     }
 
     @Override
-    public Station getStationById(int id) {
-       return this.stationDao.getStationById(id);
+    public StationDTO getStationById(int id) {
+       return this.stationMapper.entityToDto(stationDao.getStationById(id));
     }
 
     @Override
-    public List<Station> listStations() {
-        return this.stationDao.listStations();
+    public List<StationDTO> listStations() {
+        return this.stationMapper.listEntityToDtoList(stationDao.listStations());
     }
 
 

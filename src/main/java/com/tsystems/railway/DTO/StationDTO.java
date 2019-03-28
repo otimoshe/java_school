@@ -12,6 +12,9 @@ public class StationDTO {
         this.name = name;
     }
 
+    public StationDTO() {
+    }
+
     public int getId() {
         return id;
     }

@@ -1,18 +1,19 @@
 package com.tsystems.railway.service;
 
+import com.tsystems.railway.DTO.StationDTO;
 import com.tsystems.railway.entity.Station;
 
 import java.util.List;
 
 public interface StationService {
 
-    void addStation(Station station);
+    void addStation(StationDTO station);
 
     void deleteStation(int id);
 
-    void updateStation(Station station);
+    void updateStation(StationDTO station);
 
-    Station getStationById(int id);
+    StationDTO getStationById(int id);
 
-    List<Station> listStations();
+    List<StationDTO> listStations();
 }
