@@ -38,7 +38,7 @@ public class StationController {
     }
 
     @RequestMapping("/removeStation/{id}")
-    public String removeBook(@PathVariable("id") int id){
+    public String removeStation(@PathVariable("id") int id){
         this.stationService.deleteStation(id);
 
         return "redirect:/stations";

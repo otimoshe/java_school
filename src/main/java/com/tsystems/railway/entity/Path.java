@@ -18,11 +18,11 @@ public class Path {
 
 
     @ManyToOne
-    @JoinColumn( name = "station_id" ,insertable=false, updatable=false)
+    @JoinColumn( name = "station_id" )
     private Station station;
 
     @ManyToOne(targetEntity = Station.class)
-    @JoinColumn(name = "next_station_id",insertable=false, updatable=false)
+    @JoinColumn(name = "next_station_id")
     private Station nextStation;
 
     @Column(name = "distance")
@@ -88,15 +88,7 @@ public class Path {
     }
 
 
-    public Station getAnotherStation(Station station){
-        if (this.station.equals(station)){
-            return this.nextStation;
-        }
-        if (this.nextStation.equals(station)){
-            return station;
-        }
-        return null;
-    }
+
 
 
 

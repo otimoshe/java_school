@@ -56,7 +56,7 @@
 </head>
 <body>
 
-<a href="/">Back to main menu</a>
+<a href="/admin">Back to admin page</a>
 
 <br/>
 <br/>

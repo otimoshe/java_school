@@ -19,6 +19,9 @@ public class PathDTO {
         this.distance = distance;
     }
 
+    public PathDTO() {
+    }
+
     public void setId(int id) {
         this.id = id;
     }

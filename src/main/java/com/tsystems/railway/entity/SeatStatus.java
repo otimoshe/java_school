@@ -28,7 +28,8 @@ public class SeatStatus {
         this.available = available;
     }
 
-
+    public SeatStatus() {
+    }
 
     public Seat getSeat() {
         return seat;

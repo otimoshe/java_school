@@ -57,7 +57,7 @@
 </head>
 <body>
 <h1>Train Details</h1>
-
+<a href="/admin">Back to admin page</a>
 <table class="tg">
     <tr>
         <th width="80">ID</th>

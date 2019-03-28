@@ -51,6 +51,7 @@ public class Route {
     }
 
     public Route() {
+
     }
 
     public Route(int id, String name, BigDecimal price, Station firstStation, Set<Path> paths) {

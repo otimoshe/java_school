@@ -1,7 +1,9 @@
 package com.tsystems.railway.service.impl;
 
 import com.tsystems.railway.DAO.PathDao;
+import com.tsystems.railway.DTO.PathDTO;
 import com.tsystems.railway.entity.Path;
+import com.tsystems.railway.mappers.PathMapper;
 import com.tsystems.railway.service.PathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,18 +17,21 @@ public class PathServiceImpl implements PathService {
     @Autowired
     private PathDao pathDao;
 
+    @Autowired
+    private PathMapper pathMapper;
+
     public void setPathDao(PathDao pathDao) {
         this.pathDao = pathDao;
     }
 
     @Override
-    public List<Path> getPathList() {
-        return pathDao.listPaths();
+    public List<PathDTO> getPathList() {
+        return pathMapper.entityListTodtoList(pathDao.listPaths());
     }
 
     @Override
-    public void addPath(Path path) {
-        pathDao.addPath(path);
+    public void addPath(PathDTO path) {
+        pathDao.addPath(pathMapper.dtoToEntity(path));
     }
 
     @Override
@@ -40,7 +45,7 @@ public class PathServiceImpl implements PathService {
     }
 
     @Override
-    public void updatePath(Path path) {
-        pathDao.updatePath(path);
+    public void updatePath(PathDTO path) {
+        pathDao.updatePath(pathMapper.dtoToEntity(path));
     }
 }

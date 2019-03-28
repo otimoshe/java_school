@@ -8,9 +8,9 @@ public interface StationDao {
 
     public void addStation(Station station);
 
-    public Station getStationById(long id);
+    public Station getStationById(int id);
 
-    public void deleteStation(long id);
+    public void deleteStation(int id);
 
     public void updateStation(Station station);
 

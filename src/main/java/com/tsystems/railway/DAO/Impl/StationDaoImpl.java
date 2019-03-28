@@ -24,14 +24,14 @@ public class StationDaoImpl implements StationDao {
     }
 
     @Override
-    public Station getStationById(long id) {
+    public Station getStationById(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         Station station = (Station) session.load(Station.class,id);
         return station;
     }
 
     @Override
-    public void deleteStation(long id) {
+    public void deleteStation(int id) {
         Session session = sessionFactory.getCurrentSession();
         Station station = this.getStationById(id);
         if (station != null){

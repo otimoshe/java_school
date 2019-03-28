@@ -58,6 +58,7 @@
 <body>
 
 <h1>TrainModel List</h1>
+<a href="/admin">Back to admin page</a>
 
 <c:if test="${!empty listTrainModels}">
     <table class="tg">

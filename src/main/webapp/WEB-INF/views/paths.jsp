@@ -89,20 +89,20 @@
 
 <spring:url value="/paths" var="pathUrl"></spring:url>
 <form:form action="${pathUrl}" modelAttribute ="path" method="post">
-
-<p>Distance:<form:input path="distance" value = ""/> </p>
-
+    <spring:bind path="distance">
+    <p>Distance:<form:input type="number" path="distance" value = ""/> </p>
+    </spring:bind>
 <p>Stations:
-    <form:select path="station.id">
+    <select name = "stationId"   >
     <c:forEach items="${listStations}" var="station">
     <option value="${station.id}">${station.name}</option>
     </c:forEach>
-    </form:select>
-    <form:select path="nextStation.id">
+    </select>
+   <select name ="nextStationId">
     <c:forEach items="${listStations}" var="nextStation">
     <option value="${nextStation.id}">${nextStation.name}</option>
     </c:forEach>
-    </form:select>
+    </select>
 
 <p><input type="submit" value="Submit" /> </p>
     <sec:csrfInput/>

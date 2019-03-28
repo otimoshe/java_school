@@ -57,6 +57,8 @@
 </head>
 <body>
 
+<a href="/admin">Back to admin page</a>
+
 <c:if test="${!empty scheduleList}">
     <table class="tg">
         <tr>

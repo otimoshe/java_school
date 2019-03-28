@@ -9,7 +9,9 @@ import com.tsystems.railway.entity.Station;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -52,5 +54,23 @@ public class PathMapperImpl implements PathMapper {
         Station nextStation = stationMapper.dtoToEntity( pathDTO.getNextStation());
         double distance = pathDTO.getDistance();
         return new Path(id,station,nextStation,distance);
+    }
+
+    @Override
+    public List<Path> dtoListToEntityList(List<PathDTO> pathDTOS) {
+        List<Path> paths =  new ArrayList<>();
+        for(PathDTO dto: pathDTOS){
+            paths.add(this.dtoToEntity(dto));
+        }
+        return paths;
+    }
+
+    @Override
+    public List<PathDTO> entityListTodtoList(List<Path> paths) {
+        List<PathDTO> dtos =  new ArrayList<>();
+        for(Path path: paths){
+            dtos.add(this.entitytoDto(path));
+        }
+        return dtos;
     }
 }

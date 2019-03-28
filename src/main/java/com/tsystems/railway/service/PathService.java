@@ -1,18 +1,19 @@
 package com.tsystems.railway.service;
 
+import com.tsystems.railway.DTO.PathDTO;
 import com.tsystems.railway.entity.Path;
 
 import java.util.List;
 
 public interface PathService  {
 
-    public void addPath(Path path);
+    public void addPath(PathDTO path);
 
     public Path getPathById(int id);
 
     public void deletePath(int id);
 
-    public void updatePath(Path path);
+    public void updatePath(PathDTO path);
 
-    public List<Path>getPathList();
+    public List<PathDTO>getPathList();
 }

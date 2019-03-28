@@ -1,8 +1,11 @@
 package com.tsystems.railway.controller;
 
 
+import com.tsystems.railway.DTO.PathDTO;
 import com.tsystems.railway.entity.Path;
 
+import com.tsystems.railway.entity.Station;
+import com.tsystems.railway.mappers.StationMapper;
 import com.tsystems.railway.service.PathService;
 import com.tsystems.railway.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +25,29 @@ public class PathController {
     @Autowired
     StationService stationService;
 
+    @Autowired
+    StationMapper stationMapper;
 
     @RequestMapping(value = "paths",method = RequestMethod.GET)
     public String listPaths(Model model){
-        model.addAttribute("path",new Path());
+        model.addAttribute("path",new PathDTO());
         model.addAttribute("listPaths",this.pathService.getPathList());
         model.addAttribute("listStations",this.stationService.listStations());
+        model.addAttribute("stationId", new Integer(0));
+        model.addAttribute("nextStationId", new Integer(0));
 
         return "paths";
     }
 
     @RequestMapping(value = "/paths", method = RequestMethod.POST)
-    public String addPath(@ModelAttribute("path") Path path){
+    public String addPath(@ModelAttribute("path") PathDTO path,
+                          @ModelAttribute("stationId") Integer stationId,
+                          @ModelAttribute("nextStationId") Integer nextStationId){
 
-        if (path.getId() == 0){
 
-            pathService.addPath(path);
-        }else {
-            pathService.addPath(path);
-        }
+        path.setStation( stationMapper.entityToDto(stationService.getStationById(stationId)));
+        path.setNextStation( stationMapper.entityToDto(stationService.getStationById(nextStationId)));
+        pathService.addPath(path);
 
         return "redirect:/paths";
     }

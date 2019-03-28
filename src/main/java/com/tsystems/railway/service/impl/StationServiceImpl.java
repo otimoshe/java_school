@@ -20,7 +20,7 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public void deleteStation(long id) {
+    public void deleteStation(int id) {
         this.stationDao.deleteStation(id);
     }
 
@@ -30,8 +30,8 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public void getStationById(long id) {
-        this.stationDao.getStationById(id);
+    public Station getStationById(int id) {
+       return this.stationDao.getStationById(id);
     }
 
     @Override

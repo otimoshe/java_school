@@ -36,6 +36,8 @@ public class Ticket {
     @JoinColumn(name = "seat_id")
     Seat seat;
 
+    public Ticket() {
+    }
 
     public long getId() {
         return id;
