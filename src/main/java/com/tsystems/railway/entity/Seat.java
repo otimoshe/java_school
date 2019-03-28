@@ -21,18 +21,3 @@ public class Seat {
     private Set<SeatStatus> seatStatuses;
 }
 
-/*
-public class SeatStatus {
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
-
-    @Id
-    @Column(name = " station_id")
-    private Station station;
-
-    @Column(name = "available", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean available;
- */
