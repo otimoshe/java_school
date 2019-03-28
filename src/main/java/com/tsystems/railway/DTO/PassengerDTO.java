@@ -4,12 +4,12 @@ import java.sql.Date;
 
 public class PassengerDTO {
 
-    private long id;
+    private int id;
     private String name;
     private String lastName;
     private Date birthday;
 
-    public PassengerDTO(long id, String name, String lastName, Date birthday) {
+    public PassengerDTO(int id, String name, String lastName, Date birthday) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -20,11 +20,11 @@ public class PassengerDTO {
 
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

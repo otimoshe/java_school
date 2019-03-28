@@ -10,8 +10,9 @@ import java.util.Set;
 public class Passenger {
 
     @Id
+    @GeneratedValue
     @Column(name = "passenger_id")
-    private long id;
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -25,6 +26,16 @@ public class Passenger {
     @ManyToMany(mappedBy = "passengers")
     private Set<User> users;
 
+    public Passenger(int id, String name, String lastName, Date birhtDate) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.birhtDate = birhtDate;
+    }
+
+    public Passenger() {
+    }
+
     @Override
     public String toString() {
         return "Passenger{" +
@@ -35,11 +46,11 @@ public class Passenger {
                 '}';
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

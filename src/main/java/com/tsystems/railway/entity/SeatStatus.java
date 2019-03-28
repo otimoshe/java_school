@@ -22,7 +22,11 @@ public class SeatStatus {
     @Column(name = "available", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean available;
 
-
+    public SeatStatus(Seat seat, Station station, Boolean available) {
+        this.seat = seat;
+        this.station = station;
+        this.available = available;
+    }
 
 
 
