@@ -14,7 +14,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-    <title>Schedule page</title>
+    <title>Ticket page</title>
 
     <style type="text/css">
         .tg {
@@ -59,27 +59,29 @@
 
 <a href="/admin">Back to admin page</a>
 
-<c:if test="${!empty seatsList}">
+<c:if test="${!empty ticketList}">
     <table class="tg">
         <tr>
-            <th width="80">Number</th>
-            <th width="80">Available</th>
-            <th width="80"></th>
+            <th width="80">Passenger name</th>
+            <th width="80">Passenger lastname</th>
+            <th width="80">Passenger birthday</th>
+            <th width="80">Departure station</th>
+            <th width="80">Arrival station</th>
+            <th width="80">Seat number</th>
+            <th width="80">Price</th>
+
 
         </tr>
-        <c:set var = "available" value = "${true}"/>
-        <c:forEach items="${seatsList}" var="seat">
-            <tr>
-                <td>${seat.number}</td>
-                <div style="display: none">  ${available} = ${true} </div>
-                <c:forEach items="${seat.statuses}" var="status">
-                    <c:set var = "available" value = "${true}"/>
-                    <c:if test="${status == ${false}">
-                        <c:set var = "available" value = "${false}"/>
-                     </c:if>
-                </c:forEach>
-                <td>${available}</td>
 
+        <c:forEach items="${ticketList}" var="ticket">
+            <tr>
+                <td>${ticket.passenger.name}</td>
+                <td>${ticket.passenger.lastName}</td>
+                <td>${ticket.passenger.birthday}</td>
+                <td>${ticket.departureStation.name}</td>
+                <td>${ticket.arrivalStation.name}</td>
+                <td>${ticket.seat.number}</td>
+                <td>${ticket.price}</td>
             </tr>
         </c:forEach>
     </table>

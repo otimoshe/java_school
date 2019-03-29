@@ -30,10 +30,10 @@ public class Trip {
     private Train train;
 
     @OneToMany(mappedBy = "trip")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<Schedule> schedules;
 
-    @OneToMany(mappedBy = "trip", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL)
     private Set<Seat> seats;
 
     @OneToMany(mappedBy = "trip")

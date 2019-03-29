@@ -38,6 +38,10 @@ public class TripController {
     @Autowired
     private SeatService seatService;
 
+    @Autowired
+    private TicketService ticketService;
+
+
     @RequestMapping(value = "trips", method = RequestMethod.GET)
     public String listTrips(Model model) {
         model.addAttribute("trip", new TripDTO());
@@ -107,6 +111,11 @@ public class TripController {
         return "seats";
     }
 
-
+    @Transactional
+    @RequestMapping(value = "tripTickets/{id}", method = RequestMethod.GET)
+    public String tickets(@PathVariable("id") int tripId, Model model) {
+        model.addAttribute("ticketList", this.ticketService.getTicketsForTrip(tripId));
+        return "tickets";
+    }
 }
 
