@@ -1,10 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
   User: otimoshe
-  Date: 10.03.2019
-  Time: 21:33
+  Date: 27.03.2019
+  Time: 12:10
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -13,7 +14,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-    <title>Trips Page</title>
+    <title>Schedule page</title>
 
     <style type="text/css">
         .tg {
@@ -58,65 +59,30 @@
 
 <a href="/admin">Back to admin page</a>
 
-<br/>
-<br/>
-
-<h1>Trip List</h1>
-
-<c:if test="${!empty listTrips}">
+<c:if test="${!empty seatsList}">
     <table class="tg">
         <tr>
-            <th width="80">ID</th>
-            <th width="80">Route name</th>
-            <th width="80">Departure Date</th>
-            <th width="60">Train id</th>
-            <th width="60">Schedule</th>
-            <th width="60">Seats</th>
-            <th width="60">Delete</th>
+            <th width="80">Number</th>
+            <th width="80">Available</th>
+            <th width="80"></th>
+
         </tr>
-        <c:forEach items="${listTrips}" var="trip">
+        <c:set var = "available" value = "${true}"/>
+        <c:forEach items="${seatsList}" var="seat">
             <tr>
-                <td>${trip.id}</td>
-                <td>${trip.route.name}</td>
-                <td>${trip.departureDate}</td>
-                <td>${trip.train.id}</td>
-                <td> <a href="/tripSchedule/${trip.id}" target="_blank"> Schedule</a></td>
-                <td> <a href="/tripSeats/${trip.id}" target="_blank"> Seats</a></td>
-                <td><a href="<c:url value='/removeTrip/${trip.id}'/>">Delete</a></td>
+                <td>${seat.number}</td>
+                <div style="display: none">  ${available} = ${true} </div>
+                <c:forEach items="${seat.statuses}" var="status">
+                    <c:set var = "available" value = "${true}"/>
+                    <c:if test="${status} == ${false}">
+                            ${available} = ${false}
+                     </c:if>
+                </c:forEach>
+                <td>${available}</td>
+
             </tr>
         </c:forEach>
     </table>
 </c:if>
-
-
-<h1>Add a Trip</h1>
-
-<form:form action="/trips"  modelAttribute ="trip" method="post" >
-
-    <p>Route:
-        <select name = "routeId"   >
-        <c:forEach items="${routeList}" var="route">
-        <option value="${route.id}">${route.name}</option>
-        </c:forEach>
-        </select></p>
-    <p>Date
-        <spring:bind path="departureDate">
-        <form:input type="date"  path="departureDate"/></p>
-        </spring:bind>
-    <p>Train
-        <select name = "trainId"   >
-            <c:forEach items="${trainList}" var="train">
-                <option value="${train.id}">${train.id}</option>
-            </c:forEach>
-        </select></p>
-    <p><input type="submit" value="Submit" /> </p>
-    <sec:csrfInput/>
-</form:form>
-
-
-
-
-
-
 </body>
 </html>

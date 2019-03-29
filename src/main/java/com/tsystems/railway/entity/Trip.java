@@ -33,7 +33,7 @@ public class Trip {
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Set<Schedule> schedules;
 
-    @OneToMany(mappedBy = "trip")
+    @OneToMany(mappedBy = "trip", cascade = CascadeType.REMOVE)
     private Set<Seat> seats;
 
     @OneToMany(mappedBy = "trip")

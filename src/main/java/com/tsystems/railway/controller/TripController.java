@@ -1,10 +1,7 @@
 package com.tsystems.railway.controller;
 
 import com.tsystems.railway.DTO.*;
-import com.tsystems.railway.service.RouteService;
-import com.tsystems.railway.service.ScheduleService;
-import com.tsystems.railway.service.TrainService;
-import com.tsystems.railway.service.TripService;
+import com.tsystems.railway.service.*;
 import org.hibernate.Session;
 import org.hibernate.SessionBuilder;
 import org.hibernate.SessionFactory;
@@ -19,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Controller
@@ -36,6 +35,9 @@ public class TripController {
     @Autowired
     private ScheduleService scheduleService;
 
+    @Autowired
+    private SeatService seatService;
+
     @RequestMapping(value = "trips", method = RequestMethod.GET)
     public String listTrips(Model model) {
         model.addAttribute("trip", new TripDTO());
@@ -45,7 +47,6 @@ public class TripController {
         model.addAttribute("routeList", this.routeService.getDtoRouteList());
         model.addAttribute("trainList", this.trainService.listTrainDTOs());
 
-
         return "trips";
     }
 
@@ -54,7 +55,6 @@ public class TripController {
     public String addTrip(@ModelAttribute("trip") TripDTO tripDTO,
                           @ModelAttribute("routeId") Integer routeID,
                           @ModelAttribute("trainId") Integer trainId) {
-
 
         tripDTO.setRoute(routeService.getRouteDTOById(routeID));
         tripDTO.setTrain(trainService.getTrainDtoById(trainId));
@@ -78,16 +78,33 @@ public class TripController {
             TripDTO trip = tripService.getTripById(tripId);
             RouteDTO route = trip.getRoute();
             List<StationDTO> stationList = route.getStationList();
-            //  List<ScheduleDTO> scheduleList = new ArrayList<>();
+
             for (StationDTO station : stationList) {
                 scheduleService.addSchedule(new ScheduleDTO(trip, trip.getDepartureDate(), trip.getDepartureDate(), station));
             }
-
         }
-
         model.addAttribute("scheduleList", this.scheduleService.scheduleListForTrip(tripId));
 
         return "schedule";
+    }
+
+    @Transactional
+    @RequestMapping(value = "tripSeats/{id}", method = RequestMethod.GET)
+    public String seats(@PathVariable("id") int tripId, Model model) {
+        if (this.seatService.getAllSeatsForTrip(tripId).size() == 0) {
+            TripDTO tripDTO = tripService.getTripById(tripId);
+            for ( int i = 1;i <=tripDTO.getTrain().getNumberOfSeats();i++){
+                LinkedHashMap<StationDTO,Boolean> statuses = new LinkedHashMap<>();
+                for (StationDTO stationDTO: tripDTO.getRoute().getStationList()){
+                    statuses.put(stationDTO,true);
+                }
+
+               seatService.addSeat( new SeatDTO(tripDTO,i,statuses));
+            }
+        }
+        model.addAttribute("seatsList", this.seatService.getAllSeatsForTrip(tripId));
+
+        return "seats";
     }
 
 

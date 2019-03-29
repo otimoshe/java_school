@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public class SeatStatusDaoImpl implements SeatStatusDao {
@@ -14,9 +15,10 @@ public class SeatStatusDaoImpl implements SeatStatusDao {
     SessionFactory sessionFactory;
 
     @Override
+
     public void addSeatStatus(SeatStatus seatStatus) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(seatStatus);
+        session.saveOrUpdate(seatStatus);
     }
 
     @Override

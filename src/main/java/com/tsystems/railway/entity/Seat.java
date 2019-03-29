@@ -17,11 +17,16 @@ public class Seat {
     @JoinColumn(name = "trip_id")
     private Trip trip;
 
-    @OneToMany(mappedBy = "seat",fetch = FetchType.EAGER)
+    @Column(name = "number")
+    private  int number;
+
+    @OneToMany(mappedBy = "seat",cascade = CascadeType.ALL)
     private Set<SeatStatus> seatStatuses;
 
-    public Seat(Trip trip, Set<SeatStatus> seatStatuses) {
+    public Seat( int id, Trip trip, int number, Set<SeatStatus> seatStatuses) {
+        this.id = id;
         this.trip = trip;
+        this.number = number;
         this.seatStatuses = seatStatuses;
     }
 
@@ -32,6 +37,15 @@ public class Seat {
         this.id = id;
         this.trip = trip;
         this.seatStatuses = seatStatuses;
+    }
+
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public int getId() {

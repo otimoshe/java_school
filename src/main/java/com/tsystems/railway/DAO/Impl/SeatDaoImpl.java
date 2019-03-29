@@ -6,8 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Repository
@@ -17,9 +18,10 @@ public class SeatDaoImpl implements SeatDao {
     SessionFactory sessionFactory;
 
     @Override
+
     public void addSeat(Seat seat) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(seat);
+        session.saveOrUpdate(seat);
     }
 
     @Override

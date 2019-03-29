@@ -3,6 +3,7 @@ package com.tsystems.railway.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "seat_status")
@@ -22,13 +23,13 @@ public class SeatStatus {
     @Column(name = "available", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean available;
 
+    public SeatStatus() {
+    }
+
     public SeatStatus(Seat seat, Station station, Boolean available) {
         this.seat = seat;
         this.station = station;
         this.available = available;
-    }
-
-    public SeatStatus() {
     }
 
     public Seat getSeat() {
@@ -55,7 +56,7 @@ public class SeatStatus {
         this.available = available;
     }
 
-    public class SeatStatusKey implements Serializable {
+    public  static class SeatStatusKey implements Serializable {
 
         static final long serialVersionUID = 1L;
 
@@ -78,6 +79,27 @@ public class SeatStatus {
             this.station = station;
         }
 
+        public SeatStatusKey() {
 
+        }
+
+        public SeatStatusKey(Seat seat, Station station) {
+            this.seat = seat;
+            this.station = station;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            SeatStatusKey that = (SeatStatusKey) o;
+            return Objects.equals(seat, that.seat) &&
+                    Objects.equals(station, that.station);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(seat, station);
+        }
     }
 }
