@@ -20,6 +20,13 @@ public class Station {
     @OneToMany(mappedBy = "station")
     private Set<SeatStatus> seatStatuses;
 
+    @OneToMany(mappedBy = "departureStation")
+    private Set<Ticket> departureTicket;
+
+    @OneToMany(mappedBy = "arrivalStation")
+    private Set<Ticket> arrivalTicket;
+
+
 
 
     public Station(String name) {

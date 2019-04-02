@@ -37,6 +37,5 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public List<TicketDTO> getTicketsForTrip(int tripId) {
        return ticketMapper.listEntityToDtoList(ticketDao.getTicketsForTrip(tripId));
-
     }
 }

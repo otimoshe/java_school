@@ -16,4 +16,6 @@ public interface StationService {
     StationDTO getStationById(int id);
 
     List<StationDTO> listStations();
+
+    StationDTO getStationByName(String name);
 }

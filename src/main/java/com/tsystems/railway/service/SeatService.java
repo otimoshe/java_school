@@ -1,6 +1,7 @@
 package com.tsystems.railway.service;
 
 import com.tsystems.railway.DTO.SeatDTO;
+import com.tsystems.railway.DTO.StationDTO;
 
 
 import java.util.List;
@@ -15,4 +16,7 @@ public interface SeatService {
     SeatDTO getSeatById(int id);
 
     List<SeatDTO> getAllSeatsForTrip(int tripId);
+
+    List<SeatDTO> getAvailableSeatForTrip(int tripId, StationDTO arrivalStation, StationDTO departureStation);
+
 }

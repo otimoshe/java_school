@@ -94,6 +94,15 @@ public class Route {
         return stationList;
     }
 
+    public List<Station> getSubRoute(Station start,Station end){
+        List<Station> stationList = this.getStationList();
+        int startIndex = stationList.indexOf(start);
+        int endIndec = stationList.indexOf(end);
+        List<Station> subRoute = stationList.subList(startIndex,endIndec);
+        subRoute.add(end);
+        return subRoute;
+    }
+
     public int getId() {
         return id;
     }

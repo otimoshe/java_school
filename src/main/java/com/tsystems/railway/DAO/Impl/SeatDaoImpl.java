@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 public class SeatDaoImpl implements SeatDao {
 
     @Autowired
@@ -21,6 +22,7 @@ public class SeatDaoImpl implements SeatDao {
 
     public void addSeat(Seat seat) {
         Session session = sessionFactory.getCurrentSession();
+        session.clear();
         session.saveOrUpdate(seat);
     }
 
@@ -40,6 +42,7 @@ public class SeatDaoImpl implements SeatDao {
     }
 
     @Override
+
     public List<Seat> listSeatsForTrip(int tripId) {
         Session session = sessionFactory.getCurrentSession();
         List<Seat> seats = session.createQuery("from Seat where trip_id=" + tripId).list();

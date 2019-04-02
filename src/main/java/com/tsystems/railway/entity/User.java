@@ -75,5 +75,11 @@ public class User {
         this.confirmPassword = confirmPassword;
     }
 
+    public Set<Passenger> getPassengers() {
+        return passengers;
+    }
 
+    public void setPassengers(Set<Passenger> passengers) {
+        this.passengers = passengers;
+    }
 }

@@ -6,13 +6,15 @@ import java.util.List;
 
 public interface StationDao {
 
-    public void addStation(Station station);
+    void addStation(Station station);
 
-    public Station getStationById(int id);
+    Station getStationById(int id);
 
-    public void deleteStation(int id);
+    void deleteStation(int id);
 
-    public void updateStation(Station station);
+    void updateStation(Station station);
 
-    public List<Station> listStations();
+    List<Station> listStations();
+
+    Station getStationByName(String name);
 }

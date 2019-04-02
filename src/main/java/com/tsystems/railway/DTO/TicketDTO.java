@@ -26,6 +26,17 @@ public class TicketDTO {
         this.price = price;
     }
 
+    public TicketDTO(PassengerDTO passenger, TripDTO trip, StationDTO departureStation, StationDTO arrivalStation, Date departureDate, Date arrivalDate, SeatDTO seat, BigDecimal price) {
+        this.passenger = passenger;
+        this.trip = trip;
+        this.departureStation = departureStation;
+        this.arrivalStation = arrivalStation;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.seat = seat;
+        this.price = price;
+    }
+
     public TicketDTO() {
     }
 

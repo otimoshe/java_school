@@ -22,11 +22,7 @@ public class TripServiceImpl implements TripService {
     @Autowired
     private TripMapper tripMapper;
 
-    @Autowired
-    private RouteMapper routeMapper;
 
-    @Autowired
-    private TrainMapper trainMapper;
 
     @Override
     public void addTrip(TripDTO trip) {

@@ -44,5 +44,8 @@ public class StationServiceImpl implements StationService {
         return this.stationMapper.listEntityToDtoList(stationDao.listStations());
     }
 
-
+    @Override
+    public StationDTO getStationByName(String name) {
+         return this.stationMapper.entityToDto(stationDao.getStationByName(name));
+    }
 }

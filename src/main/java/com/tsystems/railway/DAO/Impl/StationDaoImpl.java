@@ -52,4 +52,11 @@ public class StationDaoImpl implements StationDao {
         List<Station> stationList = session.createQuery("from Station").list();
         return stationList;
     }
+
+    @Override
+    public Station getStationByName(String name) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Station station = (Station) session.load(Station.class,name);
+        return station;
+    }
 }

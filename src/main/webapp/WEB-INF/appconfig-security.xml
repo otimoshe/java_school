@@ -12,6 +12,10 @@
     <intercept-url pattern="/welcome" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
     <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
     <intercept-url pattern="/trains" access="hasRole('ROLE_ADMIN')"/>
+    <intercept-url pattern="/stations" access="hasRole('ROLE_ADMIN')"/>
+    <intercept-url pattern="/paths" access="hasRole('ROLE_ADMIN')"/>
+    <intercept-url pattern="/routes" access="hasRole('ROLE_ADMIN')"/>
+    <intercept-url pattern="/trainModels" access="hasRole('ROLE_ADMIN')"/>
     <intercept-url pattern="/trains/add" access="hasRole('ROLE_ADMIN')"/>
     <intercept-url pattern="/trips" access="hasRole('ROLE_ADMIN')"/>
 

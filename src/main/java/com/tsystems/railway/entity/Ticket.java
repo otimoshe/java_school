@@ -1,5 +1,7 @@
 package com.tsystems.railway.entity;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -35,11 +37,14 @@ public class Ticket {
     private Date arrivalDate;
 
     @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "seat_id")
     Seat seat;
 
     @Column(name = "price")
     private BigDecimal price;
+
+
 
 
     public Ticket() {

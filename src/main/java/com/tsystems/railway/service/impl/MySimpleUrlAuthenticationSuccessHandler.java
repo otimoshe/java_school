@@ -49,7 +49,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
         }
 
         if (isUser) {
-            return "/welcome";
+            return "/user";
         } else if (isAdmin) {
             return "/admin";
         } else {
