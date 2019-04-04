@@ -1,81 +1,147 @@
 package com.tsystems.railway.controller;
 
-import com.tsystems.railway.service.SecurityService;
-import com.tsystems.railway.service.UserService;
+import com.tsystems.railway.DTO.*;
 import com.tsystems.railway.entity.User;
-import com.tsystems.railway.validator.UserValidator;
+import com.tsystems.railway.mappers.PassengerMapper;
+import com.tsystems.railway.mappers.RouteMapper;
+import com.tsystems.railway.mappers.StationMapper;
+import com.tsystems.railway.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
 
 
 @Controller
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    TicketService ticketService;
 
     @Autowired
-    private SecurityService securityService;
+    TripService tripService;
 
     @Autowired
-    private UserValidator userValidator;
+    SeatService seatService;
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(Model model) {
-        model.addAttribute("userForm", new User());
+    @Autowired
+    StationService stationService;
 
-        return "registration";
+    @Autowired
+    PassengerMapper passengerMapper;
+    
+    @Autowired
+    RouteMapper routeMapper;
+    
+    @Autowired
+    StationMapper stationMapper;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    ScheduleService scheduleService;
+
+
+    @RequestMapping(value = "/tripList", method = RequestMethod.GET)
+    public String listTrips(Model model) {
+     //   model.addAttribute("ticket" , new TicketDTO());
+        model.addAttribute("listTrips", this.tripService.listTripDTOs());
+
+        return "tripList";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-        userValidator.validate(userForm, bindingResult);
+    @RequestMapping(value = ("buyTicket/{id}"), method = RequestMethod.GET)
+    public String ticket(@PathVariable("id") int tripId, Model model) {
+        model.addAttribute("trip", this.tripService.getTripById(tripId));
+        model.addAttribute("seatsList", seatService.getAvailableSeatForTrip(tripId, tripService.getTripById(tripId).getRoute().getFirst_station(), tripService.getTripById(tripId).getRoute().getStationList().get(tripService.getTripById(tripId).getRoute().getStationList().size() - 1)));
+        return "buyTicket";
+    }
 
-        if (bindingResult.hasErrors()) {
-            return "registration";
+    //@Transactional
+    @RequestMapping(value = ("/buyForTrip/{id}"), method = RequestMethod.POST)
+    public String buyTicket( Model model,
+                             @PathVariable("id") int tripId,
+                             @ModelAttribute("seatId") Integer seatId) {
+
+
+        String username =  SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username);
+        PassengerDTO passenger = passengerMapper.entityToDto(user.getPassengers().stream().findFirst().get());
+        TripDTO trip = tripService.getTripById(tripId);
+        StationDTO departureStation = trip.getRoute().getFirst_station();
+        StationDTO arrivalStation = trip.getRoute().getStationList().get(trip.getRoute().getStationList().size() - 1);
+        Date departureDate = trip.getDepartureDate();
+        Date arrivalDate = trip.getDepartureDate();
+        BigDecimal price = trip.getRoute().getPrice();
+        SeatDTO seat =  seatService.getSeatById(seatId);
+
+        TicketDTO ticket = new TicketDTO();
+        ticket.setPassenger(passenger);
+        ticket.setTrip(trip);
+        ticket.setDepartureStation(departureStation);
+        ticket.setArrivalStation(arrivalStation);
+        ticket.setArrivalDate(arrivalDate);
+        ticket.setDepartureDate(departureDate);
+        ticket.setPrice(price);
+
+        //change seatStatus for our seat
+
+        //TODO 
+        LinkedHashMap<StationDTO,Boolean> statuses = seat.getStatuses();
+        List<StationDTO> stationList = stationMapper.listEntityToDtoList(routeMapper.dtoToEntity(trip.getRoute()).getSubRoute(stationMapper.dtoToEntity(departureStation),stationMapper.dtoToEntity(arrivalStation)));
+        for(StationDTO station:stationList){
+            statuses.replace(station,false);
         }
 
-        userService.addUser(userForm);
+      //  seatService.updateSeat(seat);
+        ticket.setSeat( seat);
+       // seat.setStatuses(statuses);
 
-        securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
-
-        return "redirect:/welcome";
+        ticketService.addTicket(ticket);
+        return "tripList";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model, String error, String logout) {
-        if (error != null) {
-            model.addAttribute("error", "Username or password is incorrect.");
+    @RequestMapping(value = "/userSchedule",method = RequestMethod.GET)
+    public String userSchedule(Model model){
+        model.addAttribute("stationList",stationService.listStations());
+        return "userSchedule";
+    }
+
+    @RequestMapping(value = "/userSchedule", method = RequestMethod.POST,produces = "application/json")
+    @ResponseBody
+    public List<ScheduleDTO> ajaxTest(@RequestBody StationScheduleDTO stationScheduleDTO,
+                         Model model ) {
+        int stationId = stationScheduleDTO.getStationId();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date parsed = null;
+        try {
+            parsed = format.parse(stationScheduleDTO.getDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+        java.sql.Date date = new java.sql.Date(parsed.getTime());
 
-        if (logout != null) {
-            model.addAttribute("message", "Logged out successfully.");
-        }
-
-        return "login";
+      // this.tripSchedule(model,stationScheduleDTO.getStationId(),sql);
+        // return "redirect:/tripSchedule";
+        return scheduleService.getScheduleListForStation(stationId,date);
     }
 
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcome(Model model) {
-        return "welcome";
+    @RequestMapping(value = "/tripSchedule",method = RequestMethod.GET)
+    public String tripSchedule(Model model,int stationId,Date date){
+        model.addAttribute("scheduleList",scheduleService.getScheduleListForStation(stationId,date));
+        return "userSchedule";
     }
-
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String admin(Model model) {
-        return "admin";
-    }
-
-    @RequestMapping(value = { "/user"}, method = RequestMethod.GET)
-    public String user (Model model) {
-        return "user";
-    }
-
 
 
 }

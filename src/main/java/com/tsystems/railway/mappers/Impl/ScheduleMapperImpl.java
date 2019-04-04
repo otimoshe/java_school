@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +33,10 @@ public class ScheduleMapperImpl implements ScheduleMapper {
         Station station = stationMapper.dtoToEntity(scheduleDTO.getStation());
         Date arrivalDate = scheduleDTO.getArrivalDate();
         Date departureDate = scheduleDTO.getDepartureDate();
+        Time departureTime = scheduleDTO.getDepartureTime();
+        Time arrivalTime = scheduleDTO.getArrivalTime();
 
-        return new Schedule(id, trip, arrivalDate, departureDate, station);
+        return new Schedule(id, trip, arrivalDate, departureDate, station,departureTime,arrivalTime);
     }
 
     @Override
@@ -41,11 +44,12 @@ public class ScheduleMapperImpl implements ScheduleMapper {
         long id = schedule.getId();
         TripDTO trip = tripMapper.entityToDto(schedule.getTrip());
         StationDTO station = stationMapper.entityToDto(schedule.getStation());
-
         Date arrivalDate = schedule.getArrivalDate();
         Date departureDate = schedule.getDepartureDate();
+        Time departureTime = schedule.getDepartureTime();
+        Time arrivalTime = schedule.getArrivalTime();
 
-        return new ScheduleDTO(id, trip, arrivalDate, departureDate, station);
+        return new ScheduleDTO(id, trip, arrivalDate, departureDate, station,departureTime,arrivalTime);
     }
 
     @Override

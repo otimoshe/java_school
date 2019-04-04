@@ -84,7 +84,7 @@ public class TripController {
             List<StationDTO> stationList = route.getStationList();
 
             for (StationDTO station : stationList) {
-                scheduleService.addSchedule(new ScheduleDTO(trip, trip.getDepartureDate(), trip.getDepartureDate(), station));
+               // scheduleService.addSchedule(new ScheduleDTO(trip, trip.getDepartureDate(), trip.getDepartureDate(), station));
             }
         }
         model.addAttribute("scheduleList", this.scheduleService.scheduleListForTrip(tripId));

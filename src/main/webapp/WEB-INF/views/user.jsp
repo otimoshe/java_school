@@ -27,7 +27,7 @@
         </h2>
     </c:if>
     <p> <a href ="/tripList"> Buy ticket</a></p>
-    <p> <a href ="/schedules"> See Schedule</a></p>
+    <p> <a href ="/userSchedule"> See Schedule</a></p>
 </div>
 
 

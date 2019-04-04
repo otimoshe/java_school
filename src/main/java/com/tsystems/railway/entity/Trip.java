@@ -6,6 +6,7 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -44,6 +45,7 @@ public class Trip {
         this.route = route;
         this.departure_date = departure_date;
         this.train = train;
+        HashSet<Seat> seats = new HashSet<>();
     }
 
     public Trip(Route route, Date departure_date, Train train) {
