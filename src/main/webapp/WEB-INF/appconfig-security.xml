@@ -18,6 +18,7 @@
     <intercept-url pattern="/trainModels" access="hasRole('ROLE_ADMIN')"/>
     <intercept-url pattern="/trains/add" access="hasRole('ROLE_ADMIN')"/>
     <intercept-url pattern="/trips" access="hasRole('ROLE_ADMIN')"/>
+    <intercept-url pattern="/templates" access="hasRole('ROLE_ADMIN')"/>
 
     <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"
                 username-parameter="username" password-parameter="password"

@@ -26,7 +26,8 @@ public class Station {
     @OneToMany(mappedBy = "arrivalStation")
     private Set<Ticket> arrivalTicket;
 
-
+    @OneToMany(mappedBy = "station")
+    private Set<TemplateStation> templateStations;
 
 
     public Station(String name) {

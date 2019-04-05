@@ -35,6 +35,9 @@ public class Route {
     @OneToMany(mappedBy = "route")
     private Set<Trip> trips ;
 
+    @OneToMany(mappedBy = "route")
+    private Set<TimeTemplate> templates;
+
     public Route(String name, BigDecimal price, Station firstStation, Set<Path> paths) {
         this.name = name;
         this.price = price;
