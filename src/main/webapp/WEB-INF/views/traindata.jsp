@@ -57,17 +57,31 @@
 </head>
 <body>
 <h1>Train Details</h1>
-<a href="/admin">Back to admin page</a>
+
 <table class="tg">
     <tr>
         <th width="80">ID</th>
         <th width="120">Seats</th>
+        <th width="120">Model</th>
     </tr>
     <tr>
-        <td>${train.id}</td>
-        <td>${train.numberOfSeats}</td>
+    <form:form action="/train"  modelAttribute ="train" method="post">
+        <td><form:input type="text" path="id" value="${train.id}" readonly="true"/></td>
+    <td>NumberOfSeats:<form:input type ="number" path="numberOfSeats" value = "${train.numberOfSeats}"/></td>
+    <td>Model:
+        <form:select path="trainModel.id" selected ="${train.trainModel.id}">${train.trainModel.name}
+        <c:forEach items="${listTrainModels}" var="model">
+        <option value="${model.id}">${model.name}</option>
+        </c:forEach>
+        </form:select></td>
+    <p><input type="submit" value="Submit" /> </p>
+        <sec:csrfInput/>
+    </form:form>
+</body>
+</tr>
+<a href="/admin">Back to admin page</a>
 
-    </tr>
+
 </table>
 </body>
 </html>

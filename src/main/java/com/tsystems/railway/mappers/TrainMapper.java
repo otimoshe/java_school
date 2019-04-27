@@ -2,7 +2,6 @@ package com.tsystems.railway.mappers;
 
 import com.tsystems.railway.DTO.TrainDTO;
 import com.tsystems.railway.entity.Train;
-
 import java.util.List;
 
 public interface TrainMapper {

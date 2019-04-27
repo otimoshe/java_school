@@ -26,11 +26,10 @@ public class TrainControler {
         model.addAttribute("train",new Train());
         model.addAttribute("listTrains",this.trainService.listTrains());
         model.addAttribute("listTrainModels",this.trainModelService.listTrainModels());
-
         return "trains";
     }
 
-    @RequestMapping(value = "/trains", method = RequestMethod.POST)
+    @RequestMapping(value = "/train", method = RequestMethod.POST)
     public String addTrain(@ModelAttribute("train") Train train){
         if (train.getId() == 0){
             trainService.addTrain(train);
@@ -43,27 +42,25 @@ public class TrainControler {
     @RequestMapping("/remove/{id}")
     public String removeTrain(@PathVariable("id") int id){
         this.trainService.removeTrain(id);
-
         return "redirect:/trains";
     }
 
-    @RequestMapping(value = "edit/{id}")
-    public String editTrain(@PathVariable("id") int id, Model model){
-       model.addAttribute("train",this.trainService.getTrainById(id));
-       model.addAttribute("listTrains",this.trainService.listTrains());
-
-       // this.trainService.updateTtain(this.trainService.getTrainById(id));
-        return "trains";
+    @RequestMapping(value = "train/{id}" ,method = RequestMethod.PUT)
+    public String editTrain(@PathVariable("id") int id, @ModelAttribute("train") Train train ,Model model){
+        trainService.updateTtain(train);
+       return "trains";
     }
 
-
+    @RequestMapping(value = "train/{id}" ,method = RequestMethod.GET)
+    public String getTrain(@PathVariable("id") int id, @ModelAttribute("train") Train train ,Model model){
+       model.addAttribute("train", this.trainService.getTrainById(id));
+        model.addAttribute("listTrainModels",this.trainModelService.listTrainModels());
+        return "traindata";
+    }
 
     @RequestMapping(value ="traindata/{id}",method = RequestMethod.GET)
     public String trainData(@PathVariable("id") int id,Model model){
         model.addAttribute("train",this.trainService.getTrainById(id));
-
         return "traindata";
     }
-
-
 }

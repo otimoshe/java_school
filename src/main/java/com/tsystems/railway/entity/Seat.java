@@ -1,6 +1,6 @@
 package com.tsystems.railway.entity;
 
-import org.hibernate.annotations.Cascade;
+
 
 import javax.persistence.*;
 import java.util.*;
@@ -21,9 +21,8 @@ public class Seat {
     @Column(name = "number")
     private  int number;
 
-    @OneToMany(mappedBy = "seat")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private Set<SeatStatus> seatStatuses;
+    @OneToMany(mappedBy = "seat",cascade = CascadeType.ALL)
+    private Set<SeatStatus> seatStatuses = new HashSet<>();
 
     public boolean isAvailable(Station  arrivalStation,Station departureStation ){
         List<Station> stations =  this.trip.getRoute().getStationList(); //all stations from route
@@ -42,8 +41,7 @@ public class Seat {
         return true ;
     }
 
-
-    public Seat( int id, Trip trip, int number, Set<SeatStatus> seatStatuses) {
+    public Seat( int id, Trip trip, int number, HashSet<SeatStatus> seatStatuses) {
         this.id = id;
         this.trip = trip;
         this.number = number;
@@ -53,7 +51,7 @@ public class Seat {
     public Seat() {
     }
 
-    public Seat(int id,Trip trip, Set<SeatStatus> seatStatuses) {
+    public Seat(int id,Trip trip, HashSet<SeatStatus> seatStatuses) {
         this.id = id;
         this.trip = trip;
         this.seatStatuses = seatStatuses;
@@ -88,7 +86,7 @@ public class Seat {
         return seatStatuses;
     }
 
-    public void setSeatStatuses(Set<SeatStatus> seatStatuses) {
+    public void setSeatStatuses(HashSet<SeatStatus> seatStatuses) {
         this.seatStatuses = seatStatuses;
     }
 

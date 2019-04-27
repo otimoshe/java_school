@@ -7,12 +7,9 @@ import com.tsystems.railway.entity.Train;
 import com.tsystems.railway.service.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 import java.util.List;
 
 @Service
-
 public class TrainServiceImpl implements TrainService {
 
     @Autowired

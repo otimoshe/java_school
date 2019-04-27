@@ -33,7 +33,7 @@ public class TripMapperImpl implements TripMapper {
         Route route = routeMapper.dtoToEntity(dto.getRoute());
         Date date =  dto.getDepartureDate();
         Train train = trainMapper.dtoToEntity(dto.getTrain());
-        //TODO add after_insert triiger for creation schedules for this trip
+
         return new Trip (id,route,date,train);
     }
 

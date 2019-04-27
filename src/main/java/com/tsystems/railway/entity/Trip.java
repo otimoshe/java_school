@@ -30,8 +30,7 @@ public class Trip {
     @JoinColumn(name = "train_id")
     private Train train;
 
-    @OneToMany(mappedBy = "trip")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @OneToMany(mappedBy = "trip",cascade = CascadeType.ALL)
     private Set<Schedule> schedules;
 
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL)
@@ -45,7 +44,7 @@ public class Trip {
         this.route = route;
         this.departure_date = departure_date;
         this.train = train;
-        HashSet<Seat> seats = new HashSet<>();
+
     }
 
     public Trip(Route route, Date departure_date, Train train) {
@@ -95,5 +94,21 @@ public class Trip {
 
     public void setSchedules(Set<Schedule> schedules) {
         this.schedules = schedules;
+    }
+
+    public Set<Seat> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(Set<Seat> seats) {
+        this.seats = seats;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

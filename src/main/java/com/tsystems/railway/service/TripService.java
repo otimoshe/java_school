@@ -1,18 +1,21 @@
 package com.tsystems.railway.service;
 
 import com.tsystems.railway.DTO.TripDTO;
+import com.tsystems.railway.entity.Trip;
 
 import java.util.List;
 
 public interface TripService {
 
-    public void addTrip(TripDTO trip);
+    void addTrip(TripDTO trip);
 
-    public void deleteTrip(int id);
+    void deleteTrip(int id);
 
-    public void updateTrip(TripDTO trip);
+    void updateTrip(TripDTO trip);
 
-    public List<TripDTO> listTripDTOs();
+    List<TripDTO> listTripDTOs();
 
-    public TripDTO getTripById(int id);
+    TripDTO getTripById(int id);
+
+    void addTrip(Trip trip);
 }

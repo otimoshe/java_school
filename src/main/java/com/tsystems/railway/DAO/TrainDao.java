@@ -1,7 +1,6 @@
 package com.tsystems.railway.DAO;
 
 import com.tsystems.railway.entity.Train;
-
 import java.util.List;
 
 public interface TrainDao {

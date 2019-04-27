@@ -1,22 +1,15 @@
 package com.tsystems.railway.controller;
 
 import com.tsystems.railway.DTO.*;
+import com.tsystems.railway.entity.Trip;
+import com.tsystems.railway.mappers.TripMapper;
 import com.tsystems.railway.service.*;
-import org.hibernate.Session;
-import org.hibernate.SessionBuilder;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.springframework.web.bind.annotation.*;
+import java.sql.Time;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -41,6 +34,12 @@ public class TripController {
     @Autowired
     private TicketService ticketService;
 
+    @Autowired
+    private TimeTemplateService timeTemplateService;
+
+    @Autowired
+    private TripMapper tripMapper;
+
 
     @RequestMapping(value = "trips", method = RequestMethod.GET)
     public String listTrips(Model model) {
@@ -54,15 +53,38 @@ public class TripController {
         return "trips";
     }
 
-    @Transactional
+  //  @Transactional
     @RequestMapping(value = "/trips", method = RequestMethod.POST)
     public String addTrip(@ModelAttribute("trip") TripDTO tripDTO,
                           @ModelAttribute("routeId") Integer routeID,
-                          @ModelAttribute("trainId") Integer trainId) {
+                          @ModelAttribute("trainId") Integer trainId,
+                          @ModelAttribute("templateId") Integer templateId) {
 
-        tripDTO.setRoute(routeService.getRouteDTOById(routeID));
+        RouteDTO route = routeService.getRouteDTOById(routeID);
+        tripDTO.setRoute(route);
         tripDTO.setTrain(trainService.getTrainDtoById(trainId));
-        tripService.addTrip(tripDTO);
+        TimeTemplateDTO timeTemplateDTO = timeTemplateService.getTimeTemplateById(templateId);
+        List<StationDTO> stationList = route.getStationList();
+
+        Trip trip = tripMapper.dtoToEntity(tripDTO);
+        tripService.addTrip(trip);
+        tripDTO.setId(trip.getId());
+        //create schedules for trip
+        for (StationDTO station : stationList) {
+             Time arrivalTime = timeTemplateDTO.getTemplateStation().get(station).get(0);
+             Time departureTime = timeTemplateDTO.getTemplateStation().get(station).get(1);
+             scheduleService.addSchedule(new ScheduleDTO(tripDTO, tripDTO.getDepartureDate(), tripDTO.getDepartureDate(), station,arrivalTime,departureTime));
+        }
+    //create seats for trip
+        for ( int i = 1;i <=tripDTO.getTrain().getNumberOfSeats();i++){
+            LinkedHashMap<StationDTO,Boolean> statuses = new LinkedHashMap<>();
+            for (StationDTO stationDTO: tripDTO.getRoute().getStationList()){
+                statuses.put(stationDTO,true);
+            }
+
+            seatService.addSeat( new SeatDTO(tripDTO,i,statuses));
+        }
+
 
         return "redirect:/trips";
     }
@@ -77,7 +99,7 @@ public class TripController {
     @Transactional
     @RequestMapping(value = "tripSchedule/{id}", method = RequestMethod.GET)
     public String schedule(@PathVariable("id") int tripId, Model model) {
-        if (this.scheduleService.scheduleListForTrip(tripId).size() == 0) {
+     /*   if (this.scheduleService.scheduleListForTrip(tripId).size() == 0) {
             // generate schedules for trip
             TripDTO trip = tripService.getTripById(tripId);
             RouteDTO route = trip.getRoute();
@@ -86,7 +108,7 @@ public class TripController {
             for (StationDTO station : stationList) {
                // scheduleService.addSchedule(new ScheduleDTO(trip, trip.getDepartureDate(), trip.getDepartureDate(), station));
             }
-        }
+        }*/
         model.addAttribute("scheduleList", this.scheduleService.scheduleListForTrip(tripId));
 
         return "schedule";
@@ -95,7 +117,7 @@ public class TripController {
     @Transactional
     @RequestMapping(value = "tripSeats/{id}", method = RequestMethod.GET)
     public String seats(@PathVariable("id") int tripId, Model model) {
-        if (this.seatService.getAllSeatsForTrip(tripId).size() == 0) {
+      /*  if (this.seatService.getAllSeatsForTrip(tripId).size() == 0) {
             TripDTO tripDTO = tripService.getTripById(tripId);
             for ( int i = 1;i <=tripDTO.getTrain().getNumberOfSeats();i++){
                 LinkedHashMap<StationDTO,Boolean> statuses = new LinkedHashMap<>();
@@ -105,7 +127,7 @@ public class TripController {
 
                seatService.addSeat( new SeatDTO(tripDTO,i,statuses));
             }
-        }
+        }*/
         model.addAttribute("seatsList", this.seatService.getAllSeatsForTrip(tripId));
 
         return "seats";
@@ -116,6 +138,13 @@ public class TripController {
     public String tickets(@PathVariable("id") int tripId, Model model) {
         model.addAttribute("ticketList", this.ticketService.getTicketsForTrip(tripId));
         return "tickets";
+    }
+
+    @RequestMapping(value = "/routeId", method = RequestMethod.POST,produces = "application/json")
+    @ResponseBody
+    public List<TimeTemplateDTO> getRouteId(@RequestBody RouteDTO route){
+        return timeTemplateService.getTimeTemplateListForRoute(route.getId());
+
     }
 }
 

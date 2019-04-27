@@ -2,7 +2,6 @@ package com.tsystems.railway.service;
 
 import com.tsystems.railway.DTO.TrainDTO;
 import com.tsystems.railway.entity.Train;
-
 import java.util.List;
 
 public interface TrainService {
@@ -19,5 +18,5 @@ public interface TrainService {
 
      List<Train> listTrains();
 
-    List<TrainDTO> listTrainDTOs();
+     List<TrainDTO> listTrainDTOs();
 }

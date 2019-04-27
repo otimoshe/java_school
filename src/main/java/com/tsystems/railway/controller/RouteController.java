@@ -21,18 +21,13 @@ public class RouteController {
     public String listRoutes(Model model) {
         model.addAttribute("route", new Route());
         model.addAttribute("listRoutes", this.routeService.getRouteList());
-
-
         return "routes";
     }
 
     @RequestMapping(value = "/routes", method = RequestMethod.POST)
     public String addRoute(@ModelAttribute("route") Route route) {
         if (route.getId() == 0) {
-
             routeService.addRoute(route);
-        } else {
-            routeService.updateRoute(route);
         }
         return "redirect:/routes";
     }
@@ -40,7 +35,6 @@ public class RouteController {
     @RequestMapping("/removeRoute/{id}")
     public String removeTrain(@PathVariable("id") int id) {
         this.routeService.deleteRoute(id);
-
         return "redirect:/route";
     }
 

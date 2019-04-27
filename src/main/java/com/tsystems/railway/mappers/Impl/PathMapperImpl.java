@@ -1,5 +1,4 @@
 package com.tsystems.railway.mappers.Impl;
-
 import com.tsystems.railway.DTO.PathDTO;
 import com.tsystems.railway.DTO.StationDTO;
 import com.tsystems.railway.mappers.PathMapper;
@@ -8,7 +7,6 @@ import com.tsystems.railway.entity.Path;
 import com.tsystems.railway.entity.Station;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

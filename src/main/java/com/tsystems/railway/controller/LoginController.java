@@ -37,15 +37,11 @@ public class LoginController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
         userValidator.validate(userForm, bindingResult);
-
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-
         userService.addUser(userForm);
-
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
-
         return "redirect:/welcome";
     }
 
@@ -54,7 +50,6 @@ public class LoginController {
         if (error != null) {
             model.addAttribute("error", "Username or password is incorrect.");
         }
-
         if (logout != null) {
             model.addAttribute("message", "Logged out successfully.");
         }

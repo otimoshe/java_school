@@ -18,12 +18,25 @@
 <body>
 
 <form:form action="/buyForTrip/${trip.id}"  modelAttribute="ticket" method="post" >
-        <p>Pick a seat</p>
-        <select name = "seatId" >
+
+        <p>pick a departure station</p>
+        <select name = "departId" >
+        <c:forEach items="${stationList}" var="station">
+            <option value="${station.id}">${station.name}</option>
+        </c:forEach>
+        </select></p>
+        <p>pick a arrival station</p>
+        <select name = "arriveId" >
+        <c:forEach items="${stationList}" var="station">
+            <option value="${station.id}">${station.name}</option>
+        </c:forEach>
+        </select></p>
+         <p>Pick a seat</p>
+            <select name = "seatId" >
             <c:forEach items="${seatsList}" var="seat">
                 <option value="${seat.id}">${seat.number}</option>
             </c:forEach>
-        </select></p>
+            </select>
 
     <p><input type="submit" value="Submit" /> </p>
     <sec:csrfInput/>

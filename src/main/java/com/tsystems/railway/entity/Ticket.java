@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Time;
 
 @Entity
 @Table(name = "tickets")
@@ -36,6 +37,12 @@ public class Ticket {
     @Column(name = "arrival_date")
     private Date arrivalDate;
 
+    @Column(name = "arrival_time")
+    private Time arrivalTime;
+
+    @Column(name = "departure_time")
+    private Time departureTime;
+
     @OneToOne
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "seat_id")
@@ -60,6 +67,36 @@ public class Ticket {
         this.arrivalDate = arrivalDate;
         this.seat = seat;
         this.price = price;
+    }
+
+    public Ticket(long id,Passenger passenger, Trip trip, Station departureStation, Station arrivalStation, Date departureDate, Date arrivalDate, Time arrivalTime, Time departureTime, Seat seat, BigDecimal price) {
+        this.id = id;
+        this.passenger = passenger;
+        this.trip = trip;
+        this.departureStation = departureStation;
+        this.arrivalStation = arrivalStation;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.seat = seat;
+        this.price = price;
+    }
+
+    public Time getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(Time arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public Time getDepartureTime() {
+        return departureTime;
+    }
+
+    public void setDepartureTime(Time departureTime) {
+        this.departureTime = departureTime;
     }
 
     public Passenger getPassenger() {

@@ -80,5 +80,29 @@
         </c:forEach>
     </table>
 </c:if>
+
+
+<spring:url value="/addTemplate"  var="addTemplateUrl"></spring:url>
+<form:form action="${addTemplateUrl}" modelAttribute ="template" method="post">
+    <p>Add new template </p>
+    <spring:bind path="name">
+        <p>Name:<form:input type="text" path="name" value = ""/> </p>
+    </spring:bind>
+    <p>Route:
+        <select name = "routeId">
+            <option value="" style="display:none;"></option>
+            <c:forEach items="${routesList}" var="route">
+                <option value="${route.id}">${route.name}</option>
+            </c:forEach>
+        </select>
+
+    </p>
+    <p><input type="submit" value="Submit" /> </p>
+    <sec:csrfInput/>
+</form:form>
 </body>
+
+
+
+
 </html>

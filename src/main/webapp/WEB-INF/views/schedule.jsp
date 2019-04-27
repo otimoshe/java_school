@@ -70,8 +70,8 @@
         <c:forEach items="${scheduleList}" var="schedule">
             <tr>
                 <td>${schedule.station.name}</td>
-                <td>${schedule.arrivalDate}</td>
-                <td>${schedule.departureDate}</td>
+                <td>${schedule.arrivalTime}</td>
+                <td>${schedule.departureTime}</td>
             </tr>
         </c:forEach>
     </table>

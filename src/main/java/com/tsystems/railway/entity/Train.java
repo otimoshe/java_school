@@ -1,13 +1,9 @@
 package com.tsystems.railway.entity;
 
-;
-
 import javax.persistence.*;
 import java.util.Set;
 
-
 @Entity
-//@Proxy(lazy=false)
 @Table(name = "trains")
 public class Train {
 
@@ -66,17 +62,11 @@ public class Train {
     }
 
 
-
-
-
-
     @Override
     public String toString() {
         return "Train{" +
                 "id=" + id +
                 ", numberOfSeats=" + numberOfSeats +
-            //    ", stations=" + stations +
-           //     ", passengers=" + passengers +
                 '}';
     }
 

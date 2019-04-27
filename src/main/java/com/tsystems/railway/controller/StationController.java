@@ -1,8 +1,7 @@
 package com.tsystems.railway.controller;
 
-
 import com.tsystems.railway.DTO.StationDTO;
-import com.tsystems.railway.entity.Station;
+import com.tsystems.railway.entity.Train;
 import com.tsystems.railway.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +17,6 @@ public class StationController {
     @Autowired
     private StationService stationService;
 
-
-
     @RequestMapping(value = "stations",method = RequestMethod.GET)
     public String listStations(Model model){
         model.addAttribute("station",new StationDTO());
@@ -27,10 +24,9 @@ public class StationController {
         return "stations";
     }
 
-    @RequestMapping(value = "/stations", method = RequestMethod.POST)
+    @RequestMapping(value = "/station", method = RequestMethod.POST)
     public String addStation(@ModelAttribute("station") StationDTO station){
         if (station.getId() == 0){
-
             stationService.addStation(station);
         }else {
             stationService.updateStation(station);
@@ -45,4 +41,9 @@ public class StationController {
         return "redirect:/stations";
     }
 
+    @RequestMapping(value = "station/{id}" ,method = RequestMethod.GET)
+    public String getTrain(@PathVariable("id") int id, @ModelAttribute("train") Train train , Model model) {
+        model.addAttribute("station", this.stationService.getStationById(id));
+        return "stationdata";
+    }
 }

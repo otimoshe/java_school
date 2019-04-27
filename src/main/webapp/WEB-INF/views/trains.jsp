@@ -53,6 +53,19 @@
             background-color: #f9f9f9
         }
     </style>
+
+    <script type="text/javascript">
+        function validate_form(){
+            if (parseInt(document.getElementById('numberOfSeats').value) <= 0){
+                document.getElementById('alert').innerHTML  = "Number of seats must be greater than 0";
+                return false;
+            } else {
+                console.log("ytyy");
+                return true;
+            }
+        }
+    </script>
+
 </head>
 <body>
 
@@ -75,34 +88,27 @@
         <c:forEach items="${listTrains}" var="train">
             <tr>
                 <td>${train.id}</td>
-                <td><a href="/traindata/${train.id}" target="_blank">${train.numberOfSeats}</a></td>
+                <td>${train.numberOfSeats}</td>
                 <td>${train.trainModel.name}</td>
-                <td><a href="<c:url value='/edit/${train.id}'/>">Edit</a></td>
+                <td><a href="<c:url value='/train/${train.id}'/>">Edit</a></td>
                 <td><a href="<c:url value='/remove/${train.id}'/>">Delete</a></td>
             </tr>
         </c:forEach>
     </table>
 </c:if>
-
-
 <h1>Add a Train</h1>
 
-<form:form action="/trains"  modelAttribute ="train" method="post">
-    <p>NumberOfSeats:<form:input type ="number" path="numberOfSeats" value = ""/></p>
+<form:form action="/train"  modelAttribute ="train" method="post" onsubmit="return validate_form()">
+    <p>NumberOfSeats:<form:input type ="number" path="numberOfSeats" value = "" id="numberOfSeats"/></p>
     <p>Model:
         <form:select path="trainModel.id">
     <c:forEach items="${listTrainModels}" var="model">
         <option value="${model.id}">${model.name}</option>
     </c:forEach>
 </form:select>
+    <div id="alert"></div>
     <p><input type="submit" value="Submit" /> </p>
     <sec:csrfInput/>
 </form:form>
-
-
-
-
-
-
 </body>
 </html>

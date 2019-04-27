@@ -33,8 +33,6 @@ public class TrainModelController {
     public String editModel(@PathVariable("id") int id, Model model){
         model.addAttribute("train",this.trainModelService.getTrainModelById(id));
         model.addAttribute("listTrains",this.trainModelService.listTrainModels());
-
-        // this.trainService.updateTtain(this.trainService.getTrainById(id));
         return "trains";
     }
 
@@ -48,13 +46,5 @@ public class TrainModelController {
         }
         return "redirect:/trainModels";
     }
-
-  //  @RequestMapping(value ="modeldata/{id}",method = RequestMethod.GET)
- //   public String trainData(@PathVariable("id") int id,Model entity){
-  //      entity.addAttribute("entity",this.trainModelService.getTrainModelById(id));
-
-   //     return "traindata";
-  //  }
-
 
 }

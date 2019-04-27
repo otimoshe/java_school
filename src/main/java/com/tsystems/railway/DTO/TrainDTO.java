@@ -5,8 +5,6 @@ public class TrainDTO {
     private int numberOfSeats;
     private TrainModelDTO trainModelDTO;
 
-
-
     public TrainDTO(int id, int numberOfSeats, TrainModelDTO trainModelDTO) {
         this.id = id;
         this.numberOfSeats = numberOfSeats;

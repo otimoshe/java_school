@@ -3,6 +3,7 @@ package com.tsystems.railway.service.impl;
 
 import com.tsystems.railway.DAO.TripDao;
 import com.tsystems.railway.DTO.TripDTO;
+import com.tsystems.railway.entity.Trip;
 import com.tsystems.railway.mappers.RouteMapper;
 import com.tsystems.railway.mappers.TrainMapper;
 import com.tsystems.railway.mappers.TripMapper;
@@ -49,6 +50,8 @@ public class TripServiceImpl implements TripService {
        return tripMapper.entityToDto(tripDao.getTripById(id));
     }
 
-
+    public void addTrip(Trip trip){
+        tripDao.addtrip(trip);
+    }
 
 }

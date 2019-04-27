@@ -11,7 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.ParseException;
@@ -19,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
+
 
 
 @Controller
@@ -55,7 +54,7 @@ public class UserController {
 
     @RequestMapping(value = "/tripList", method = RequestMethod.GET)
     public String listTrips(Model model) {
-     //   model.addAttribute("ticket" , new TicketDTO());
+        model.addAttribute("ticket" , new TicketDTO());
         model.addAttribute("listTrips", this.tripService.listTripDTOs());
 
         return "tripList";
@@ -64,23 +63,28 @@ public class UserController {
     @RequestMapping(value = ("buyTicket/{id}"), method = RequestMethod.GET)
     public String ticket(@PathVariable("id") int tripId, Model model) {
         model.addAttribute("trip", this.tripService.getTripById(tripId));
+
+        model.addAttribute("stationList",this.tripService.getTripById(tripId).getRoute().getStationList());
         model.addAttribute("seatsList", seatService.getAvailableSeatForTrip(tripId, tripService.getTripById(tripId).getRoute().getFirst_station(), tripService.getTripById(tripId).getRoute().getStationList().get(tripService.getTripById(tripId).getRoute().getStationList().size() - 1)));
+
         return "buyTicket";
     }
 
-    //@Transactional
+
     @RequestMapping(value = ("/buyForTrip/{id}"), method = RequestMethod.POST)
     public String buyTicket( Model model,
                              @PathVariable("id") int tripId,
-                             @ModelAttribute("seatId") Integer seatId) {
+                             @ModelAttribute("seatId") Integer seatId,
+                             @ModelAttribute("departId") Integer departId,
+                             @ModelAttribute("arriveId") Integer arriveId) {
 
 
         String username =  SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
         PassengerDTO passenger = passengerMapper.entityToDto(user.getPassengers().stream().findFirst().get());
         TripDTO trip = tripService.getTripById(tripId);
-        StationDTO departureStation = trip.getRoute().getFirst_station();
-        StationDTO arrivalStation = trip.getRoute().getStationList().get(trip.getRoute().getStationList().size() - 1);
+        StationDTO departureStation = stationService.getStationById(departId);
+        StationDTO arrivalStation = stationService.getStationById(arriveId);
         Date departureDate = trip.getDepartureDate();
         Date arrivalDate = trip.getDepartureDate();
         BigDecimal price = trip.getRoute().getPrice();
@@ -120,8 +124,7 @@ public class UserController {
 
     @RequestMapping(value = "/userSchedule", method = RequestMethod.POST,produces = "application/json")
     @ResponseBody
-    public List<ScheduleDTO> ajaxTest(@RequestBody StationScheduleDTO stationScheduleDTO,
-                         Model model ) {
+    public List<ScheduleDTO> ajaxTest(@RequestBody StationScheduleDTO stationScheduleDTO, Model model ) {
         int stationId = stationScheduleDTO.getStationId();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date parsed = null;
@@ -131,9 +134,6 @@ public class UserController {
             e.printStackTrace();
         }
         java.sql.Date date = new java.sql.Date(parsed.getTime());
-
-      // this.tripSchedule(model,stationScheduleDTO.getStationId(),sql);
-        // return "redirect:/tripSchedule";
         return scheduleService.getScheduleListForStation(stationId,date);
     }
 

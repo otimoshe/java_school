@@ -56,7 +56,7 @@ public class StationDaoImpl implements StationDao {
     @Override
     public Station getStationByName(String name) {
         Session session = this.sessionFactory.getCurrentSession();
-        Station station = (Station) session.load(Station.class,name);
+        Station station = (Station) session.createQuery("from Station where name ='"+name+"'").list().get(0);
         return station;
     }
 }

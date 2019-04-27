@@ -70,6 +70,7 @@
         <th width="80">Station </th>
         <th width="80">Station </th>
         <th width="60">Distance</th>
+        <th width="60">Edit</th>
         <th width="60">Delete</th>
     </tr>
     <c:forEach items="${listPaths}" var="path">
@@ -78,6 +79,7 @@
             <td>${path.station.name}</td>
             <td>${path.nextStation.name}</td>
             <td>${path.distance}</td>
+            <td><a href="<c:url value='/paths/${path.id}'/>">Edit</a></td>
             <td><a href="<c:url value='/paths/remove/${path.id}'/>">Delete</a></td>
         </tr>
     </c:forEach>

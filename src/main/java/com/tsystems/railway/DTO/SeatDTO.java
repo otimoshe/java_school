@@ -1,7 +1,7 @@
 package com.tsystems.railway.DTO;
-
-import java.util.HashMap;
 import java.util.LinkedHashMap;
+
+
 
 public class SeatDTO {
     private int id;

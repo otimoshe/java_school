@@ -1,11 +1,6 @@
 package com.tsystems.railway.controller;
 
-
 import com.tsystems.railway.DTO.PathDTO;
-import com.tsystems.railway.entity.Path;
-
-import com.tsystems.railway.entity.Station;
-import com.tsystems.railway.mappers.StationMapper;
 import com.tsystems.railway.service.PathService;
 import com.tsystems.railway.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,18 +38,15 @@ public class PathController {
                           @ModelAttribute("stationId") Integer stationId,
                           @ModelAttribute("nextStationId") Integer nextStationId){
 
-
         path.setStation(stationService.getStationById(stationId));
         path.setNextStation( stationService.getStationById(nextStationId));
         pathService.addPath(path);
-
         return "redirect:/paths";
     }
 
     @RequestMapping("/paths/remove/{id}")
     public String removePath(@PathVariable("id") int id){
         this.pathService.deletePath(id);
-
         return "redirect:/paths";
     }
 

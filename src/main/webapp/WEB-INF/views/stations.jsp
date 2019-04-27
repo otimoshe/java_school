@@ -75,9 +75,9 @@
         <c:forEach items="${listStations}" var="station">
             <tr>
                 <td>${station.id}</td>
-                <td><a href="/traindata/${station.id}" target="_blank">${station.name}</a></td>
+                <td>${station.name}</td>
 
-                <td><a href="<c:url value='/edit/${station.id}'/>">Edit</a></td>
+                <td><a href="<c:url value='/station/${station.id}'/>">Edit</a></td>
                 <td><a href="<c:url value='/removeStation/${station.id}'/>">Delete</a></td>
             </tr>
         </c:forEach>
@@ -87,7 +87,7 @@
 
 <h1>Add a Station</h1>
 
-<form:form action="/stations"  modelAttribute ="station" method="post">
+<form:form action="/station"  modelAttribute ="station" method="post">
     <p>Name:<form:input path="name" value = ""/></p>
     <p><input type="submit" value="Submit" /> </p>
     <sec:csrfInput/>

@@ -72,9 +72,9 @@
         <c:forEach items="${listTrainModels}" var="model">
             <tr>
                 <td>${model.id}</td>
-                <td><a href="/modeldata/${model.id}" target="_blank">${model.name}</a></td>
+                <td>${model.name}</td>
 
-                <td><a href="<c:url value='/edit/${model.id}'/>">Edit</a></td>
+                <td><a href="<c:url value='/trainModel/${model.id}'/>">Edit</a></td>
                 <td><a href="<c:url value='/removeModel/${model.id}'/>">Delete</a></td>
             </tr>
         </c:forEach>

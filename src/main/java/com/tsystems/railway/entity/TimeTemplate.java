@@ -19,7 +19,7 @@ public class TimeTemplate {
     @JoinColumn(name = "route_id")
     private Route route;
 
-    @OneToMany(mappedBy = "template",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "template",cascade = CascadeType.ALL)
     private Set<TemplateStation> templateStationSet;
 
     public TimeTemplate() {
@@ -68,5 +68,10 @@ public class TimeTemplate {
 
     public void setTemplateStationSet(Set<TemplateStation> templateStationSet) {
         this.templateStationSet = templateStationSet;
+    }
+
+    @Override
+    public String toString() {
+        return "";
     }
 }

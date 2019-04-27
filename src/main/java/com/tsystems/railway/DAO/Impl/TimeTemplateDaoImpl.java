@@ -6,13 +6,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
 
 @Repository
-@Transactional
 public class TimeTemplateDaoImpl implements TimeTemplateDao {
 
     @Autowired
@@ -21,7 +19,7 @@ public class TimeTemplateDaoImpl implements TimeTemplateDao {
     @Override
     public void addTimeTempalte(TimeTemplate timeTemplate) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(timeTemplate);
+        session.save(timeTemplate);
     }
 
     @Override
