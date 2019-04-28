@@ -76,7 +76,6 @@
             <tr>
                 <td>${station.id}</td>
                 <td>${station.name}</td>
-
                 <td><a href="<c:url value='/station/${station.id}'/>">Edit</a></td>
                 <td><a href="<c:url value='/removeStation/${station.id}'/>">Delete</a></td>
             </tr>

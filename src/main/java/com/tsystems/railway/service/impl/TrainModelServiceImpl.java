@@ -21,7 +21,7 @@ public class TrainModelServiceImpl implements TrainModelService {
 
     @Override
     public void updateTrainModel(TrainModel trainModel) {
-        trainModelDao.addTrainModel(trainModel);
+        trainModelDao.updateTrainModel(trainModel);
     }
 
     @Override

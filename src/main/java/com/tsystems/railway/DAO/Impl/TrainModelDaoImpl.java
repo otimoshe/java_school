@@ -28,7 +28,7 @@ public class TrainModelDaoImpl implements TrainModelDao {
     }
 
     @Override
-    public void updateTtainModel(TrainModel trainModel) {
+    public void updateTrainModel(TrainModel trainModel) {
         Session session = sessionFactory.getCurrentSession();
         session.update(trainModel);
     }
@@ -37,7 +37,6 @@ public class TrainModelDaoImpl implements TrainModelDao {
     public void removeTrainModel(int id) {
         Session session = sessionFactory.getCurrentSession();
         TrainModel trainModel = (TrainModel) session.load(TrainModel.class,id);
-
         if(trainModel != null){
             session.delete(trainModel);
         }

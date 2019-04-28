@@ -8,7 +8,7 @@ public interface TrainModelDao {
 
     public void addTrainModel(TrainModel trainModel);
 
-    public void updateTtainModel(TrainModel trainModel);
+    public void updateTrainModel(TrainModel trainModel);
 
     public void removeTrainModel(int id);
 

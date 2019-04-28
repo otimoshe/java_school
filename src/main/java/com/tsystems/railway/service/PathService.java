@@ -9,7 +9,7 @@ public interface PathService  {
 
     public void addPath(PathDTO path);
 
-    public Path getPathById(int id);
+    public PathDTO getPathById(int id);
 
     public void deletePath(int id);
 

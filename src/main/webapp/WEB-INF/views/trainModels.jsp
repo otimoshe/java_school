@@ -84,7 +84,7 @@
 
 <h1>Add a Model</h1>
 
-<form:form action="/trainModels"  modelAttribute ="model" method="post">
+<form:form action="/trainModel"  modelAttribute ="model" method="post">
     <p>Name:<form:input path="name" value = ""/> </p>
     <p><input type="submit" value="Submit" /> </p>
     <sec:csrfInput/>

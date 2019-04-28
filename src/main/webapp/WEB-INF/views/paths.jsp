@@ -53,6 +53,16 @@
             background-color: #f9f9f9
         }
     </style>
+    <script type="text/javascript">
+        function validate_form(){
+            var  validate = true;
+            if (document.getElementById('station').value == document.getElementById('nextStation').value){
+                document.getElementById('alert').innerHTML  += "<p>"+"Stations must not be the same" +"</p>";
+                validate = false;
+            }
+            return validate;
+        }
+    </script>
 </head>
 <body>
 
@@ -79,8 +89,8 @@
             <td>${path.station.name}</td>
             <td>${path.nextStation.name}</td>
             <td>${path.distance}</td>
-            <td><a href="<c:url value='/paths/${path.id}'/>">Edit</a></td>
-            <td><a href="<c:url value='/paths/remove/${path.id}'/>">Delete</a></td>
+            <td><a href="<c:url value='/path/${path.id}'/>">Edit</a></td>
+            <td><a href="<c:url value='/path/remove/${path.id}'/>">Delete</a></td>
         </tr>
     </c:forEach>
 </table>
@@ -88,19 +98,18 @@
 
 
 <h1>Add a Path</h1>
-
-<spring:url value="/paths" var="pathUrl"></spring:url>
-<form:form action="${pathUrl}" modelAttribute ="path" method="post">
+<spring:url value="/path" var="pathUrl"></spring:url>
+<form:form action="${pathUrl}" modelAttribute ="path" method="post" onsubmit="return validate_form() ">
     <spring:bind path="distance">
-    <p>Distance:<form:input type="number" path="distance" value = ""/> </p>
+    <p>Distance:<form:input type="number" path="distance" id ="distance" value = "0.1" min="0.1" step="0.1"/> </p>
     </spring:bind>
 <p>Stations:
-    <select name = "stationId"   >
+    <select name = "stationId" id="station">
     <c:forEach items="${listStations}" var="station">
     <option value="${station.id}">${station.name}</option>
     </c:forEach>
     </select>
-   <select name ="nextStationId">
+   <select name ="nextStationId" id ="nextStation">
     <c:forEach items="${listStations}" var="nextStation">
     <option value="${nextStation.id}">${nextStation.name}</option>
     </c:forEach>
@@ -109,3 +118,5 @@
 <p><input type="submit" value="Submit" /> </p>
     <sec:csrfInput/>
 </form:form>
+<div id ="alert"> </div>
+</body>

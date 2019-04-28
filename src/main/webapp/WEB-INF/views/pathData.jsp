@@ -6,14 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
 
 <html>
 <head>
-    <title>TrainData</title>
+    <title>StationData</title>
 
     <style type="text/css">
         .tg {
@@ -53,40 +52,28 @@
             background-color: #f9f9f9
         }
     </style>
-    <script type="text/javascript">
-        function validate_form(){
-            if (parseInt(document.getElementById('numberOfSeats').value) <= 0){
-                document.getElementById('alert').innerHTML  = "Number of seats must be greater than 0";
-                return false;
-            } else {
-                console.log("ytyy");
-                return true;
-            }
-        }
-    </script>
+
 </head>
 <body>
-<h1>Train Details</h1>
+<h1>Station Details</h1>
 
 <table class="tg">
     <tr>
         <th width="80">ID</th>
-        <th width="120">Seats</th>
-        <th width="120">Model</th>
+        <th width="120">Station</th>
+        <th width="120">Next station</th>
+        <th width="120">Distance</th>
+
     </tr>
     <tr>
-    <form:form action="/train"  modelAttribute ="train" method="post" onsubmit=" return validate_form()">
-        <td><form:input type="text" path="id" value="${train.id}" readonly="true"/></td>
-    <td>NumberOfSeats:<form:input type ="number" path="numberOfSeats" value = "${train.numberOfSeats}"/></td>
-    <td>Model:
-        <form:select path="trainModel.id" selected ="${train.trainModel.id}">${train.trainModel.name}
-        <c:forEach items="${listTrainModels}" var="model">
-        <option value="${model.id}">${model.name}</option>
-        </c:forEach>
-        </form:select></td>
-    <p><input type="submit" value="Submit" /> </p>
-        <sec:csrfInput/>
-    </form:form>
+        <form:form action="/path/${path.id}"  modelAttribute ="path" method="post">
+        <td>name:<form:input type ="text" path="id" value = "${station.id}" readonly="true"/></td>
+        <td>${path.station.name}</td>
+            <td>${path.nextStation.name}</td>
+            <td>name:<form:input type ="number" path="distance" value = "${station.distance}" /></td>
+        <p><input type="submit" value="Submit" /> </p>
+            <sec:csrfInput/>
+        </form:form>
 </body>
 </tr>
 <a href="/admin">Back to admin page</a>

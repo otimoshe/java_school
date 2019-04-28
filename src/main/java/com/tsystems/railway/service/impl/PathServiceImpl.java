@@ -35,8 +35,8 @@ public class PathServiceImpl implements PathService {
     }
 
     @Override
-    public Path getPathById(int id) {
-        return pathDao.getPathById(id);
+    public PathDTO getPathById(int id) {
+        return pathMapper.entitytoDto(pathDao.getPathById(id));
     }
 
     @Override

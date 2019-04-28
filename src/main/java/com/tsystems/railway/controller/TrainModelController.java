@@ -1,5 +1,6 @@
 package com.tsystems.railway.controller;
 
+import com.tsystems.railway.entity.Train;
 import com.tsystems.railway.entity.TrainModel;
 import com.tsystems.railway.service.TrainModelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,9 @@ public class TrainModelController {
         return "trains";
     }
 
-    @RequestMapping(value = "/trainModels", method = RequestMethod.POST)
+    @RequestMapping(value = "/trainModel", method = RequestMethod.POST)
     public String addTrainModel(@ModelAttribute("model") TrainModel trainModel){
         if (trainModel.getId() == 0){
-
             trainModelService.addTrainModel(trainModel);
         }else {
             trainModelService.updateTrainModel(trainModel);
@@ -47,4 +47,10 @@ public class TrainModelController {
         return "redirect:/trainModels";
     }
 
+    @RequestMapping(value = "trainModel/{id}" ,method = RequestMethod.GET)
+    public String getTrain(@PathVariable("id") int id,  Model model){
+        model.addAttribute("model", this.trainModelService.getTrainModelById(id));
+        model.addAttribute("listTrainModels",this.trainModelService.listTrainModels());
+        return "trainModelData";
+    }
 }
