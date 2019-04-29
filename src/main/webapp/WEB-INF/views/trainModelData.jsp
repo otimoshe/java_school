@@ -54,6 +54,33 @@
         }
     </style>
 
+    <script type="text/javascript">
+        function getModelList(){
+            var modelList = [],trainModel;
+            <c:forEach var="trainModel" items="${listTrainModels}">
+            trainModel = "${trainModel.name}";
+            modelList.push(trainModel);
+            </c:forEach>
+            console.log(modelList);
+            return modelList;
+        }
+
+        function validate_trainModel_form(){
+            var  validate = true;
+            document.getElementById('alert').innerHTML  ="";
+            var trainModels = getModelList();
+            var trainModel = document.getElementById('trainModelName').value ;
+            for (var i = 0; i < trainModels.length; i++){
+                if (trainModels[i]  == trainModel){
+                    document.getElementById('alert').innerHTML  = "<p>"+"This train model already exist" +"</p>";
+                    validate = false;
+                }
+            }
+            console.log(trainModels)
+            return validate;
+        }
+    </script>
+
 </head>
 <body>
 <h1>TrainModel Details</h1>
@@ -64,9 +91,10 @@
         <th width="120">Name</th>
     </tr>
     <tr>
-        <form:form action="/trainModel"  modelAttribute ="model" method="post">
+        <form:form action="/trainModel"  modelAttribute ="model" method="post" onsubmit=" return validate_trainModel_form()">
         <td><form:input type="text" path="id" value="${model.id}" readonly="true"/></td>
-           <td>name:<form:input type ="text" path="name" value = "${model.name}"/></td>
+           <td><form:input type ="text" path="name" id = "trainModelName" required="true"  value = "${model.name}"/></td>
+            <div id="alert"></div>
         <p><input type="submit" value="Submit" /> </p>
             <sec:csrfInput/>
         </form:form>

@@ -1,18 +1,21 @@
 <%--
   Created by IntelliJ IDEA.
   User: otimoshe
-  Date: 10.03.2019
-  Time: 21:33
+  Date: 05.04.2019
+  Time: 9:53
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page session="false" %>
 
 <html>
 <head>
-    <title>Template Data</title>
+    <title>TrainData</title>
 
     <style type="text/css">
         .tg {
@@ -55,28 +58,36 @@
 
 </head>
 <body>
-<h1>Template Details</h1>
-
+<h1>Train Details</h1>
+<a href="/admin">Back to admin page</a>
 <table class="tg">
     <tr>
-        <th width="80">Template ID</th>
-        <th width="80">Template name</th>
-        <th width="80">Route name</th>
-
+        <th width="80">Station</th>
+        <th width="80">arrival time</th>
+        <th width="120">departure time</th>
     </tr>
+
+    <form:form action="/templateInfo/{id}"  modelAttribute="times"  method="post" >
+    <c:forEach items="${times.templateStationMap}" var="template">
     <tr>
-        <form:form action="/template/${template.id}"  modelAttribute ="template" method="post">
-        <td>name:<form:input type ="text" path="id" value = "${template.id}" readonly="true"/></td>
-            <td>name:<form:input type ="text" path="name" value = "${template.name}" /></td>
-            <td>name:<form:input type ="text" path="route.name" value = "${template.route.name}" readonly="true" /></td>
+        <td><input type="text" readonly value="${template.key}" /></td>
+        <td><form:input path="templateStationMap['${template.key}'][0]" type="time" value = "${template.value.get(0)}" onchange="doAppend()"/></td>
+        <td><form:input path="templateStationMap['${template.key}'][1]" type="time" value = "${template.value.get(1)}" onchange="doAppend()"/></td>
+    </tr>
+    </c:forEach>
+        <input type="hidden" name="templateId" value="${times.templateId}">
         <p><input type="submit" value="Submit" /> </p>
-            <sec:csrfInput/>
-        </form:form>
-</body>
-</tr>
-<a href="/admin">Back to admin page</a>
-
-
+        <sec:csrfInput/>
+    </form:form>
 </table>
 </body>
+
+<script type="text/javascript">
+    function doAppend() {
+        console.log(this);
+
+        console.log(this.value);
+    }
+</script>
+
 </html>

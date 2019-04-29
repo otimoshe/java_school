@@ -15,7 +15,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Train models page</title>
     <style type="text/css">
         .tg {
             border-collapse: collapse;
@@ -54,6 +54,31 @@
             background-color: #f9f9f9
         }
     </style>
+    <script type="text/javascript">
+        function getModelList(){
+            var modelList = [],trainModel;
+            <c:forEach var="trainModel" items="${listTrainModels}">
+            trainModel = "${trainModel.name}";
+            modelList.push(trainModel);
+            </c:forEach>
+            console.log(modelList);
+            return modelList;
+        }
+
+        function validate_trainModel_form(){
+            var  validate = true;
+            document.getElementById('alert').innerHTML  ="";
+            var trainModels = getModelList();
+            var trainModel = document.getElementById('trainModelName').value ;
+            for (var i = 0; i < trainModels.length; i++){
+                if (trainModels[i]  == trainModel){
+                    document.getElementById('alert').innerHTML  = "<p>"+"This train model already exist" +"</p>";
+                    validate = false;
+                }
+            }
+            return validate;
+        }
+    </script>
 </head>
 <body>
 
@@ -84,9 +109,10 @@
 
 <h1>Add a Model</h1>
 
-<form:form action="/trainModel"  modelAttribute ="model" method="post">
-    <p>Name:<form:input path="name" value = ""/> </p>
+<form:form action="/trainModel"  modelAttribute ="model" method="post" onsubmit=" return validate_trainModel_form()">
+    <p>Train model name:<form:input path="name" value = "" id = "trainModelName" required = "true"/> </p>
     <p><input type="submit" value="Submit" /> </p>
+    <div id = "alert"></div>
     <sec:csrfInput/>
 </form:form>
 </body>

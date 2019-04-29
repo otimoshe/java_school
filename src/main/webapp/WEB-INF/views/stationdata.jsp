@@ -52,11 +52,38 @@
             background-color: #f9f9f9
         }
     </style>
+    <script type="text/javascript">
+        function getStationNameList(){
+            var stationNameList = [],station;
+            <c:forEach var="station" items="${listStations}">
+            station = "${station.name}";
+            stationNameList.push(station);
+            </c:forEach>
+            return stationNameList;
+        }
 
+        function check_form( ){
+            var validate = true, stations = getStationNameList();
+            if (document.getElementById('stationName').value == ""){
+                document.getElementById('alert').innerHTML = "Station name should not be empty!";
+                validate = false;
+            }
+            var stationName = document.getElementById('stationName').value
+            if (stations.length !== 0) {
+                for (var i = 0; i < stations.length; i++) {
+                    if (stationName == stations[i]) {
+                        document.getElementById('alert').innerHTML = "This station already exist!";
+                        validate = false;
+                    }
+                }
+            }
+            return validate;
+        }
+    </script>
 </head>
 <body>
 <h1>Station Details</h1>
-
+<a href="/admin">Back to admin page</a>
 <table class="tg">
     <tr>
         <th width="80">ID</th>
@@ -64,9 +91,10 @@
 
     </tr>
     <tr>
-        <form:form action="/station"  modelAttribute ="station" method="post">
-            <td>name:<form:input type ="text" path="id" value = "${station.id}" readonly="true"/></td>
-             <td>name:<form:input type ="text" path="name" value = "${station.name}"/></td>
+        <form:form action="/station"  modelAttribute ="station" method="post" onsubmit="return check_form()">
+            <td><form:input type ="text" path="id" value = "${station.id}" readonly="true"/></td>
+             <td><form:input type ="text" id = "stationName" path="name" value = "${station.name}  "/></td>
+            <div id ="alert"></div>
             <p><input type="submit" value="Submit" /> </p>
             <sec:csrfInput/>
         </form:form>

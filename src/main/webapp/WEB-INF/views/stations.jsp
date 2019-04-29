@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: otimoshe
-  Date: 12.03.2019
-  Time: 23:13
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -53,6 +46,35 @@
             background-color: #f9f9f9
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function getStationNameList(){
+            var stationNameList = [],station;
+            <c:forEach var="station" items="${listStations}">
+            station = "${station.name}";
+            stationNameList.push(station);
+            </c:forEach>
+            return stationNameList;
+        }
+
+        function validate_form( ){
+            var validate = true, stations = getStationNameList() ;
+            if (document.getElementById('stationName').value == ""){
+                document.getElementById('alert').innerHTML = "Station name should not be empty!";
+                validate = false;
+            }
+            var stationName = document.getElementById('stationName').value
+            if (stations.length !== 0) {
+                for (var i = 0; i < stations.length; i++) {
+                    if (stationName == stations[i]) {
+                        document.getElementById('alert').innerHTML = "This station already exist!";
+                        validate = false;
+                    }
+                }
+            }
+            return validate;
+        }
+    </script>
 </head>
 <body>
 
@@ -86,16 +108,11 @@
 
 <h1>Add a Station</h1>
 
-<form:form action="/station"  modelAttribute ="station" method="post">
-    <p>Name:<form:input path="name" value = ""/></p>
+<form:form action="/station"  modelAttribute ="station" method="post" onsubmit=" return validate_form()">
+    <p>Name:<form:input path="name" value = ""  id="stationName" /></p>
+    <div id ="alert"> </div>
     <p><input type="submit" value="Submit" /> </p>
     <sec:csrfInput/>
 </form:form>
-
-
-
-
-
-
 </body>
 </html>

@@ -12,7 +12,7 @@
 
 <html>
 <head>
-    <title>StationData</title>
+    <title>Path Data</title>
 
     <style type="text/css">
         .tg {
@@ -55,7 +55,7 @@
 
 </head>
 <body>
-<h1>Station Details</h1>
+<h1>Path Details</h1>
 
 <table class="tg">
     <tr>
@@ -67,10 +67,10 @@
     </tr>
     <tr>
         <form:form action="/path/${path.id}"  modelAttribute ="path" method="post">
-        <td>name:<form:input type ="text" path="id" value = "${station.id}" readonly="true"/></td>
+        <td><form:input type ="text" path="id" value = "${station.id}" readonly="true"/></td>
         <td>${path.station.name}</td>
             <td>${path.nextStation.name}</td>
-            <td>name:<form:input type ="number" path="distance" value = "${station.distance}" /></td>
+            <td><form:input type ="number" path="distance"   min="0.1" step="0.1" value = "${station.distance}" /></td>
         <p><input type="submit" value="Submit" /> </p>
             <sec:csrfInput/>
         </form:form>

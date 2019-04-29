@@ -1,9 +1,6 @@
 package com.tsystems.railway.controller;
 
-import com.tsystems.railway.DTO.RouteDTO;
-import com.tsystems.railway.DTO.StationDTO;
-import com.tsystems.railway.DTO.TimeTemplateDTO;
-import com.tsystems.railway.DTO.TimeTemplatesForm;
+import com.tsystems.railway.DTO.*;
 import com.tsystems.railway.service.RouteService;
 import com.tsystems.railway.service.StationService;
 import com.tsystems.railway.service.TimeTemplateService;
@@ -44,7 +41,7 @@ public class TimeTemplateControler {
     }
 
 
-    @RequestMapping(value ="templateInfo/{id}",method = RequestMethod.GET)
+    @RequestMapping(value ="templateTimeInfo/{id}",method = RequestMethod.GET)
     public String templateData(@PathVariable("id") Integer id,Model model){
         model.addAttribute("TemplateStationSet", timeTemplateService.getTimeTemplateById(id).getTemplateStation());
         HashMap<StationDTO,List<Time>> times = timeTemplateService.getTimeTemplateById(id).getTemplateStation();
@@ -62,7 +59,7 @@ public class TimeTemplateControler {
         }
 
         model.addAttribute("times",new TimeTemplatesForm(id,map));
-        return "templateData";
+        return "templateTimeInfo";
     }
 
     @RequestMapping(value = "/addTemplate",method = RequestMethod.POST)
@@ -99,7 +96,20 @@ public class TimeTemplateControler {
         }
         timeTemplate.setTemplateStation(stationTimesMap);
         timeTemplateService.updateTimeTemplate(timeTemplate);
+        return "templateTimeInfo";
+    }
+
+    @RequestMapping(value = "template/{id}" ,method = RequestMethod.GET)
+    public String gettemplateInfo(@PathVariable("id") int id,  Model model){
+        model.addAttribute("template", this.timeTemplateService.getTimeTemplateById(id));
         return "templateData";
     }
 
+    @RequestMapping(value = "template/{id}" ,method = RequestMethod.POST)
+    public String updateTemplate(@PathVariable("id") int id,@ModelAttribute("template") TimeTemplateDTO template){
+        TimeTemplateDTO oldTemplate = this.timeTemplateService.getTimeTemplateById(id);
+        oldTemplate.setName(template.getName());
+        timeTemplateService.updateTimeTemplate(oldTemplate);
+        return "redirect:/templates";
+    }
 }

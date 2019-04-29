@@ -66,6 +66,7 @@
             <th width="80">Template name</th>
             <th width="80">Route name</th>
             <th width="80">Time info</th>
+            <th width="80">Edit</th>
             <th width="80">Delete</th>
         </tr>
 
@@ -75,6 +76,7 @@
                 <td>${template.name}</td>
                 <td>${template.route.name}</td>
                 <td><a href="<c:url value='/templateInfo/${template.id}'/>">Info</a></td>
+                <td><a href="<c:url value='/template/${template.id}'/>">Edit</a></td>
                 <td><a href="<c:url value='/removeTemplate/${template.id}'/>">Delete</a></td>
             </tr>
         </c:forEach>

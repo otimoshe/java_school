@@ -37,13 +37,13 @@ public class StationController {
     @RequestMapping("/removeStation/{id}")
     public String removeStation(@PathVariable("id") int id){
         this.stationService.deleteStation(id);
-
         return "redirect:/stations";
     }
 
     @RequestMapping(value = "station/{id}" ,method = RequestMethod.GET)
     public String getTrain(@PathVariable("id") int id, @ModelAttribute("train") Train train , Model model) {
         model.addAttribute("station", this.stationService.getStationById(id));
+        model.addAttribute("listStations",this.stationService.listStations());
         return "stationdata";
     }
 }

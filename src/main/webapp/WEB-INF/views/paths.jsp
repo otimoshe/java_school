@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: otimoshe
-  Date: 22.03.2019
-  Time: 16:56
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -53,12 +46,38 @@
             background-color: #f9f9f9
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
+        function getPathList(){
+            var pathList = [],path;
+            <c:forEach var="path" items="${listPaths}">
+            path = {};
+            path.station= "${path.station.name}";
+            path.nextStation= "${path.nextStation.name}";
+            pathList.push(path);
+            </c:forEach>
+            console.log(pathList);
+            return pathList;
+        }
+
         function validate_form(){
             var  validate = true;
+            document.getElementById('alert').innerHTML = "";
             if (document.getElementById('station').value == document.getElementById('nextStation').value){
                 document.getElementById('alert').innerHTML  += "<p>"+"Stations must not be the same" +"</p>";
                 validate = false;
+            }
+            var paths       = getPathList();
+            var station     = document.getElementById('station').options[document.getElementById('station').selectedIndex].text ;
+            var nextStation = document.getElementById('nextStation').options[document.getElementById('nextStation').selectedIndex].text;
+
+            // validate new path
+            for (var i = 0; i < paths.length; i++){
+                if ((paths[i].station == station) && (paths[i].nextStation == nextStation) ||
+                    ((paths[i].station == nextStation) && (paths[i].nextStation == station))){
+                    document.getElementById('alert').innerHTML  += "<p>"+"This path already exist" +"</p>";
+                    validate = false;
+                }
             }
             return validate;
         }
