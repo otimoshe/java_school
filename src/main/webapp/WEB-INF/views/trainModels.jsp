@@ -5,58 +5,19 @@
   Time: 16:04
   To change this template use File | Settings | File Templates.
 --%>
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page session="false" %>
+<jsp:include page="sideBar.jsp"/>
 <html>
 <head>
     <title>Train models page</title>
-    <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-color: #ccc;
-        }
-
-        .tg td {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #fff;
-        }
-
-        .tg th {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #f0f0f0;
-        }
-
-        .tg .tg-4eph {
-            background-color: #f9f9f9
-        }
-    </style>
     <script type="text/javascript">
-        function getModelList(){
-            var modelList = [],trainModel;
+        function getModelList() {
+            var modelList = [], trainModel;
             <c:forEach var="trainModel" items="${listTrainModels}">
             trainModel = "${trainModel.name}";
             modelList.push(trainModel);
@@ -65,14 +26,14 @@
             return modelList;
         }
 
-        function validate_trainModel_form(){
-            var  validate = true;
-            document.getElementById('alert').innerHTML  ="";
+        function validate_trainModel_form() {
+            var validate = true;
+            document.getElementById('alert').innerHTML = "";
             var trainModels = getModelList();
-            var trainModel = document.getElementById('trainModelName').value ;
-            for (var i = 0; i < trainModels.length; i++){
-                if (trainModels[i]  == trainModel){
-                    document.getElementById('alert').innerHTML  = "<p>"+"This train model already exist" +"</p>";
+            var trainModel = document.getElementById('trainModelName').value;
+            for (var i = 0; i < trainModels.length; i++) {
+                if (trainModels[i] == trainModel) {
+                    document.getElementById('alert').innerHTML = "<p>" + "This train model already exist" + "</p>";
                     validate = false;
                 }
             }
@@ -81,39 +42,70 @@
     </script>
 </head>
 <body>
+<div id="content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                        <h5>TrainModel list</h5>
+                    </div>
+                    <c:if test="${!empty listTrainModels}">
+                        <table class="table table-bordered data-table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <c:forEach items="${listTrainModels}" var="model">
+                                <tbody>
+                                <tr>
+                                    <td>${model.id}</td>
+                                    <td>${model.name}</td>
 
-<h1>TrainModel List</h1>
-<a href="/admin">Back to admin page</a>
-
-<c:if test="${!empty listTrainModels}">
-    <table class="tg">
-        <tr>
-            <th width="80">ID</th>
-            <th width="80">Name</th>
-
-            <th width="60">Edit</th>
-            <th width="60">Delete</th>
-        </tr>
-        <c:forEach items="${listTrainModels}" var="model">
-            <tr>
-                <td>${model.id}</td>
-                <td>${model.name}</td>
-
-                <td><a href="<c:url value='/trainModel/${model.id}'/>">Edit</a></td>
-                <td><a href="<c:url value='/removeModel/${model.id}'/>">Delete</a></td>
-            </tr>
-        </c:forEach>
-    </table>
-</c:if>
-
-
-<h1>Add a Model</h1>
-
-<form:form action="/trainModel"  modelAttribute ="model" method="post" onsubmit=" return validate_trainModel_form()">
-    <p>Train model name:<form:input path="name" value = "" id = "trainModelName" required = "true"/> </p>
-    <p><input type="submit" value="Submit" /> </p>
-    <div id = "alert"></div>
-    <sec:csrfInput/>
-</form:form>
+                                    <td><a href="<c:url value='/trainModel/${model.id}'/>">Edit</a></td>
+                                    <td><a href="<c:url value='/removeModel/${model.id}'/>">Delete</a></td>
+                                </tr>
+                                </tbody>
+                            </c:forEach>
+                        </table>
+                    </c:if>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <hr>
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="widget-box">
+                        <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
+                            <h5>Add TrainModel</h5>
+                        </div>
+                        <div class="widget-content nopadding">
+                            <form:form action="/trainModel" modelAttribute="model" method="post"
+                                       onsubmit=" return validate_trainModel_form()" class="form-horizontal">
+                                <div class="control-group">
+                                    <label class="control-label"> Name:</label>
+                                    <div class="controls">
+                                        <form:input path="name" value="" id="trainModelName" class ="span11"
+                                                                      required="true"/>
+                                    </div>
+                                </div>
+                                <div id="alert"></div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                </div>
+                                <sec:csrfInput/>
+                            </form:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

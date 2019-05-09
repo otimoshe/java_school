@@ -11,122 +11,110 @@
 <%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page session="false" %>
+<jsp:include page="sideBar.jsp"/>
 <html>
 <head>
     <title>Trips Page</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <meta name="_csrf" content="${_csrf.token}"/>
-    <sec:csrfMetaTags />
+    <sec:csrfMetaTags/>
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
-
-
-    <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-color: #ccc;
-        }
-
-        .tg td {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #fff;
-        }
-
-        .tg th {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #f0f0f0;
-        }
-
-        .tg .tg-4eph {
-            background-color: #f9f9f9
-        }
-    </style>
 </head>
 <body>
+<div id="content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                        <h5>Trips list</h5>
+                    </div>
+                    <c:if test="${!empty listTrips}">
+                        <table class="table table-bordered data-table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Route name</th>
+                                <th>Departure Date</th>
+                                <th>Train id</th>
+                                <th>Schedule</th>
+                                <th>Tickets</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${listTrips}" var="trip">
+                                <tr>
+                                    <td>${trip.id}</td>
+                                    <td>${trip.route.name}</td>
+                                    <td>${trip.departureDate}</td>
+                                    <td>${trip.train.id}</td>
+                                    <td><a href="/trip/schedule/${trip.id}" target="_blank"> Schedule</a></td>
 
-<a href="/admin">Back to admin page</a>
+                                    <td><a href="/tripTickets/${trip.id}" target="_blank"> Tickets</a></td>
+                                    <td><a href="<c:url value='/removeTrip/${trip.id}'/>">Delete</a></td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <hr>
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="widget-box">
+                        <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
+                            <h5>Add Trip</h5>
+                        </div>
+                        <div class="widget-content nopadding">
+                            <form:form action="/trips" modelAttribute="trip" method="post" class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label"> Route:</label>
+                                <div class="controls">
+                                    <select name="routeId" onchange="doAjax()" class="span11">
+                                        <option value="" style="display:none;"></option>
+                                        <c:forEach items="${routeList}" var="route">
+                                            <option value="${route.id}">${route.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Time template:</label>
+                                <div class="controls">
+                                    <select name="templateId" class="span11">
+                                        <option value="" style="display:none;"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label"> Date:</label>
+                                <div class="controls">
+                                    <spring:bind path="departureDate">
+                                        <form:input type="date" path="departureDate" class="span11"/>
+                                    </spring:bind>
+                                </div>
+                            </div>
 
-<br/>
-<br/>
-
-<h1>Trip List</h1>
-
-<c:if test="${!empty listTrips}">
-    <table class="tg">
-        <tr>
-            <th width="80">ID</th>
-            <th width="80">Route name</th>
-            <th width="80">Departure Date</th>
-            <th width="60">Train id</th>
-            <th width="60">Schedule</th>
-
-            <th width="60">Tickets</th>
-            <th width="60">Delete</th>
-        </tr>
-        <c:forEach items="${listTrips}" var="trip">
-            <tr>
-                <td>${trip.id}</td>
-                <td>${trip.route.name}</td>
-                <td>${trip.departureDate}</td>
-                <td>${trip.train.id}</td>
-                <td> <a href="/tripSchedule/${trip.id}" target="_blank"> Schedule</a></td>
-
-                <td> <a href="/tripTickets/${trip.id}" target="_blank"> Tickets</a></td>
-                <td><a href="<c:url value='/removeTrip/${trip.id}'/>">Delete</a></td>
-            </tr>
-        </c:forEach>
-    </table>
-</c:if>
-
-
-<h1>Add a Trip</h1>
-
-<form:form action="/trips"  modelAttribute ="trip" method="post" >
-
-    <p>Route:
-        <select name = "routeId"  onchange="doAjax()">
-             <option value="" style="display:none;"></option>
-             <c:forEach items="${routeList}" var="route">
-                   <option value="${route.id}">${route.name}</option>
-             </c:forEach>
-        </select></p>
-    <p>Time template
-        <select name = "templateId" >
-            <option value="" style="display:none;"></option>
-        </select>
-    </p>
-    <p>Date
-        <spring:bind path="departureDate">
-        <form:input type="date"  path="departureDate"/></p>
-        </spring:bind>
-    <p>Train
-        <select name = "trainId"   >
-            <c:forEach items="${trainList}" var="train">
-                <option value="${train.id}">${train.id}</option>
-            </c:forEach>
-        </select></p>
-    <p><input type="submit" value="Submit" /> </p>
-    <sec:csrfInput/>
-</form:form>
+                            <div class="control-group">
+                                <label class="control-label">Train:</label>
+                                <div class="controls">
+                                    <select name="trainId" class="span11">
+                                        <c:forEach items="${trainList}" var="train">
+                                            <option value="${train.id}">${train.id}</option>
+                                        </c:forEach>
+                                    </select></div>
+                            </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                </div>
+                                <sec:csrfInput/>
+                            </form:form>
 
 </body>
 </html>
@@ -138,7 +126,7 @@
     var csrfHeader = $("meta[name='_csrf_header']").attr("content");
     var csrfToken = $("meta[name='_csrf']").attr("content");
 
-    function doAjax(){
+    function doAjax() {
         console.log($("select[name='routeId']").val());
         var headers = {};
         headers[csrfHeader] = csrfToken;
@@ -150,16 +138,17 @@
             data: JSON.stringify({"id": $("select[name='routeId']").val()}),
             //data:{stationId: $('#station').val(),date: $('#date').val()},
             dataType: 'json',
-                success: function (data) {
-                    console.log(data);
-                    var html = '';
-                    var len = data.length;
-                    if(len > 0) {
-                        for (var i = 0; i < len; i++) {
-                            html += '<option value='+data[i].id+'>'+data[i].name+'</option>';
-                        }
-                        $("select[name='templateId']").append(html);
+            success: function (data) {
+                console.log(data);
+                var html = '';
+                var len = data.length;
+                if (len > 0) {
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value=' + data[i].id + '>' + data[i].name + '</option>';
                     }
-                }})
-        }
+                    $("select[name='templateId']").append(html);
+                }
+            }
+        })
+    }
 </script>

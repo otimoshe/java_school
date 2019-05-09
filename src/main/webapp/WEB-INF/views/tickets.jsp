@@ -12,79 +12,52 @@
 <%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page session="false" %>
+<jsp:include page="sideBar.jsp"/>
 <html>
 <head>
     <title>Ticket page</title>
-
-    <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-color: #ccc;
-        }
-
-        .tg td {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #fff;
-        }
-
-        .tg th {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #f0f0f0;
-        }
-
-        .tg .tg-4eph {
-            background-color: #f9f9f9
-        }
-    </style>
 </head>
 <body>
-
-<a href="/admin">Back to admin page</a>
-
-<c:if test="${!empty ticketList}">
-    <table class="tg">
-        <tr>
-            <th width="80">Passenger name</th>
-            <th width="80">Passenger lastname</th>
-            <th width="80">Passenger birthday</th>
-            <th width="80">Departure station</th>
-            <th width="80">Arrival station</th>
-            <th width="80">Seat number</th>
-            <th width="80">Price</th>
-
-
-        </tr>
-
-        <c:forEach items="${ticketList}" var="ticket">
-            <tr>
-                <td>${ticket.passenger.name}</td>
-                <td>${ticket.passenger.lastName}</td>
-                <td>${ticket.passenger.birthday}</td>
-                <td>${ticket.departureStation.name}</td>
-                <td>${ticket.arrivalStation.name}</td>
-                <td>${ticket.seat.number}</td>
-                <td>${ticket.price}</td>
-            </tr>
-        </c:forEach>
-    </table>
-</c:if>
+<div id="content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                        <h5>Tickets list</h5>
+                    </div>
+                    <c:if test="${!empty ticketList}">
+                        <table class="table table-bordered data-table">
+                            <thead>
+                            <tr>
+                                <th>Passenger name</th>
+                                <th>Passenger lastname</th>
+                                <th>Passenger birthday</th>
+                                <th>Departure station</th>
+                                <th>Arrival station</th>
+                                <th>Seat number</th>
+                                <th>Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${ticketList}" var="ticket">
+                                <tr>
+                                    <td>${ticket.passenger.name}</td>
+                                    <td>${ticket.passenger.lastName}</td>
+                                    <td>${ticket.passenger.birthday}</td>
+                                    <td>${ticket.departureStation.name}</td>
+                                    <td>${ticket.arrivalStation.name}</td>
+                                    <td>${ticket.seat.number}</td>
+                                    <td>${ticket.price}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

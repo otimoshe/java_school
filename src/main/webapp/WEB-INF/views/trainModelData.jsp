@@ -6,57 +6,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
-
+<jsp:include page="sideBar.jsp"/>
 <html>
 <head>
     <title>TrainData</title>
 
-    <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-color: #ccc;
-        }
-
-        .tg td {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #fff;
-        }
-
-        .tg th {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #f0f0f0;
-        }
-
-        .tg .tg-4eph {
-            background-color: #f9f9f9
-        }
-    </style>
 
     <script type="text/javascript">
-        function getModelList(){
-            var modelList = [],trainModel;
+        function getModelList() {
+            var modelList = [], trainModel;
             <c:forEach var="trainModel" items="${listTrainModels}">
             trainModel = "${trainModel.name}";
             modelList.push(trainModel);
@@ -65,14 +26,14 @@
             return modelList;
         }
 
-        function validate_trainModel_form(){
-            var  validate = true;
-            document.getElementById('alert').innerHTML  ="";
+        function validate_trainModel_form() {
+            var validate = true;
+            document.getElementById('alert').innerHTML = "";
             var trainModels = getModelList();
-            var trainModel = document.getElementById('trainModelName').value ;
-            for (var i = 0; i < trainModels.length; i++){
-                if (trainModels[i]  == trainModel){
-                    document.getElementById('alert').innerHTML  = "<p>"+"This train model already exist" +"</p>";
+            var trainModel = document.getElementById('trainModelName').value;
+            for (var i = 0; i < trainModels.length; i++) {
+                if (trainModels[i] == trainModel) {
+                    document.getElementById('alert').innerHTML = "<p>" + "This train model already exist" + "</p>";
                     validate = false;
                 }
             }
@@ -83,26 +44,36 @@
 
 </head>
 <body>
-<h1>TrainModel Details</h1>
-
-<table class="tg">
-    <tr>
-        <th width="80">ID</th>
-        <th width="120">Name</th>
-    </tr>
-    <tr>
-        <form:form action="/trainModel"  modelAttribute ="model" method="post" onsubmit=" return validate_trainModel_form()">
-        <td><form:input type="text" path="id" value="${model.id}" readonly="true"/></td>
-           <td><form:input type ="text" path="name" id = "trainModelName" required="true"  value = "${model.name}"/></td>
-            <div id="alert"></div>
-        <p><input type="submit" value="Submit" /> </p>
+<div id="content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="widget-box">
+                    <table class="table table-bordered data-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <form:form action="/trainModel" modelAttribute="model" method="post"
+                                       onsubmit=" return validate_trainModel_form()" class="form-horizontal">
+                            <td><form:input type="text" path="id" value="${model.id}" readonly="true" class="span11"/></td>
+                            <td><form:input type="text" path="name" id="trainModelName" required="true" class="span11"
+                                            value="${model.name}"/></td>
+                            <div id="alert"></div>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="submit" class="btn btn-info">Edit</button>
+            </div>
             <sec:csrfInput/>
-        </form:form>
-</body>
-</tr>
-<a href="/admin">Back to admin page</a>
-
-
-</table>
+            </form:form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

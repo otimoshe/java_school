@@ -57,6 +57,11 @@ public class Seat {
         this.seatStatuses = seatStatuses;
     }
 
+    public Seat(  Trip trip, int number, HashSet<SeatStatus> seatStatuses) {
+        this.trip = trip;
+        this.number = number;
+        this.seatStatuses = seatStatuses;
+    }
 
     public int getNumber() {
         return number;

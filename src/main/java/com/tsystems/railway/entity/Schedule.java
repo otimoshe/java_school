@@ -53,7 +53,14 @@ public class Schedule {
         this.departureTime = departureTime;
     }
 
-
+    public Schedule( Trip trip, Date arrivalDate, Date departureDate, Station currentStation, Time arrivalTime, Time departureTime) {
+        this.trip = trip;
+        this.arrivalDate = arrivalDate;
+        this.departureDate = departureDate;
+        this.station = currentStation;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+    }
 
     public long getId() {
         return id;

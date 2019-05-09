@@ -11,18 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional
 public class SeatDaoImpl implements SeatDao {
 
     @Autowired
     SessionFactory sessionFactory;
 
     @Override
-
     public void addSeat(Seat seat) {
         Session session = sessionFactory.getCurrentSession();
-
-        session.saveOrUpdate(seat);
+        session.persist(seat);
     }
 
     @Override

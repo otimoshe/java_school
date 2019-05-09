@@ -1,7 +1,9 @@
 package com.tsystems.railway.DAO.Impl;
 
 import com.tsystems.railway.DAO.TripDao;
+import com.tsystems.railway.entity.Schedule;
 import com.tsystems.railway.entity.Trip;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional(readOnly = false)
 public class TripDaoImpl implements TripDao {
 
     @Autowired
     SessionFactory sessionFactory;
 
     @Override
+
     public void addtrip(Trip trip) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(trip);
+        session.save(trip);
     }
 
     @Override
@@ -51,4 +53,14 @@ public class TripDaoImpl implements TripDao {
         List<Trip> trips = session.createQuery("from Trip").list();
         return trips;
     }
+
+    @Override
+    public List<Trip> getTripListWithIds(List<Integer> tripsId) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from Trip where trip_id in (:ids)");
+        query.setParameterList("ids", tripsId);
+        List<Trip> trips = query.list();
+        return trips;
+    }
+
 }

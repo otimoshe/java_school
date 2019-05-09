@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional(readOnly = false)
 public class StationDaoImpl implements StationDao {
 
     @Autowired

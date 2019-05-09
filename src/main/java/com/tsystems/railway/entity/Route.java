@@ -63,13 +63,8 @@ public class Route {
         this.price = price;
         this.firstStation = firstStation;
         this.paths = paths;
-       // this.trips = trips;
+
     }
-
-    //  @ElementCollection(targetClass = Station.class)
-  //  private List<Station> stations = this.getStationList();
-
-
 
     public List<Station> getStationList(){
         Set<Path> paths =  new HashSet<>(this.getPaths());

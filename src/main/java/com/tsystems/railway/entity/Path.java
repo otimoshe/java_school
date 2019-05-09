@@ -1,11 +1,8 @@
 package com.tsystems.railway.entity;
 
-
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-
 
 @Entity
 @Table(name = "paths")
@@ -34,10 +31,6 @@ public class Path {
        //    inverseJoinColumns = @JoinColumn(name = "route_id"))
     private Set<Route> routes = new HashSet<Route>();
 
-
-
-
-
     public Path(Station station, Station nextStation, double distance) {
         this.station = station;
         this.nextStation = nextStation;
@@ -51,9 +44,7 @@ public class Path {
         this.id = id;
     }
 
-    public Path(){
-
-    }
+    public Path(){ }
 
     public double getDistance() {
         return distance;

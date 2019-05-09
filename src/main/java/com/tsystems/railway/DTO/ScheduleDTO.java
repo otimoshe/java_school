@@ -18,7 +18,7 @@ public class ScheduleDTO {
 
     }
 
-    public ScheduleDTO(long id, TripDTO trip, Date arrivalDate, Date departureDate, StationDTO station,Time departureTime,Time arrivalTime) {
+    public ScheduleDTO(long id, TripDTO trip, Date arrivalDate, Date departureDate, StationDTO station,Time arrivalTime,Time departureTime) {
         this.id = id;
         this.trip = trip;
         this.arrivalDate = arrivalDate;

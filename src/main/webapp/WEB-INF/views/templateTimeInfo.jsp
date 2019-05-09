@@ -12,82 +12,66 @@
 <%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page session="false" %>
-
+<jsp:include page="sideBar.jsp"/>
 <html>
 <head>
-    <title>TrainData</title>
-
-    <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-color: #ccc;
-        }
-
-        .tg td {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #fff;
-        }
-
-        .tg th {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #f0f0f0;
-        }
-
-        .tg .tg-4eph {
-            background-color: #f9f9f9
-        }
-    </style>
-
+    <title>TemplateTimeData</title>
 </head>
 <body>
-<h1>Train Details</h1>
-<a href="/admin">Back to admin page</a>
-<table class="tg">
-    <tr>
-        <th width="80">Station</th>
-        <th width="80">arrival time</th>
-        <th width="120">departure time</th>
-    </tr>
-
-    <form:form action="/templateInfo/{id}"  modelAttribute="times"  method="post" >
-    <c:forEach items="${times.templateStationMap}" var="template">
-    <tr>
-        <td><input type="text" readonly value="${template.key}" /></td>
-        <td><form:input path="templateStationMap['${template.key}'][0]" type="time" value = "${template.value.get(0)}" onchange="doAppend()"/></td>
-        <td><form:input path="templateStationMap['${template.key}'][1]" type="time" value = "${template.value.get(1)}" onchange="doAppend()"/></td>
-    </tr>
-    </c:forEach>
-        <input type="hidden" name="templateId" value="${times.templateId}">
-        <p><input type="submit" value="Submit" /> </p>
-        <sec:csrfInput/>
-    </form:form>
-</table>
+<div id="content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="widget-box">
+                    <table class="table table-bordered data-table">
+                        <thead>
+                        <tr>
+                            <th>Station</th>
+                            <th>arrival time</th>
+                            <th>departure time</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <form:form action="/template/{id}/times" modelAttribute="times" method="post"
+                                   class="form-horizontal">
+                        <c:forEach items="${times.templateStationMap}" var="template">
+                            <tr>
+                                <td><input type="text" readonly value="${template.key}" class="span11"/></td>
+                                <td><form:input path="templateStationMap['${template.key}'][0]" type="text"
+                                                class="timepicker span11"
+                                                value="${template.value.get(0)}"/></td>
+                                <td><form:input path="templateStationMap['${template.key}'][1]" type="text"
+                                                class="timepicker span11"
+                                                value="${template.value.get(1)}"/></td>
+                            </tr>
+                        </c:forEach>
+                        <tr><form:input path="templateId" value="${times.templateId}" type="hidden"/></tr>
+                        <div id="alert"></div>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="submit" class="btn btn-info">Edit</button>
+            </div>
+            <sec:csrfInput/>
+            </form:form>
+        </div>
+    </div>
+</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
 <script type="text/javascript">
-    function doAppend() {
-        console.log(this);
-
-        console.log(this.value);
-    }
+    $(document).ready(function() {
+        $('.timepicker').timepicker({
+            timeFormat: 'HH:mm:ss',
+            interval: 60
+        });
+    });
 </script>
 
 </html>

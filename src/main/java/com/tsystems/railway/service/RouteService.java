@@ -1,5 +1,6 @@
 package com.tsystems.railway.service;
 
+import com.tsystems.railway.DTO.AddRouteForm;
 import com.tsystems.railway.DTO.RouteDTO;
 import com.tsystems.railway.entity.Route;
 
@@ -7,19 +8,19 @@ import java.util.List;
 
 public interface RouteService {
 
-    public void addRoute(Route route);
+     void addRoute(RouteDTO route);
 
-    public void updateRoute(Route route);
+     void updateRoute(RouteDTO route);
 
-    public void deleteRoute(int id);
+     void deleteRoute(int id);
 
-    public Route getRouteById(int id);
+     Route getRouteById(int id);
 
-    public RouteDTO getRouteDTOById(int id);
+     RouteDTO getRouteDTOById(int id);
 
-    public List<Route>getRouteList();
+     List<Route>getRouteList();
 
-    public List<RouteDTO> getDtoRouteList();
+     List<RouteDTO> getDtoRouteList();
 
-  //  public List<Station> getStationList(Route route);
+     void addRoute(AddRouteForm form);
 }

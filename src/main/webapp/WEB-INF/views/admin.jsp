@@ -36,6 +36,7 @@
     <p><a href="/routes"> Routes</a></p>
     <p><a href="/templates"> Time templates</a></p>
     <p> <a href ="/trips">Trips</a></p>
+    <p> <a href ="/sideBar">SideBar</a></p>
 </div>
 
 

@@ -5,13 +5,15 @@ import com.tsystems.railway.entity.Trip;
 import java.util.List;
 
 public interface TripDao {
-    public void addtrip(Trip trip);
+    void addtrip(Trip trip);
 
-    public void deleteTrip(int id);
+    void deleteTrip(int id);
 
-    public void updateTrip(Trip trip);
+    void updateTrip(Trip trip);
 
-    public Trip getTripById(int id);
+    Trip getTripById(int id);
 
-    public List<Trip> listTrips();
+    List<Trip> listTrips();
+
+    List<Trip> getTripListWithIds(List<Integer> tripsId);
 }

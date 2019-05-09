@@ -11,104 +11,89 @@
 <%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page session="false" %>
+<jsp:include page="sideBar.jsp"/>
 <html>
 <head>
     <title>Train Page</title>
-
-    <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-color: #ccc;
-        }
-
-        .tg td {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #fff;
-        }
-
-        .tg th {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #f0f0f0;
-        }
-
-        .tg .tg-4eph {
-            background-color: #f9f9f9
-        }
-    </style>
-
-    <script type="text/javascript">
-        function validate_form(){
-            if (parseInt(document.getElementById('numberOfSeats').value) <= 0){
-                document.getElementById('alert').innerHTML  = "Number of seats must be greater than 0";
-                return false;
-            } else {
-                console.log("ytyy");
-                return true;
-            }
-        }
-    </script>
-
 </head>
 <body>
+<div id="content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                        <h5>Trains list</h5>
+                    </div>
+                    <c:if test="${!empty listTrains}">
+                        <table class="table table-bordered data-table">
+                            <thead>
+                            <tr>
+                                <th width="80">ID</th>
+                                <th width="80">Seats</th>
+                                <th width="80">Model</th>
+                                <th width="60">Edit</th>
+                                <th width="60">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${listTrains}" var="train">
+                                <tr class="gradeX">
+                                    <td>${train.id}</td>
+                                    <td>${train.numberOfSeats}</td>
+                                    <td>${train.trainModel.name}</td>
+                                    <td><a href="<c:url value='/train/${train.id}'/>">Edit</a></td>
+                                    <td><a href="<c:url value='/remove/${train.id}'/>">Delete</a></td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<a href="/admin">Back to admin page</a>
-
-<br/>
-<br/>
-
-<h1>Train List</h1>
-
-<c:if test="${!empty listTrains}">
-    <table class="tg">
-        <tr>
-            <th width="80">ID</th>
-            <th width="80">Seats</th>
-            <th width="80">Model</th>
-            <th width="60">Edit</th>
-            <th width="60">Delete</th>
-        </tr>
-        <c:forEach items="${listTrains}" var="train">
-            <tr>
-                <td>${train.id}</td>
-                <td>${train.numberOfSeats}</td>
-                <td>${train.trainModel.name}</td>
-                <td><a href="<c:url value='/train/${train.id}'/>">Edit</a></td>
-                <td><a href="<c:url value='/remove/${train.id}'/>">Delete</a></td>
-            </tr>
-        </c:forEach>
-    </table>
-</c:if>
-<h1>Add a Train</h1>
-
-<form:form action="/train"  modelAttribute ="train" method="post" onsubmit="return validate_form()">
-    <p>NumberOfSeats:<form:input type ="number" path="numberOfSeats" value = "" id="numberOfSeats"/></p>
-    <p>Model:
-        <form:select path="trainModel.id">
-    <c:forEach items="${listTrainModels}" var="model">
-        <option value="${model.id}">${model.name}</option>
-    </c:forEach>
-</form:select>
-    <div id="alert"></div>
-    <p><input type="submit" value="Submit" /> </p>
-    <sec:csrfInput/>
-</form:form>
+    <div class="container-fluid">
+        <hr>
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
+                        <h5>Add Train</h5>
+                    </div>
+                    <div class="widget-content nopadding">
+                        <form:form action="/train" modelAttribute="train" method="post"
+                                    class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label"> NumberOfSeats:</label>
+                                <div class="controls">
+                                    <form:input type="number" path="numberOfSeats" value="" min="1" required = "true"
+                                                class="span11" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label"> Model:</label>
+                                <div class="controls">
+                                    <form:select path="trainModel.id" class="span11" required="true">
+                                        <c:forEach items="${listTrainModels}" var="model">
+                                            <option value="${model.id}">${model.name}</option>
+                                        </c:forEach>
+                                    </form:select>
+                                </div>
+                            </div>
+                            <div id="alert"></div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </div>
+                            <sec:csrfInput/>
+                        </form:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+
 </html>

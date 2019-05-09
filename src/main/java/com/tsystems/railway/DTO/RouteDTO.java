@@ -9,7 +9,7 @@ public class RouteDTO {
     private BigDecimal price;
     private String name;
     private StationDTO first_station;
-    private Set<PathDTO> pathsDTOSet;
+    private Set<PathDTO> paths;
     private List<StationDTO> stationList;
 
     public List<StationDTO> getStationList() {
@@ -20,52 +20,49 @@ public class RouteDTO {
         this.stationList = stationList;
     }
 
-    public RouteDTO(int id, BigDecimal price, String name, StationDTO first_station, Set<PathDTO> pathsDTOSet, List<StationDTO> stationList) {
+    public RouteDTO(int id, BigDecimal price, String name, StationDTO first_station, Set<PathDTO> paths, List<StationDTO> stationList) {
         this.id = id;
         this.price = price;
         this.name = name;
         this.first_station = first_station;
-        this.pathsDTOSet = pathsDTOSet;
+        this.paths = paths;
         this.stationList = stationList;
     }
 
     //TODO delete  pathsDTOSet ????
 
-
-
-
-    public Set<PathDTO> getPathsDTOSet() {
-        return pathsDTOSet;
+    public Set<PathDTO> getPaths() {
+        return paths;
     }
 
-    public void setPathsDTOSet(Set<PathDTO> pathsDTOSet) {
-        this.pathsDTOSet = pathsDTOSet;
+    public void setPaths(Set<PathDTO> paths) {
+        this.paths = paths;
     }
 
-    public StationDTO getFirst_station() {
+    public StationDTO getFirstStation() {
         return first_station;
     }
 
-    public void setFirst_station(StationDTO first_station) {
+    public void setFirstStation(StationDTO first_station) {
         this.first_station = first_station;
     }
 
     public RouteDTO() {
     }
 
-    public RouteDTO(int id, BigDecimal price, String name, StationDTO first_station, Set<PathDTO> pathsDTOSet) {
+    public RouteDTO(int id, BigDecimal price, String name, StationDTO first_station, Set<PathDTO> paths) {
         this.id = id;
         this.price = price;
         this.name = name;
         this.first_station = first_station;
-        this.pathsDTOSet = pathsDTOSet;
+        this.paths = paths;
     }
 
-    public RouteDTO(BigDecimal price, String name,StationDTO first_station,Set<PathDTO> pathsDTOSet) {
+    public RouteDTO(BigDecimal price, String name,StationDTO first_station,Set<PathDTO> paths) {
         this.price = price;
         this.name = name;
         this.first_station = first_station;
-        this.pathsDTOSet = pathsDTOSet;
+        this.paths = paths;
     }
 
     public int getId() {

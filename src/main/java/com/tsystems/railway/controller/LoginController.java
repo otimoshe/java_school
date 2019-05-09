@@ -72,6 +72,10 @@ public class LoginController {
         return "user";
     }
 
+    @RequestMapping(value = { "/sideBar"}, method = RequestMethod.GET)
+    public String sideBar (Model model) {
+        return "sideBar";
+    }
 
 
 }

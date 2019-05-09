@@ -16,7 +16,7 @@ import java.sql.Date;
 import java.util.List;
 
 @Repository
-@Transactional
+
 public class ScheduleDaoImpl implements ScheduleDao {
 
     @Autowired
@@ -70,6 +70,14 @@ public class ScheduleDaoImpl implements ScheduleDao {
         Query query = session.createQuery("from Schedule where station_id = "+stationId+" and (departureDate = '"+ date +"' or arrivalDate = '"+ date +"' )" );
         //query.setParameter("date",new java.sql.Timestamp(date.getTime()));
         //java.sql.Date dateDB = new java.sql.Date(dateStr.getTime());
+        List<Schedule> schedules = query.list();
+        return schedules;
+    }
+
+    public List<Schedule> getScheduleFotTripsAtStation(List<Integer> tripsId,Date date,int stationId){
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("FROM Schedule  WHERE trip_id  IN (:ids) and departureDate = '"+ date+"' and station_id = "+stationId);
+        query.setParameterList("ids", tripsId);
         List<Schedule> schedules = query.list();
         return schedules;
     }

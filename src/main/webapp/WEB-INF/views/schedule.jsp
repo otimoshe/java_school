@@ -12,69 +12,47 @@
 <%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page session="false" %>
+<jsp:include page="sideBar.jsp"/>
 <html>
 <head>
     <title>Schedule page</title>
-
-    <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-color: #ccc;
-        }
-
-        .tg td {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #fff;
-        }
-
-        .tg th {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #f0f0f0;
-        }
-
-        .tg .tg-4eph {
-            background-color: #f9f9f9
-        }
-    </style>
 </head>
 <body>
-
-<a href="/admin">Back to admin page</a>
-
-<c:if test="${!empty scheduleList}">
-    <table class="tg">
-        <tr>
-            <th width="80">Station</th>
-            <th width="80">Arrival time</th>
-            <th width="80">Departure time</th>
-
-        </tr>
-        <c:forEach items="${scheduleList}" var="schedule">
-            <tr>
-                <td>${schedule.station.name}</td>
-                <td>${schedule.arrivalTime}</td>
-                <td>${schedule.departureTime}</td>
-            </tr>
-        </c:forEach>
-    </table>
-</c:if>
+<div id="content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                        <h5>Schedule list</h5>
+                    </div>
+                    <c:if test="${!empty scheduleList}">
+                        <table class="table table-bordered data-table">
+                            <thead>
+                            <tr>
+                                <th>Station</th>
+                                <th>Arrival date</th>
+                                <th>Arrival time</th>
+                                <th>Departure date</th>
+                                <th>Departure time</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${scheduleList}" var="schedule">
+                                <tr>
+                                    <td>${schedule.station.name}</td>
+                                    <td>${schedule.arrivalDate}</td>
+                                    <td>${schedule.arrivalTime}</td>
+                                    <td>${schedule.departureDate}</td>
+                                    <td>${schedule.departureTime}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if></div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

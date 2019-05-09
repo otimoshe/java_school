@@ -52,7 +52,6 @@
    var csrfToken = $("meta[name='_csrf']").attr("content");
 
     function doAjax(){
-        console.log("ttttttttt");
         $('#table').empty();
         if($('#date').val() !=''){
             var headers = {};

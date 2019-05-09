@@ -1,7 +1,10 @@
 package com.tsystems.railway.controller;
 
-import com.tsystems.railway.entity.Route;
+import com.tsystems.railway.DTO.AddRouteForm;
+import com.tsystems.railway.DTO.RouteDTO;
+import com.tsystems.railway.service.PathService;
 import com.tsystems.railway.service.RouteService;
+import com.tsystems.railway.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,26 +19,48 @@ public class RouteController {
     @Autowired
     private RouteService routeService;
 
+    @Autowired
+    private StationService stationService;
+
+    @Autowired
+    private PathService pathService;
 
     @RequestMapping(value = "routes", method = RequestMethod.GET)
     public String listRoutes(Model model) {
-        model.addAttribute("route", new Route());
+        model.addAttribute("route", new RouteDTO());
+        model.addAttribute("listPaths",this.pathService.getPathList());
+        model.addAttribute("listStations",this.stationService.listStations());
         model.addAttribute("listRoutes", this.routeService.getRouteList());
+        model.addAttribute("dto", new AddRouteForm());
         return "routes";
     }
 
-    @RequestMapping(value = "/routes", method = RequestMethod.POST)
-    public String addRoute(@ModelAttribute("route") Route route) {
-        if (route.getId() == 0) {
-            routeService.addRoute(route);
-        }
+    @RequestMapping(value = "/route", method = RequestMethod.POST)
+    public String addRoute(@ModelAttribute("dto") AddRouteForm form) {
+        routeService.addRoute(form);
         return "redirect:/routes";
     }
 
-    @RequestMapping("/removeRoute/{id}")
-    public String removeTrain(@PathVariable("id") int id) {
+    @RequestMapping(value = "/route/{id}", method = RequestMethod.GET)
+    public String getRoute(@PathVariable("id") int id,  Model model) {
+        model.addAttribute("route", this.routeService.getRouteDTOById(id));
+        model.addAttribute("listRoutes", this.routeService.getRouteList());
+        return "routeData";
+    }
+
+    @RequestMapping(value = "/route/{id}", method = RequestMethod.POST)
+    public String editRoute(@PathVariable("id") int id,@ModelAttribute("route") RouteDTO route) {
+        RouteDTO oldRoute = routeService.getRouteDTOById(id);
+        oldRoute.setName(route.getName());
+        oldRoute.setPrice(route.getPrice());
+        routeService.updateRoute(oldRoute);
+        return "redirect:/routes";
+    }
+
+    @RequestMapping(value = "/remove/route/{id}")
+    public String removeRoute(@PathVariable("id") int id) {
         this.routeService.deleteRoute(id);
-        return "redirect:/route";
+        return "redirect:/routes";
     }
 
 

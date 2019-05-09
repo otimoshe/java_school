@@ -16,4 +16,6 @@ public interface PathService  {
     public void updatePath(PathDTO path);
 
     public List<PathDTO>getPathList();
+
+    public List<PathDTO>pathsForStation(int stationId);
 }

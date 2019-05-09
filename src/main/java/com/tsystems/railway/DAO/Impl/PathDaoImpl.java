@@ -51,4 +51,11 @@ public class PathDaoImpl implements PathDao {
         Path path = (Path) session.load(Path.class,id);
         return path;
     }
+
+    @Override
+    public List<Path> pathsForStation(int stationId) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Path> pathList =  session.createQuery("from Path where station_id = "+stationId+"or next_station_id = "+stationId).list();
+        return pathList;
+    }
 }

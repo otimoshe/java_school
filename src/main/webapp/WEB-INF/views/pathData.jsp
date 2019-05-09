@@ -9,76 +9,51 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
-
+<jsp:include page="sideBar.jsp"/>
 <html>
 <head>
     <title>Path Data</title>
 
-    <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-color: #ccc;
-        }
-
-        .tg td {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #fff;
-        }
-
-        .tg th {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #f0f0f0;
-        }
-
-        .tg .tg-4eph {
-            background-color: #f9f9f9
-        }
-    </style>
-
 </head>
 <body>
-<h1>Path Details</h1>
 
-<table class="tg">
-    <tr>
-        <th width="80">ID</th>
-        <th width="120">Station</th>
-        <th width="120">Next station</th>
-        <th width="120">Distance</th>
+<div id="content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="widget-box">
+                    <table class="table table-bordered data-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Station</th>
+                            <th>Station</th>
+                            <th>Distance</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="gradeX">
+                            <form:form action="/path/${path.id}" modelAttribute="path" method="post"
+                                       class="form-horizontal">
+                            <td><form:input type="text" path="id" value="${path.id}" readonly="true"
+                                            class="span11"/></td>
+                            <td>${path.station.name}</td>
+                            <td>${path.nextStation.name}</td>
+                            <td><form:input type="number" path="distance" min="0.1" step="0.1" class="span11" required="true"
+                                            value="${path.distance}"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="submit" class="btn btn-info">Edit</button>
+            </div>
 
-    </tr>
-    <tr>
-        <form:form action="/path/${path.id}"  modelAttribute ="path" method="post">
-        <td><form:input type ="text" path="id" value = "${station.id}" readonly="true"/></td>
-        <td>${path.station.name}</td>
-            <td>${path.nextStation.name}</td>
-            <td><form:input type ="number" path="distance"   min="0.1" step="0.1" value = "${station.distance}" /></td>
-        <p><input type="submit" value="Submit" /> </p>
             <sec:csrfInput/>
-        </form:form>
-</body>
-</tr>
-<a href="/admin">Back to admin page</a>
-
-
-</table>
+            </form:form>
+            <div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

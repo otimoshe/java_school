@@ -12,99 +12,123 @@
 <%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page session="false" %>
+<jsp:include page="sideBar.jsp"/>
 <html>
 <head>
     <title>Time Templates page</title>
-
-    <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-color: #ccc;
-        }
-
-        .tg td {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #fff;
-        }
-
-        .tg th {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #f0f0f0;
-        }
-
-        .tg .tg-4eph {
-            background-color: #f9f9f9
-        }
-    </style>
 </head>
 <body>
-
-<a href="/admin">Back to admin page</a>
-
-<c:if test="${!empty listTemplates}">
-    <table class="tg">
-        <tr>
-            <th width="80">Template ID</th>
-            <th width="80">Template name</th>
-            <th width="80">Route name</th>
-            <th width="80">Time info</th>
-            <th width="80">Edit</th>
-            <th width="80">Delete</th>
-        </tr>
-
-        <c:forEach items="${listTemplates}" var="template">
-            <tr>
-                <td>${template.id}</td>
-                <td>${template.name}</td>
-                <td>${template.route.name}</td>
-                <td><a href="<c:url value='/templateInfo/${template.id}'/>">Info</a></td>
-                <td><a href="<c:url value='/template/${template.id}'/>">Edit</a></td>
-                <td><a href="<c:url value='/removeTemplate/${template.id}'/>">Delete</a></td>
-            </tr>
-        </c:forEach>
-    </table>
-</c:if>
-
-
-<spring:url value="/addTemplate"  var="addTemplateUrl"></spring:url>
-<form:form action="${addTemplateUrl}" modelAttribute ="template" method="post">
-    <p>Add new template </p>
-    <spring:bind path="name">
-        <p>Name:<form:input type="text" path="name" value = ""/> </p>
-    </spring:bind>
-    <p>Route:
-        <select name = "routeId">
-            <option value="" style="display:none;"></option>
-            <c:forEach items="${routesList}" var="route">
-                <option value="${route.id}">${route.name}</option>
-            </c:forEach>
-        </select>
-
-    </p>
-    <p><input type="submit" value="Submit" /> </p>
-    <sec:csrfInput/>
-</form:form>
+<div id="content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                        <h5>TimeTemplate list</h5>
+                    </div>
+                    <c:if test="${!empty listTemplates}">
+                        <table class="table table-bordered data-table">
+                            <thead>
+                            <tr>
+                            <th>Template ID</th>
+                            <th>Template name</th>
+                            <th>Route name</th>
+                            <th>Time info</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${listTemplates}" var="template">
+                                <tr>
+                                    <td>${template.id}</td>
+                                    <td>${template.name}</td>
+                                    <td>${template.route.name}</td>
+                                    <td><a href="<c:url value='/template/${template.id}/times'/>">Info</a></td>
+                                    <td><a href="<c:url value='/template/${template.id}'/>">Edit</a></td>
+                                    <td><a href="<c:url value='/removeTemplate/${template.id}'/>">Delete</a></td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <hr>
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="widget-box">
+                        <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
+                            <h5>Add TimeTemplate</h5>
+                        </div>
+                        <div class="widget-content nopadding">
+                            <spring:url value="/addTemplate" var="addTemplateUrl"></spring:url>
+                            <form:form action="${addTemplateUrl}" modelAttribute="template" method="post"
+                                       onsubmit="return validate_template_form()" class="form-horizontal">
+                                <spring:bind path="name">
+                                    <div class="control-group">
+                                        <label class="control-label"> Name:</label>
+                                        <div class="controls">
+                                            <form:input type="text" path="name" value="" id="templateName"
+                                                        required="true" class="span11"/>
+                                        </div>
+                                    </div>
+                                </spring:bind>
+                                <div class="control-group">
+                                    <label class="control-label"> Route:</label>
+                                    <div class="controls">
+                                        <select name="routeId" required="true" class="span11">
+                                            <option value="" style="display:none;"></option>
+                                            <c:forEach items="${routesList}" var="route">
+                                                <option value="${route.id}">${route.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="alert"></div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                </div>
+                                <sec:csrfInput/>
+                            </form:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 
+<script type="text/javascript">
+    function getTemplateList() {
+        var templateList = [], template;
+        <c:forEach var="template" items="${listTemplates}">
+        template = "${template.name}";
+        templateList.push(template);
+        </c:forEach>
+        console.log(templateList);
+        return templateList;
+    }
+
+    function validate_template_form() {
+        var validate = true;
+        var templates = getTemplateList();
+        var template = document.getElementById('templateName').value;
+        document.getElementById('alert').innerHTML = "";
+
+        for (var i = 0; i < templates.length; i++) {
+            if (templates[i] == template) {
+                document.getElementById('alert').innerHTML += "<p>" + "Time template with name " + template + " already exist" + "</p>";
+                validate = false;
+            }
+        }
+        return validate;
+    }
+</script>
 
 
 </html>

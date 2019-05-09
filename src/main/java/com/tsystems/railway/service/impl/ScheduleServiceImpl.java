@@ -3,6 +3,7 @@ package com.tsystems.railway.service.impl;
 import com.tsystems.railway.DAO.ScheduleDao;
 import com.tsystems.railway.DTO.ScheduleDTO;
 import com.tsystems.railway.DTO.StationDTO;
+import com.tsystems.railway.entity.Schedule;
 import com.tsystems.railway.mappers.ScheduleMapper;
 import com.tsystems.railway.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ScheduleDTO> getScheduleListForStation(int stationId, Date date) {
         return scheduleMapper.listEntityToDtoList( scheduleDao.getSchedulesForStation(stationId,date));
+    }
+    @Override
+    public List<ScheduleDTO> getScheduleFotTripsAtStation(List<Integer> tripsId, Date date,int stationId){
+        return scheduleMapper.listEntityToDtoList(scheduleDao.getScheduleFotTripsAtStation(tripsId, date,stationId));
     }
 }

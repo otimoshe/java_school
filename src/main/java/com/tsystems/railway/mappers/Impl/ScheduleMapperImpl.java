@@ -49,7 +49,7 @@ public class ScheduleMapperImpl implements ScheduleMapper {
         Time departureTime = schedule.getDepartureTime();
         Time arrivalTime = schedule.getArrivalTime();
 
-        return new ScheduleDTO(id, trip, arrivalDate, departureDate, station,departureTime,arrivalTime);
+        return new ScheduleDTO(id, trip, arrivalDate, departureDate, station,arrivalTime,departureTime);
     }
 
     @Override

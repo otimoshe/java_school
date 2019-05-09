@@ -11,88 +11,144 @@
 <%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page session="false" %>
+<jsp:include page="sideBar.jsp"/>
 <html>
 <head>
-    <title>Train Page</title>
-
-    <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-color: #ccc;
+    <title>Route Page</title>
+    <script type="text/javascript">
+        function getRouteList() {
+            var routeList = [];
+            <c:forEach var="route" items="${listRoutes}">
+            routeList.push("${route.name}");
+            </c:forEach>
+            return routeList;
         }
 
-        .tg td {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #fff;
-        }
+        function validate_form() {
+            var validate = true;
+            document.getElementById('alert').innerHTML = "";
+            var routes = getRouteList();
+            var routeName = document.getElementById('routeName').value;
+            // validate new route name
+            for (var i = 0; i < routes.length; i++) {
+                if (routeName == routes[i]) {
+                    document.getElementById('alert').innerHTML += "<p>" + "Route with name " + routeName + " already exist" + "</p>";
+                    validate = false;
+                }
+            }
 
-        .tg th {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #f0f0f0;
+            return validate;
         }
-
-        .tg .tg-4eph {
-            background-color: #f9f9f9
-        }
-    </style>
+    </script>
 </head>
 <body>
+<div id="content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                        <h5>Routes list</h5>
+                    </div>
+                    <c:if test="${!empty listRoutes}">
+                        <table class="table table-bordered data-table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Stations</th>
+                                <th>Price</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${listRoutes}" var="route">
+                                <tr>
+                                    <td>${route.id}</td>
+                                    <td>${route.name}</td>
+                                    <td>
+                                        <c:forEach items="${route.stationList}" var="station">
+                                            ${station.name}
+                                        </c:forEach>
+                                    </td>
+                                    <td>${route.price}</td>
+                                    <td><a href="<c:url value='/route/${route.id}'/>">Edit</a></td>
+                                    <td><a href="<c:url value='/remove/route/${route.id}'/>">Delete</a></td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <hr>
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="widget-box">
+                        <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
+                            <h5>Add Route</h5>
+                        </div>
+                        <div class="widget-content nopadding">
+                            <spring:url value="/route" var="pathUrl"></spring:url>
+                            <form:form action="${pathUrl}" modelAttribute="dto" method="post" class="form-horizontal"
+                                       onsubmit="return validate_form()">
+                                <spring:bind path="name">
+                                    <div class="control-group">
+                                        <label class="control-label"> Name:</label>
+                                        <div class="controls"><form:input type="text" path="name" required="true"
+                                                                          id="routeName"
+                                                                          class="span11"/>
+                                        </div>
+                                    </div>
+                                </spring:bind>
+                                <spring:bind path="price">
+                                    <div class="control-group">
+                                        <label class="control-label"> Price:</label>
+                                        <div class="controls"><form:input type="number" path="price" id="distance"
+                                                                          value="0.1" required="true" min="0.1"
+                                                                          step="0.1" class="span11"/>
+                                        </div>
+                                    </div>
+                                </spring:bind></p>
+                                <div class="control-group">
+                                    <label class="control-label"> First station:</label>
+                                    <spring:bind path="firstStationId">
+                                        <div class="controls">
+                                            <select name="firstStationId">
+                                                <c:forEach items="${listStations}" var="station">
+                                                    <option value="${station.id}">${station.name}</option>
+                                                </c:forEach>
+                                            </select></div>
+                                    </spring:bind>
+                                </div>
+                                <div id="paths">
+                                    <div class="control-group">
+                                        <label class="control-label"> Paths:</label>
+                                        <div class="controls">
+                                            <form:select path="pathIds[0]">
+                                                <c:forEach items="${listPaths}" var="aPath">
+                                                    <option value="${aPath.id}">${aPath.station.name} ${aPath.nextStation.name}</option>
+                                                </c:forEach>
+                                            </form:select></div>
+                                    </div>
+                                </div>
 
-<a href="/admin">Back to admin page</a>
-
-<br/>
-<br/>
-
-<h1>Route List</h1>
-
-<c:if test="${!empty listRoutes}">
-    <table class="tg">
-        <tr>
-            <th width="80">ID</th>
-            <th width="80">Name</th>
-
-            <th >Stations</th>
-      <%--      <c:forEach items="${listRoutes.route.stationList}" var="station">
-                <th width="80">Station</th>
-            </c:forEach>  --%>
-        </tr>
-        <c:forEach items="${listRoutes}" var="route">
-            <tr>
-                <td>${route.id}</td>
-                <td>${route.name}</td>
-                <c:forEach items="${route.stationList}" var="station">
-                <td>${station.name}</td>
-                </c:forEach>
-            </tr>
-        </c:forEach>
-    </table>
-</c:if>
-
-
-<h1>Add a Route</h1>
-
-
-
-
-
-
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                </div>
+                                <sec:csrfInput/>
+                            </form:form>
+                            <div id="alert"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+
 </html>

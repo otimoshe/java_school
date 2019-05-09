@@ -15,11 +15,8 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-
 
 @Controller
 public class UserController {
@@ -51,6 +48,8 @@ public class UserController {
     @Autowired
     ScheduleService scheduleService;
 
+    @Autowired
+    BuyTicketService buyTicketService;
 
     @RequestMapping(value = "/tripList", method = RequestMethod.GET)
     public String listTrips(Model model) {
@@ -63,9 +62,8 @@ public class UserController {
     @RequestMapping(value = ("buyTicket/{id}"), method = RequestMethod.GET)
     public String ticket(@PathVariable("id") int tripId, Model model) {
         model.addAttribute("trip", this.tripService.getTripById(tripId));
-
         model.addAttribute("stationList",this.tripService.getTripById(tripId).getRoute().getStationList());
-        model.addAttribute("seatsList", seatService.getAvailableSeatForTrip(tripId, tripService.getTripById(tripId).getRoute().getFirst_station(), tripService.getTripById(tripId).getRoute().getStationList().get(tripService.getTripById(tripId).getRoute().getStationList().size() - 1)));
+        model.addAttribute("seatsList", seatService.getAvailableSeatForTrip(tripId, tripService.getTripById(tripId).getRoute().getFirstStation(), tripService.getTripById(tripId).getRoute().getStationList().get(tripService.getTripById(tripId).getRoute().getStationList().size() - 1)));
 
         return "buyTicket";
     }
@@ -119,6 +117,7 @@ public class UserController {
     @RequestMapping(value = "/userSchedule",method = RequestMethod.GET)
     public String userSchedule(Model model){
         model.addAttribute("stationList",stationService.listStations());
+
         return "userSchedule";
     }
 
@@ -134,6 +133,7 @@ public class UserController {
             e.printStackTrace();
         }
         java.sql.Date date = new java.sql.Date(parsed.getTime());
+        buyTicketService.findRelevantTrips("a", "c", date);
         return scheduleService.getScheduleListForStation(stationId,date);
     }
 
@@ -143,5 +143,9 @@ public class UserController {
         return "userSchedule";
     }
 
+    @RequestMapping(value = "/index",method = RequestMethod.GET)
+    public String getMainPage(Model model){
+        return "index";
+    }
 
 }

@@ -21,4 +21,6 @@ public interface ScheduleService {
 
     List<ScheduleDTO> getScheduleListForStation(int stationId, Date date);
 
+    List<ScheduleDTO> getScheduleFotTripsAtStation(List<Integer> tripsId, Date date,int stationId);
+
 }

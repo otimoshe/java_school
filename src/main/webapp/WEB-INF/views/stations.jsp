@@ -4,52 +4,14 @@
 <%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page session="false" %>
+<jsp:include page="sideBar.jsp"/>
 <html>
 <head>
     <title>Staions Page</title>
-
-    <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-color: #ccc;
-        }
-
-        .tg td {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #fff;
-        }
-
-        .tg th {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #f0f0f0;
-        }
-
-        .tg .tg-4eph {
-            background-color: #f9f9f9
-        }
-    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
-        function getStationNameList(){
-            var stationNameList = [],station;
+        function getStationNameList() {
+            var stationNameList = [], station;
             <c:forEach var="station" items="${listStations}">
             station = "${station.name}";
             stationNameList.push(station);
@@ -57,9 +19,10 @@
             return stationNameList;
         }
 
-        function validate_form( ){
-            var validate = true, stations = getStationNameList() ;
-            if (document.getElementById('stationName').value == ""){
+        function validate_form() {
+            var validate = true, stations = getStationNameList();
+            console.log(stations)
+            if (document.getElementById('stationName').value == "") {
                 document.getElementById('alert').innerHTML = "Station name should not be empty!";
                 validate = false;
             }
@@ -77,42 +40,68 @@
     </script>
 </head>
 <body>
-
-<a href="/admin">Back to admin page</a>
-
-<br/>
-<br/>
-
-<h1>Stations List</h1>
-
-<c:if test="${!empty listStations}">
-    <table class="tg">
-        <tr>
-            <th width="80">ID</th>
-            <th width="80">Name</th>
-
-            <th width="60">Edit</th>
-            <th width="60">Delete</th>
-        </tr>
-        <c:forEach items="${listStations}" var="station">
-            <tr>
-                <td>${station.id}</td>
-                <td>${station.name}</td>
-                <td><a href="<c:url value='/station/${station.id}'/>">Edit</a></td>
-                <td><a href="<c:url value='/removeStation/${station.id}'/>">Delete</a></td>
-            </tr>
-        </c:forEach>
-    </table>
-</c:if>
-
-
-<h1>Add a Station</h1>
-
-<form:form action="/station"  modelAttribute ="station" method="post" onsubmit=" return validate_form()">
-    <p>Name:<form:input path="name" value = ""  id="stationName" /></p>
-    <div id ="alert"> </div>
-    <p><input type="submit" value="Submit" /> </p>
-    <sec:csrfInput/>
-</form:form>
+<div id="content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                        <h5>Stations list</h5>
+                    </div>
+                    <c:if test="${!empty listStations}">
+                        <table class="table table-bordered data-table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${listStations}" var="station">
+                                <tr>
+                                    <td>${station.id}</td>
+                                    <td>${station.name}</td>
+                                    <td><a href="<c:url value='/station/${station.id}'/>">Edit</a></td>
+                                    <td><a href="<c:url value='/removeStation/${station.id}'/>">Delete</a></td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <hr>
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="widget-box">
+                        <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
+                            <h5>Add Station</h5>
+                        </div>
+                        <div class="widget-content nopadding">
+                            <form:form action="/station" modelAttribute="station" method="post"
+                                       onsubmit=" return validate_form()" class="form-horizontal">
+                                <div class="control-group">
+                                    <label class="control-label"> Name:</label>
+                                    <div class="controls">
+                                        <form:input path="name" value="" id="stationName" class="span11"/>
+                                    </div>
+                                </div>
+                                <div id="alert"></div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                </div>
+                                <sec:csrfInput/>
+                            </form:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
