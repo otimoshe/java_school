@@ -27,7 +27,7 @@ public class SeatMapperImpl implements SeatMapper {
         Seat seat = new Seat();
         seat.setId(seatDTO.getId());
         seat.setTrip(tripMapper.dtoToEntity(seatDTO.getTripDto()));
-        LinkedHashMap<StationDTO, Boolean> statuses = seatDTO.getStatuses();
+        Map<StationDTO, Boolean> statuses = seatDTO.getStatuses();
         seat.setNumber(seatDTO.getNumber());
         HashSet<SeatStatus> seatStatuses = new HashSet<>();
         for (Map.Entry<StationDTO, Boolean> entry : statuses.entrySet()) {

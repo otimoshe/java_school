@@ -15,31 +15,10 @@
 <html>
 <head>
     <title>Route Page</title>
-    <script type="text/javascript">
-        function getRouteList() {
-            var routeList = [];
-            <c:forEach var="route" items="${listRoutes}">
-            routeList.push("${route.name}");
-            </c:forEach>
-            return routeList;
-        }
-
-        function validate_form() {
-            var validate = true;
-            document.getElementById('alert').innerHTML = "";
-            var routes = getRouteList();
-            var routeName = document.getElementById('routeName').value;
-            // validate new route name
-            for (var i = 0; i < routes.length; i++) {
-                if (routeName == routes[i]) {
-                    document.getElementById('alert').innerHTML += "<p>" + "Route with name " + routeName + " already exist" + "</p>";
-                    validate = false;
-                }
-            }
-
-            return validate;
-        }
-    </script>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <sec:csrfMetaTags/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 <body>
 <div id="content">
@@ -94,7 +73,7 @@
                         <div class="widget-content nopadding">
                             <spring:url value="/route" var="pathUrl"></spring:url>
                             <form:form action="${pathUrl}" modelAttribute="dto" method="post" class="form-horizontal"
-                                       onsubmit="return validate_form()">
+                                       onsubmit="return validate_form()" id="form">
                                 <spring:bind path="name">
                                     <div class="control-group">
                                         <label class="control-label"> Name:</label>
@@ -117,27 +96,24 @@
                                     <label class="control-label"> First station:</label>
                                     <spring:bind path="firstStationId">
                                         <div class="controls">
-                                            <select name="firstStationId">
+                                            <select name="firstStationId" onchange="getPaths()">
+                                                <option value="" style="display:none;" selected></option>
                                                 <c:forEach items="${listStations}" var="station">
                                                     <option value="${station.id}">${station.name}</option>
                                                 </c:forEach>
                                             </select></div>
                                     </spring:bind>
                                 </div>
-                                <div id="paths">
-                                    <div class="control-group">
-                                        <label class="control-label"> Paths:</label>
-                                        <div class="controls">
-                                            <form:select path="pathIds[0]">
-                                                <c:forEach items="${listPaths}" var="aPath">
-                                                    <option value="${aPath.id}">${aPath.station.name} ${aPath.nextStation.name}</option>
-                                                </c:forEach>
-                                            </form:select></div>
+                                <div class="control-group">
+                                    <label class="control-label"> Paths:</label>
+                                    <div class="controls">
+                                        <select class="path" name="paths" required="true">
+                                        </select>
+                                        <button id="pathButton" type="button"> Add path</button>
                                     </div>
                                 </div>
-
                                 <div class="form-actions">
-                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <button id="submit"type="submit" class="btn btn-success">Save</button>
                                 </div>
                                 <sec:csrfInput/>
                             </form:form>
@@ -150,5 +126,107 @@
     </div>
 </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var paths = [];
+    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+    var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
 
+    function getRouteList() {
+        var routeList = [];
+        <c:forEach var="route" items="${listRoutes}">
+        routeList.push("${route.name}");
+        </c:forEach>
+        return routeList;
+    }
+
+    function validate_form() {
+        var validate = true;
+        document.getElementById('alert').innerHTML = "";
+        var routes = getRouteList();
+        var routeName = document.getElementById('routeName').value;
+        // validate new route name
+        for (var i = 0; i < routes.length; i++) {
+            if (routeName == routes[i]) {
+                document.getElementById('alert').innerHTML += "<p>" + "Route with name " + routeName + " already exist" + "</p>";
+                validate = false;
+                break;
+            }
+         // dublicate path check
+            console.log("paths = "+ paths);
+            console.log("validate path");
+
+            for(var i=1;i<paths.length;i++){
+                var path = paths.shift();
+                console.log("path = "+path);
+                console.log("paths = "+paths);
+            if(paths.includes(path)){
+                document.getElementById('alert').innerHTML += "<p>" + "In a route, the path can be used once!" + "</p>";
+                validate = false;
+                break;
+            }
+         }
+        }
+        return validate;
+    }
+    count = 0;
+    $("#pathButton").click(function () {
+        var selectBoxHtml = ["<select class =\"path\"> "];
+        var pathList = [], path;
+        <c:forEach var="path" items="${listPaths}">
+        path = {};
+        path.station = "${path.station.name}";
+        path.nextStation = "${path.nextStation.name}";
+        path.id =${path.id};
+        pathList.push(path);
+        </c:forEach>
+        for (var i = 0; i < pathList.length; i++) {
+            selectBoxHtml.push('<option value="' + pathList[i].id + '">' + pathList[i].station + "  " + pathList[i].nextStation + '</option>');
+        }
+        $(this).after(selectBoxHtml.join("") + "select>");
+    });
+
+    $("#submit").click(function () {
+        $('.path').each(function (index) {
+            paths.push($(this).val());
+        });
+        var form= $('#form');
+        for(var i = 0;i<paths.length;i++) {
+            $("<input />", {
+                type: 'hidden',
+                id: 'pathIds[' + i + ']',
+                name: 'pathIds[' + i + ']',
+                value: paths[i]
+            }).appendTo(form);
+        }
+        console.log('success');
+    });
+
+    function getPaths() {
+        var headers = {};
+        headers[csrfHeader] = csrfToken;
+        console.log()
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/paths",
+            headers: headers,
+            data: JSON.stringify({"id": $("select[name='firstStationId']").val()}),
+            //data:{stationId: $('#station').val(),date: $('#date').val()},
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var html = '';
+                var len = data.length;
+                if (len > 0) {
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value=' + data[i].id + '>' + data[i].station.name +'  '+data[i].nextStation.name+ '</option>';
+                    }
+                    $("select[name='paths']").append(html);
+                }
+            }
+        })
+    }
+</script>
 </html>

@@ -25,7 +25,7 @@ public class SeatDaoImpl implements SeatDao {
     @Override
     public void updateSeat(Seat seat) {
         Session session = sessionFactory.getCurrentSession();
-        session.update(seat);
+        session.merge(seat);
     }
 
     @Override

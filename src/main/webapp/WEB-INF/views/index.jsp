@@ -6,8 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="for" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<html>
+<%@ page session="false" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,10 +24,14 @@
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="${contextPath}/resources/css/mainpage.css" />
+    <link type="text/css" rel="stylesheet" href="${contextPath}/resources/css/mainpage.css"/>
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="${contextPath}/resources/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="${contextPath}/resources/css/style.css"/>
+
+    <link href="${contextPath}/resources/css/select2.css" rel="stylesheet"/>
+    <script src="${contextPath}/resources/js/jquery-3.3.1.js"></script>
+    <script src="${contextPath}/resources/js/select2.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,7 +48,7 @@
         <div class="container">
             <div class="row">
                 <div class="booking-form">
-                    <form>
+                    <form action="/findTrips">
                         <div class="form-group">
                             <div class="form-checkbox">
                                 <label for="roundtrip">
@@ -61,13 +69,23 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <span class="form-label">From</span>
-                                    <input class="form-control" type="text" placeholder="City or station">
+                                    <select name="departStation" class="js-example-basic-single">
+                                        <c:forEach items="${stations}" var="station">
+                                            <option value="${station.name}">${station.name}</option>
+                                        </c:forEach>
+                                    </select>
+
+                                    <%--   <input class="form-control" type="text" placeholder="City or station"> --%>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <span class="form-label">To</span>
-                                    <input class="form-control" type="text" placeholder="City or station">
+                                    <select name="arriveStation" class="js-example-basic-single">
+                                        <c:forEach items="${stations}" var="station">
+                                            <option value="${station.name}">${station.name}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -75,13 +93,13 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <span class="form-label">Departing</span>
-                                    <input class="form-control" type="date" required>
+                                    <input class="form-control" type="date" required name="date">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <span class="form-label">Returning</span>
-                                    <input class="form-control" type="date" required>
+                                    <input class="form-control" type="date">
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -110,7 +128,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-btn">
-                                    <button class="submit-btn">Show trips</button>
+                                    <button class="submit-btn" type="submit">Show trips</button>
                                 </div>
                             </div>
                         </div>
@@ -120,6 +138,13 @@
         </div>
     </div>
 </div>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
-
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.js-example-basic-single').prepend('<option selected></option>').select2({
+            placeholder: "Select a city or station",
+            allowClear: true
+        });
+    });
+</script>
 </html>

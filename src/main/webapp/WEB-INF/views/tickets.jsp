@@ -37,6 +37,7 @@
                                 <th>Arrival station</th>
                                 <th>Seat number</th>
                                 <th>Price</th>
+                                <th>Delete</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -49,6 +50,7 @@
                                     <td>${ticket.arrivalStation.name}</td>
                                     <td>${ticket.seat.number}</td>
                                     <td>${ticket.price}</td>
+                                    <td><a href="<c:url value='/removeTicket/${ticket.id}'/>">Delete</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>

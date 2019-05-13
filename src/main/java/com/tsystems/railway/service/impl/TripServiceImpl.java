@@ -9,6 +9,7 @@ import com.tsystems.railway.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -44,10 +45,9 @@ public class TripServiceImpl implements TripService {
     @Autowired
     private StationMapper stationMapper;
 
-    @Override
-    public void addTrip(TripDTO trip) {
-        tripDao.addtrip(tripMapper.dtoToEntity(trip));
-    }
+    @Autowired
+    private StationService stationService;
+
 
     @Override
     public void updateTrip(TripDTO trip) {
@@ -69,9 +69,6 @@ public class TripServiceImpl implements TripService {
         return tripMapper.entityToDto(tripDao.getTripById(id));
     }
 
-    public void addTrip(Trip trip) {
-        tripDao.addtrip(trip);
-    }
 
     @Override
     public List<TripDTO> getTripListWithIds(List<Integer> tripsId) {
@@ -130,9 +127,9 @@ public class TripServiceImpl implements TripService {
         //create seats for trip
         HashSet<Seat> seats = new HashSet<>();
         //we do not need last station from route
-        List<Station> stations ;
+        List<Station> stations;
         if (stationList.size() >= 2) {
-             stations = trip.getRoute().getStationList().subList(0, stationList.size() - 1);
+            stations = trip.getRoute().getStationList().subList(0, stationList.size() - 1);
         } else {
             stations = new ArrayList<>();
             stations.add(trip.getRoute().getStationList().get(0));
@@ -144,7 +141,7 @@ public class TripServiceImpl implements TripService {
             seat.setNumber(i);
             HashSet<SeatStatus> seatStatuses = new HashSet<>();
 
-            for (Station station: stations) {
+            for (Station station : stations) {
                 SeatStatus seatStatus = new SeatStatus();
                 seatStatus.setStation(station);
                 seatStatus.setSeat(seat);
@@ -183,13 +180,48 @@ public class TripServiceImpl implements TripService {
         return timeTemplateService.getTimeTemplateById(timeTemplateID);
     }
 
+
     @Override
-    public void addSchedule(ScheduleDTO schedule) {
-        scheduleService.addSchedule(schedule);
+    public List<TripDTO> findRelevantTrips(String departureStationName, String arrivalStationName, Date date) {
+        Station departStation = stationMapper.dtoToEntity(stationService.getStationByName(departureStationName));
+        Station arrivalStation = stationMapper.dtoToEntity(stationService.getStationByName(arrivalStationName));
+        List<TripDTO> allTripsDto = this.listTripDTOs();
+        List<Trip> allTrips = tripMapper.listDtoToEntityList(allTripsDto);
+        List<Integer> tripsId = new ArrayList<>();
+        for (Trip trip : allTrips) {
+            Route route = trip.getRoute();
+            if ((route.getStationList().contains(departStation)) && (route.getStationList()).contains(arrivalStation) &&
+                    (route.getStationList().indexOf(departStation) < route.getStationList().indexOf(arrivalStation))) {
+                tripsId.add(trip.getId());
+            }
+        }
+        List<ScheduleDTO> schedules = scheduleService.getScheduleFotTripsAtStation(tripsId, date, departStation.getId());
+        List<Integer> resultTripsId = new ArrayList<>();
+        for (ScheduleDTO schedule : schedules) {
+            resultTripsId.add(schedule.getTrip().getId());
+        }
+        List<TripDTO> resultTrips = this.getTripListWithIds(resultTripsId);
+
+        return resultTrips;
     }
 
     @Override
-    public void addSeat(SeatDTO seat) {
-        seatService.addSeat(seat);
+    public List<StationDTO> getAllStation() {
+        return this.stationService.listStations();
+    }
+
+    @Override
+    public List<TicketForm> getScheduleBoardInfo(List<TripDTO> trips, String departStationName, String arriveStationName) {
+        StationDTO departStation = stationService.getStationByName(departStationName);
+        StationDTO arriveStation = stationService.getStationByName(arriveStationName);
+        List<TicketForm> result = new ArrayList<>();
+        for (TripDTO trip : trips) {
+            ScheduleDTO departSchedule = scheduleService.getScheduleByTripStation(trip, departStation);
+            ScheduleDTO arriveSchedule = scheduleService.getScheduleByTripStation(trip, arriveStation);
+            BigDecimal price = new BigDecimal(0);
+            result.add(new TicketForm(trip.getTrain().getId(), trip.getRoute().getName(), departSchedule.getDepartureDate(),
+                    departSchedule.getDepartureTime(), arriveSchedule.getArrivalDate(), arriveSchedule.getArrivalTime(), price,trip.getId(),departStation.getId(),arriveStation.getId() ) );
+        }
+        return result;
     }
 }

@@ -65,8 +65,6 @@
                 //data:{stationId: $('#station').val(),date: $('#date').val()},
                 dataType: 'json',
                 success: function(data){
-                    console.log(data);
-                    console.log(data.length);
                     var html = '';
                     var len = data.length;
                     if(len > 0){

@@ -1,6 +1,9 @@
 package com.tsystems.railway.DAO.Impl;
 
 import com.tsystems.railway.DAO.ScheduleDao;
+import com.tsystems.railway.DTO.ScheduleDTO;
+import com.tsystems.railway.DTO.StationDTO;
+import com.tsystems.railway.DTO.TripDTO;
 import com.tsystems.railway.entity.Schedule;
 import com.tsystems.railway.entity.Trip;
 import org.hibernate.Query;
@@ -80,5 +83,10 @@ public class ScheduleDaoImpl implements ScheduleDao {
         query.setParameterList("ids", tripsId);
         List<Schedule> schedules = query.list();
         return schedules;
+    }
+    public Schedule getScheduleByTripStation(int tripId,int stationId){
+        Session session = sessionFactory.getCurrentSession();
+        List<Schedule> schedules = session.createQuery("FROM Schedule  WHERE trip_id ="+tripId+ " and station_id = "+stationId).list();
+        return schedules.get(0);
     }
 }

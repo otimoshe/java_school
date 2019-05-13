@@ -11,15 +11,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.LinkedHashMap;
 import java.util.List;
 
+
 @Controller
-public class UserController {
+@SessionAttributes(types = TicketForm.class)
+public class MainPageController {
 
     @Autowired
     TicketService ticketService;
@@ -51,21 +51,19 @@ public class UserController {
     @Autowired
     BuyTicketService buyTicketService;
 
-    @RequestMapping(value = "/tripList", method = RequestMethod.GET)
+  /*  @RequestMapping(value = "/tripList", method = RequestMethod.GET)
     public String listTrips(Model model) {
         model.addAttribute("ticket" , new TicketDTO());
         model.addAttribute("listTrips", this.tripService.listTripDTOs());
-
+        model.addAttribute("stations",tripService.getAllStation());
         return "tripList";
-    }
+    }*/
 
-    @RequestMapping(value = ("buyTicket/{id}"), method = RequestMethod.GET)
-    public String ticket(@PathVariable("id") int tripId, Model model) {
-        model.addAttribute("trip", this.tripService.getTripById(tripId));
-        model.addAttribute("stationList",this.tripService.getTripById(tripId).getRoute().getStationList());
-        model.addAttribute("seatsList", seatService.getAvailableSeatForTrip(tripId, tripService.getTripById(tripId).getRoute().getFirstStation(), tripService.getTripById(tripId).getRoute().getStationList().get(tripService.getTripById(tripId).getRoute().getStationList().size() - 1)));
+    @RequestMapping(value = ("/buyTicket/seat"), method = RequestMethod.POST)
+    public String ticket( Model model,TicketForm ticketForm) {
+        model.addAttribute("passengerList",);
 
-        return "buyTicket";
+        return "passenger";
     }
 
 
@@ -80,38 +78,7 @@ public class UserController {
         String username =  SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
         PassengerDTO passenger = passengerMapper.entityToDto(user.getPassengers().stream().findFirst().get());
-        TripDTO trip = tripService.getTripById(tripId);
-        StationDTO departureStation = stationService.getStationById(departId);
-        StationDTO arrivalStation = stationService.getStationById(arriveId);
-        Date departureDate = trip.getDepartureDate();
-        Date arrivalDate = trip.getDepartureDate();
-        BigDecimal price = trip.getRoute().getPrice();
-        SeatDTO seat =  seatService.getSeatById(seatId);
-
-        TicketDTO ticket = new TicketDTO();
-        ticket.setPassenger(passenger);
-        ticket.setTrip(trip);
-        ticket.setDepartureStation(departureStation);
-        ticket.setArrivalStation(arrivalStation);
-        ticket.setArrivalDate(arrivalDate);
-        ticket.setDepartureDate(departureDate);
-        ticket.setPrice(price);
-
-        //change seatStatus for our seat
-
-        //TODO 
-        LinkedHashMap<StationDTO,Boolean> statuses = seat.getStatuses();
-        List<StationDTO> stationList = stationMapper.listEntityToDtoList(routeMapper.dtoToEntity(trip.getRoute()).getSubRoute(stationMapper.dtoToEntity(departureStation),stationMapper.dtoToEntity(arrivalStation)));
-        for(StationDTO station:stationList){
-            statuses.replace(station,false);
-        }
-
-      //  seatService.updateSeat(seat);
-        ticket.setSeat( seat);
-       // seat.setStatuses(statuses);
-
-        ticketService.addTicket(ticket);
-        return "tripList";
+       return "";
     }
 
     @RequestMapping(value = "/userSchedule",method = RequestMethod.GET)
@@ -133,7 +100,6 @@ public class UserController {
             e.printStackTrace();
         }
         java.sql.Date date = new java.sql.Date(parsed.getTime());
-        buyTicketService.findRelevantTrips("a", "c", date);
         return scheduleService.getScheduleListForStation(stationId,date);
     }
 
@@ -145,7 +111,23 @@ public class UserController {
 
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String getMainPage(Model model){
+        model.addAttribute("stations",tripService.getAllStation());
         return "index";
+    }
+    @RequestMapping(value = "/findTrips",method = RequestMethod.GET)
+    public String findRelevantTrip(Model model,@RequestParam("departStation") String departureStationName, @RequestParam("arriveStation")String arrivalStationName, @RequestParam("date")Date date){
+        List<TripDTO> tripList = this.tripService.findRelevantTrips(departureStationName,arrivalStationName,date);
+        model.addAttribute("searchResult",this.tripService.getScheduleBoardInfo(tripList,departureStationName,arrivalStationName));
+        model.addAttribute("ticketForm", new TicketForm());
+        return "tripList";
+    }
+
+    @RequestMapping(value = ("buyTicket"), method = RequestMethod.POST)
+    public String buyTicket(Model model,@ModelAttribute("ticketForm") TicketForm ticketForm){
+        StationDTO departStation = stationService.getStationById(ticketForm.getDepartStationId());
+        StationDTO arriveStation = stationService.getStationById(ticketForm.getArriveStationId());
+        model.addAttribute("seatsList", seatService.getAvailableSeatForTrip(ticketForm.getTripId(),departStation,arriveStation));
+        return "buyTicketSeat";
     }
 
 }

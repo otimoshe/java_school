@@ -23,4 +23,6 @@ public interface ScheduleDao {
     List<Schedule> getSchedulesForStation(int stationId, Date date);
 
     List<Schedule> getScheduleFotTripsAtStation(List<Integer> tripsId,Date date,int stationId);
+
+    Schedule getScheduleByTripStation(int tripId,int stationId);
 }

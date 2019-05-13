@@ -1,8 +1,7 @@
 package com.tsystems.railway.controller;
 
 import com.tsystems.railway.DTO.*;
-import com.tsystems.railway.entity.Trip;
-import com.tsystems.railway.mappers.TripMapper;
+
 import com.tsystems.railway.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@Transactional
 public class TripController {
 
     @Autowired
@@ -19,6 +19,9 @@ public class TripController {
 
     @Autowired
     private TicketService ticketService;
+
+
+
 
     @RequestMapping(value = "trips", method = RequestMethod.GET)
     public String listTrips(Model model) {
@@ -31,7 +34,6 @@ public class TripController {
 
         return "trips";
     }
-
 
     @RequestMapping(value = "/trips", method = RequestMethod.POST)
     public String addTrip(@ModelAttribute("trip") TripDTO tripDTO,
@@ -50,7 +52,6 @@ public class TripController {
         return "redirect:/trips";
     }
 
-    @Transactional
     @RequestMapping(value = "trip/schedule/{id}", method = RequestMethod.GET)
     public String schedule(@PathVariable("id") int tripId, Model model) {
         model.addAttribute("scheduleList", this.tripService.getSchedulesForTrip(tripId));
@@ -58,19 +59,23 @@ public class TripController {
         return "schedule";
     }
 
-
-
     @RequestMapping(value = "tripTickets/{id}", method = RequestMethod.GET)
     public String tickets(@PathVariable("id") int tripId, Model model) {
         model.addAttribute("ticketList", this.ticketService.getTicketsForTrip(tripId));
         return "tickets";
     }
 
-    @RequestMapping(value = "/routeId", method = RequestMethod.POST,produces = "application/json")
+    @RequestMapping(value = "/routes", method = RequestMethod.POST,produces = "application/json")
     @ResponseBody
     public List<TimeTemplateDTO> getRouteId(@RequestBody RouteDTO route){
         return tripService.getTemplatesForRoute(route.getId());
-
     }
+
+    @RequestMapping("/removeTicket/{id}")
+    public String removeTicket(@PathVariable("id") int id) {
+        this.ticketService.deleteTicket(id);
+        return "redirect:/trips";
+    }
+
 }
 

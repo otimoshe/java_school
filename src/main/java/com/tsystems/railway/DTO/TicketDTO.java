@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 public class TicketDTO {
-    private long id;
+    private int id;
     private PassengerDTO passenger;
     private TripDTO trip;
     private StationDTO departureStation;
@@ -14,7 +14,7 @@ public class TicketDTO {
     private SeatDTO seat;
     private BigDecimal price;
 
-    public TicketDTO(long id, PassengerDTO passenger, TripDTO trip, StationDTO departureStation, StationDTO arrivalStation, Date departureDate, Date arrivalDate, SeatDTO seat, BigDecimal price) {
+    public TicketDTO(int id, PassengerDTO passenger, TripDTO trip, StationDTO departureStation, StationDTO arrivalStation, Date departureDate, Date arrivalDate, SeatDTO seat, BigDecimal price) {
         this.id = id;
         this.passenger = passenger;
         this.trip = trip;
@@ -48,11 +48,11 @@ public class TicketDTO {
         this.price = price;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

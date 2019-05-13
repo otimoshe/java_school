@@ -2,14 +2,16 @@ package com.tsystems.railway.service.impl;
 
 import com.tsystems.railway.DAO.TrainDao;
 import com.tsystems.railway.DTO.TrainDTO;
-import com.tsystems.railway.mappers.TrainMapper;
 import com.tsystems.railway.entity.Train;
+import com.tsystems.railway.mappers.TrainMapper;
 import com.tsystems.railway.service.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class TrainServiceImpl implements TrainService {
 
     @Autowired
@@ -17,10 +19,6 @@ public class TrainServiceImpl implements TrainService {
 
     @Autowired
     private TrainMapper trainMapper;
-
-    public void setTrainDao(TrainDao trainDao) {
-        this.trainDao = trainDao;
-    }
 
     @Override
 

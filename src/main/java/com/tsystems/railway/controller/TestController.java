@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class TestController {
 
-    @RequestMapping(value = "/one",method = RequestMethod.GET)
+    @RequestMapping(value = "/test",method = RequestMethod.GET)
     public String test(Model model){
         model.addAttribute("train",new Train());
         return "test";
@@ -21,6 +21,12 @@ public class TestController {
     public String post(@ModelAttribute Train train, Model model){
         model.addAttribute("train",train);
         return "result";
+    }
+
+    @RequestMapping(value = "/one",method = RequestMethod.GET  )
+    public String get(@ModelAttribute Train train, Model model){
+        model.addAttribute("train",train);
+        return "redirect:test";
     }
 
    // @RequestMapping(value = "/result")

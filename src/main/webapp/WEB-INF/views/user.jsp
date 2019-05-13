@@ -28,6 +28,7 @@
     </c:if>
     <p> <a href ="/tripList"> Buy ticket</a></p>
     <p> <a href ="/userSchedule"> See Schedule</a></p>
+    <p> <a href ="/index"> Index page</a></p>
 </div>
 
 

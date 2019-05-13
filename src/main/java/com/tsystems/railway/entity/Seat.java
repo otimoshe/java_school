@@ -24,14 +24,14 @@ public class Seat {
     @OneToMany(mappedBy = "seat",cascade = CascadeType.ALL)
     private Set<SeatStatus> seatStatuses = new HashSet<>();
 
-    public boolean isAvailable(Station  arrivalStation,Station departureStation ){
+    public boolean isAvailable(Station departureStation,Station  arrivalStation ){
         List<Station> stations =  this.trip.getRoute().getStationList(); //all stations from route
         HashMap<Station,Boolean> statuses = new HashMap<>();
-        for(SeatStatus status:seatStatuses){
+        for(SeatStatus status:this.seatStatuses){
             statuses.put(status.getStation(),status.isAvailable());
         }
-        int start =  stations.indexOf(arrivalStation);
-        int end = stations.indexOf(departureStation);
+        int start =  stations.indexOf(departureStation);
+        int end = stations.indexOf(arrivalStation);
         List<Station> stationsForCheck = stations.subList(start,end); // list staions for checks
         for(Station station:stationsForCheck){
             if( statuses.get(station) == false){

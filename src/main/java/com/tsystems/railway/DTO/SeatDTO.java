@@ -1,13 +1,13 @@
 package com.tsystems.railway.DTO;
 import java.util.LinkedHashMap;
-
+import java.util.Map;
 
 
 public class SeatDTO {
     private int id;
     private TripDTO tripDto;
     private int number;
-    private LinkedHashMap<StationDTO, Boolean> statuses;
+    private Map<StationDTO, Boolean> statuses;
 
     public SeatDTO(int id, TripDTO tripDto, int number, LinkedHashMap<StationDTO, Boolean> statuses) {
         this.id = id;
@@ -49,11 +49,11 @@ public class SeatDTO {
         this.tripDto = tripDto;
     }
 
-    public LinkedHashMap<StationDTO, Boolean> getStatuses() {
+    public Map<StationDTO, Boolean> getStatuses() {
         return statuses;
     }
 
-    public void setStatuses(LinkedHashMap<StationDTO, Boolean> statuses) {
+    public void setStatuses(Map<StationDTO, Boolean> statuses) {
         this.statuses = statuses;
     }
 }

@@ -1,14 +1,11 @@
 package com.tsystems.railway.service;
 
 import com.tsystems.railway.DTO.*;
-import com.tsystems.railway.entity.Trip;
 
 import java.sql.Date;
 import java.util.List;
 
 public interface TripService {
-
-    void addTrip(TripDTO trip);
 
     void deleteTrip(int id);
 
@@ -17,8 +14,6 @@ public interface TripService {
     List<TripDTO> listTripDTOs();
 
     TripDTO getTripById(int id);
-
-    void addTrip(Trip trip);
 
     List<TripDTO> getTripListWithIds(List<Integer> tripsId);
 
@@ -38,9 +33,9 @@ public interface TripService {
 
     TimeTemplateDTO getTimeTemplateById(int timeTemplateID);
 
-    void addSchedule(ScheduleDTO schedule);
+    List<TripDTO> findRelevantTrips(String departureStationName, String arrivalStationName, Date date);
 
-    void addSeat(SeatDTO seat);
+    List<StationDTO> getAllStation();
 
-
+    List<TicketForm> getScheduleBoardInfo(List<TripDTO> trips, String departStationName, String arriveStationName);
 }

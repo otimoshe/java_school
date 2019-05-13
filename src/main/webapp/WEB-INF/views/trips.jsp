@@ -133,7 +133,7 @@
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: "/routeId",
+            url: "/routes",
             headers: headers,
             data: JSON.stringify({"id": $("select[name='routeId']").val()}),
             //data:{stationId: $('#station').val(),date: $('#date').val()},

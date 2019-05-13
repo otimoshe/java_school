@@ -2,8 +2,7 @@ package com.tsystems.railway.service;
 
 import com.tsystems.railway.DTO.ScheduleDTO;
 import com.tsystems.railway.DTO.StationDTO;
-import com.tsystems.railway.entity.Schedule;
-
+import com.tsystems.railway.DTO.TripDTO;
 import java.sql.Date;
 import java.util.List;
 
@@ -22,5 +21,7 @@ public interface ScheduleService {
     List<ScheduleDTO> getScheduleListForStation(int stationId, Date date);
 
     List<ScheduleDTO> getScheduleFotTripsAtStation(List<Integer> tripsId, Date date,int stationId);
+
+    ScheduleDTO getScheduleByTripStation(TripDTO trip, StationDTO station);
 
 }

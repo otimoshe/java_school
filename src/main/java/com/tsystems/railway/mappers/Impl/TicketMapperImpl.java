@@ -28,7 +28,7 @@ public class TicketMapperImpl implements TicketMapper {
 
     @Override
     public Ticket dtoToEntity(TicketDTO ticketDTO) {
-        long id = ticketDTO.getId();
+        int id = ticketDTO.getId();
         Passenger passenger = passengerMapper.dtoToEntity(ticketDTO.getPassenger());
         Station departureStation = stationMapper.dtoToEntity(ticketDTO.getDepartureStation());
         Station arrivalStation = stationMapper.dtoToEntity(ticketDTO.getArrivalStation());
@@ -42,7 +42,7 @@ public class TicketMapperImpl implements TicketMapper {
 
     @Override
     public TicketDTO entityToDto(Ticket ticket) {
-        long id = ticket.getId();
+        int id = ticket.getId();
         PassengerDTO passengerDTO = passengerMapper.entityToDto(ticket.getPassenger());
         StationDTO departureStation = stationMapper.entityToDto(ticket.getDepartureStation());
         StationDTO arrivalStation = stationMapper.entityToDto(ticket.getArrivalStation());

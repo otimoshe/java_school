@@ -13,7 +13,7 @@ public class Ticket {
     @Id
     @GeneratedValue
     @Column(name = "ticket_id")
-    private long id;
+    private int id;
 
     @OneToOne
     @JoinColumn(name = "passenger_id")
@@ -57,7 +57,7 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(long id, Passenger passenger, Trip trip, Station departureStation, Station arrivalStation, Date departureDate, Date arrivalDate, Seat seat, BigDecimal price) {
+    public Ticket(int id, Passenger passenger, Trip trip, Station departureStation, Station arrivalStation, Date departureDate, Date arrivalDate, Seat seat, BigDecimal price) {
         this.id = id;
         this.passenger = passenger;
         this.trip = trip;
@@ -69,7 +69,7 @@ public class Ticket {
         this.price = price;
     }
 
-    public Ticket(long id,Passenger passenger, Trip trip, Station departureStation, Station arrivalStation, Date departureDate, Date arrivalDate, Time arrivalTime, Time departureTime, Seat seat, BigDecimal price) {
+    public Ticket(int id,Passenger passenger, Trip trip, Station departureStation, Station arrivalStation, Date departureDate, Date arrivalDate, Time arrivalTime, Time departureTime, Seat seat, BigDecimal price) {
         this.id = id;
         this.passenger = passenger;
         this.trip = trip;
@@ -147,11 +147,11 @@ public class Ticket {
         this.price = price;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
