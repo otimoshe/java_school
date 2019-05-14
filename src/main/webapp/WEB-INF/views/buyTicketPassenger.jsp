@@ -17,13 +17,13 @@
 </head>
 <body>
 
-<form:form action="/buyTicket/passenger"  modelAttribute="ticketForm" method="post" >
+<form:form action="/buyTicket/confirmation"  modelAttribute="ticketForm" method="post" >
 
-    <p>Pick a seat</p>
+    <p>Pick a passenger</p>
     <spring:bind path="passengerId">
         <select name = "passengerId" path="passengerId">
-            <c:forEach items="${seatsList}" var="seat">
-                <option value="${seat.id}">${seat.number}</option>
+            <c:forEach items="${passengerList}" var="passenger">
+                <option value="${passenger.id}">${passenger.name} ${passenger.lastName}</option>
             </c:forEach>
         </select>
     </spring:bind>

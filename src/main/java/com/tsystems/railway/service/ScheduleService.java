@@ -24,4 +24,7 @@ public interface ScheduleService {
 
     ScheduleDTO getScheduleByTripStation(TripDTO trip, StationDTO station);
 
+    List<ScheduleDTO> getScheduleByTripsIdStationId(List<Integer> tripsId,int stationId);
+
+    List<ScheduleDTO> getScheduleFoStationIdDepartDate(int id, Date date);
 }

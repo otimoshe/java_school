@@ -12,10 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -38,9 +35,6 @@ public class TripServiceImpl implements TripService {
 
     @Autowired
     private TimeTemplateService timeTemplateService;
-
-    @Autowired
-    private SeatService seatService;
 
     @Autowired
     private StationMapper stationMapper;
@@ -180,28 +174,37 @@ public class TripServiceImpl implements TripService {
         return timeTemplateService.getTimeTemplateById(timeTemplateID);
     }
 
+    @Override
+    public List<TripDTO> listTripsInDay(Date date){
+        return tripMapper.listEntityToDtoList(tripDao.listTripsInDay(date));
+    }
 
     @Override
     public List<TripDTO> findRelevantTrips(String departureStationName, String arrivalStationName, Date date) {
         Station departStation = stationMapper.dtoToEntity(stationService.getStationByName(departureStationName));
         Station arrivalStation = stationMapper.dtoToEntity(stationService.getStationByName(arrivalStationName));
-        List<TripDTO> allTripsDto = this.listTripDTOs();
-        List<Trip> allTrips = tripMapper.listDtoToEntityList(allTripsDto);
-        List<Integer> tripsId = new ArrayList<>();
-        for (Trip trip : allTrips) {
-            Route route = trip.getRoute();
-            if ((route.getStationList().contains(departStation)) && (route.getStationList()).contains(arrivalStation) &&
-                    (route.getStationList().indexOf(departStation) < route.getStationList().indexOf(arrivalStation))) {
-                tripsId.add(trip.getId());
+        List<TripDTO> resultTrips = new ArrayList<>();
+        //find schedule which visit departStation in date
+        List<ScheduleDTO> departSchedules = scheduleService.getScheduleFoStationIdDepartDate(departStation.getId(),date);
+        List<Integer> tripsId = new ArrayList<>();// contains tripId which route visit depart station and arrive station
+        if(departSchedules.size() > 0) {
+            for (ScheduleDTO scheduleDTO : departSchedules) {
+                TripDTO tripDTO = scheduleDTO.getTrip();
+                Trip trip = tripMapper.dtoToEntity(tripDTO);
+                Route route = trip.getRoute();
+                if ((route.getStationList().contains(departStation)) && (route.getStationList()).contains(arrivalStation) &&
+                        (route.getStationList().indexOf(departStation) < route.getStationList().indexOf(arrivalStation))) {
+                    tripsId.add(trip.getId());
+                }
+            }
+            //check trips which visit arrive station at this trip
+            List<ScheduleDTO> arriveSchedules = scheduleService.getScheduleByTripsIdStationId(tripsId, arrivalStation.getId());
+
+
+            for (ScheduleDTO schedule : arriveSchedules) {
+                resultTrips.add(schedule.getTrip());
             }
         }
-        List<ScheduleDTO> schedules = scheduleService.getScheduleFotTripsAtStation(tripsId, date, departStation.getId());
-        List<Integer> resultTripsId = new ArrayList<>();
-        for (ScheduleDTO schedule : schedules) {
-            resultTripsId.add(schedule.getTrip().getId());
-        }
-        List<TripDTO> resultTrips = this.getTripListWithIds(resultTripsId);
-
         return resultTrips;
     }
 
@@ -215,13 +218,19 @@ public class TripServiceImpl implements TripService {
         StationDTO departStation = stationService.getStationByName(departStationName);
         StationDTO arriveStation = stationService.getStationByName(arriveStationName);
         List<TicketForm> result = new ArrayList<>();
-        for (TripDTO trip : trips) {
-            ScheduleDTO departSchedule = scheduleService.getScheduleByTripStation(trip, departStation);
-            ScheduleDTO arriveSchedule = scheduleService.getScheduleByTripStation(trip, arriveStation);
-            BigDecimal price = new BigDecimal(0);
-            result.add(new TicketForm(trip.getTrain().getId(), trip.getRoute().getName(), departSchedule.getDepartureDate(),
-                    departSchedule.getDepartureTime(), arriveSchedule.getArrivalDate(), arriveSchedule.getArrivalTime(), price,trip.getId(),departStation.getId(),arriveStation.getId() ) );
+        for (TripDTO tripDTO : trips) {
+            Trip trip = tripMapper.dtoToEntity(tripDTO);
+            ScheduleDTO departSchedule = scheduleService.getScheduleByTripStation(tripDTO, departStation);
+            ScheduleDTO arriveSchedule = scheduleService.getScheduleByTripStation(tripDTO, arriveStation);
+            BigDecimal price = trip.getRoute().priceCalculate(stationMapper.dtoToEntity(departStation),stationMapper.dtoToEntity(arriveStation));
+            result.add(new TicketForm(tripDTO.getTrain().getId(), tripDTO.getRoute().getName(), departSchedule.getDepartureDate(),
+                    departSchedule.getDepartureTime(), arriveSchedule.getArrivalDate(), arriveSchedule.getArrivalTime(), price,tripDTO.getId(),departStation.getId(),arriveStation.getId() ) );
         }
         return result;
+    }
+
+    @Override
+    public StationDTO getStationbyId(int id) {
+        return stationService.getStationById(id);
     }
 }

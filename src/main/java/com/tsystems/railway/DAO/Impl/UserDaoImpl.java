@@ -35,7 +35,6 @@ public class UserDaoImpl implements UserDao {
 
     public User findByUsername(String username){
         Session session = this.sessionFactory.getCurrentSession();
-
         Query query = session.createQuery("from User where user_name = :name");
         query.setParameter("name", username);
         List<User> users = query.list();

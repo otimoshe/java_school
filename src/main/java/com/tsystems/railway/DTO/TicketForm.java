@@ -16,6 +16,7 @@ public class TicketForm {
     private int departStationId;
     private int arriveStationId;
     private int seatId;
+    private int passengerId;
 
 
     public int getDepartStationId() {
@@ -132,5 +133,13 @@ public class TicketForm {
 
     public void setSeatId(int seatId) {
         this.seatId = seatId;
+    }
+
+    public int getPassengerId() {
+        return passengerId;
+    }
+
+    public void setPassengerId(int passengerId) {
+        this.passengerId = passengerId;
     }
 }

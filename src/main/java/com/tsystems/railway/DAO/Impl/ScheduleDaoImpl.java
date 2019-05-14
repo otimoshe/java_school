@@ -89,4 +89,19 @@ public class ScheduleDaoImpl implements ScheduleDao {
         List<Schedule> schedules = session.createQuery("FROM Schedule  WHERE trip_id ="+tripId+ " and station_id = "+stationId).list();
         return schedules.get(0);
     }
+
+    public List<Schedule> getScheduleByTripsIdStationId(List<Integer> tripsId,int stationId){
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("FROM Schedule  WHERE trip_id IN (:ids) and station_id = "+stationId);
+        query.setParameterList("ids", tripsId);
+        List<Schedule> schedules = query.list();
+        return schedules;
+    }
+
+    @Override
+    public List<Schedule> getScheduleFoStationIdDepartDate(int stationId, Date date) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Schedule> schedules = session.createQuery("FROM Schedule  WHERE departureDate ='"+date+"'  and station_id = "+stationId).list();
+        return schedules;
+    }
 }

@@ -38,4 +38,8 @@ public interface TripService {
     List<StationDTO> getAllStation();
 
     List<TicketForm> getScheduleBoardInfo(List<TripDTO> trips, String departStationName, String arriveStationName);
+
+    StationDTO getStationbyId(int id);
+
+    List<TripDTO> listTripsInDay(Date date);
 }

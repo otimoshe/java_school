@@ -2,6 +2,7 @@ package com.tsystems.railway.DAO;
 
 import com.tsystems.railway.entity.Trip;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface TripDao {
@@ -16,4 +17,6 @@ public interface TripDao {
     List<Trip> listTrips();
 
     List<Trip> getTripListWithIds(List<Integer> tripsId);
+
+    List<Trip> listTripsInDay(Date date);
 }

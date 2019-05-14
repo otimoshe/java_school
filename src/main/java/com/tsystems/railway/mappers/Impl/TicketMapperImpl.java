@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,9 @@ public class TicketMapperImpl implements TicketMapper {
         Trip trip = tripMapper.dtoToEntity(ticketDTO.getTrip());
         Seat seat = seatMapper.dtoToEntity(ticketDTO.getSeat());
         BigDecimal price = ticketDTO.getPrice();
-        return new Ticket(id,passenger,trip,departureStation,arrivalStation,departureDate,arrivalDate,seat,price);
+        Time departTime = ticketDTO.getDepartTime();
+        Time arriveTime= ticketDTO.getArrivalTime();
+        return new Ticket(id,passenger,trip,departureStation,arrivalStation,departureDate,arrivalDate,seat,price,departTime,arriveTime);
     }
 
     @Override
@@ -51,8 +54,10 @@ public class TicketMapperImpl implements TicketMapper {
         TripDTO tripDTO = tripMapper.entityToDto(ticket.getTrip());
         SeatDTO seatDTO = seatMapper.entityToDto(ticket.getSeat());
         BigDecimal price = ticket.getPrice();
+        Time departTime = ticket.getDepartureTime();
+        Time arriveTime = ticket.getArrivalTime();
 
-        return new TicketDTO(id,passengerDTO, tripDTO,departureStation,arrivalStation,departureDate,arrivalDate,seatDTO,price);
+        return new TicketDTO(id,passengerDTO, tripDTO,departureStation,arrivalStation,departureDate,arrivalDate,seatDTO,price,departTime,arriveTime);
     }
 
     @Override

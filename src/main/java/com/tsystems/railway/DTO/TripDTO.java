@@ -2,7 +2,8 @@ package com.tsystems.railway.DTO;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
+import java.util.Objects;
+
 
 public class TripDTO implements Serializable {
 
@@ -62,5 +63,18 @@ public class TripDTO implements Serializable {
 
     public void setTrain(TrainDTO trainId) {
         this.train = trainId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TripDTO tripDTO = (TripDTO) o;
+        return id == tripDTO.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -13,7 +13,7 @@ public class User {
     @Id
     @Column(name ="user_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column(name = "user_name")
     private String username;
@@ -29,11 +29,13 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @ManyToMany
+   /* @ManyToMany
     @JoinTable(name = "user_passenger",
                 joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "passenger_id"))
-    private Set<Passenger> passengers;
+    private Set<Passenger> passengers;*/
+   @OneToMany
+   private Set<Passenger> passengers;
 
     public Role getRole() {
         return role;
@@ -43,11 +45,11 @@ public class User {
         this.role = role;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -62,5 +62,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     public ScheduleDTO getScheduleByTripStation(TripDTO trip,StationDTO station){
         return scheduleMapper.entityToDto(scheduleDao.getScheduleByTripStation(trip.getId(),station.getId()));
     }
+    public List<ScheduleDTO> getScheduleByTripsIdStationId(List<Integer> tripsId,int stationId){
+        return scheduleMapper.listEntityToDtoList(scheduleDao.getScheduleByTripsIdStationId(tripsId,stationId));
+    }
 
+    @Override
+    public List<ScheduleDTO> getScheduleFoStationIdDepartDate(int id, Date date) {
+        return  scheduleMapper.listEntityToDtoList(scheduleDao.getScheduleFoStationIdDepartDate(id,date));
+    }
 }

@@ -49,4 +49,12 @@ public class PassengerDaoImpl implements PassengerDao {
         List<Passenger>  passengers = session.createQuery("from Passenger").list();
         return passengers;
     }
+
+    @Override
+    public List<Passenger> getPassengerListForUser(int userId) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Passenger>  passengers = session.createQuery("from Passenger where user_id = " + userId).list();
+        return passengers;
+    }
+
 }

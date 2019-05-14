@@ -11,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,12 +36,6 @@ public class MainPageController {
     StationService stationService;
 
     @Autowired
-    PassengerMapper passengerMapper;
-    
-    @Autowired
-    RouteMapper routeMapper;
-    
-    @Autowired
     StationMapper stationMapper;
 
     @Autowired
@@ -49,7 +45,7 @@ public class MainPageController {
     ScheduleService scheduleService;
 
     @Autowired
-    BuyTicketService buyTicketService;
+    PassengerService passengerService;
 
   /*  @RequestMapping(value = "/tripList", method = RequestMethod.GET)
     public String listTrips(Model model) {
@@ -59,15 +55,17 @@ public class MainPageController {
         return "tripList";
     }*/
 
-    @RequestMapping(value = ("/buyTicket/seat"), method = RequestMethod.POST)
-    public String ticket( Model model,TicketForm ticketForm) {
-        model.addAttribute("passengerList",);
+    @RequestMapping(value = ("/buyTicket/seat"), method = RequestMethod.POST) //passenger
+    public String pickPassenger( Model model,TicketForm ticketForm) {
+        String username =  SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username);
+        model.addAttribute("passengerList",passengerService.getPassengerListForUser(user.getId()));
 
-        return "passenger";
+        return "buyTicketPassenger";
     }
 
 
-    @RequestMapping(value = ("/buyForTrip/{id}"), method = RequestMethod.POST)
+ /*   @RequestMapping(value = ("/buyForTrip/{id}"), method = RequestMethod.POST)
     public String buyTicket( Model model,
                              @PathVariable("id") int tripId,
                              @ModelAttribute("seatId") Integer seatId,
@@ -76,14 +74,14 @@ public class MainPageController {
 
 
         String username =  SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.findByUsername(username);
-        PassengerDTO passenger = passengerMapper.entityToDto(user.getPassengers().stream().findFirst().get());
+       User user = userService.findByUsername(username);
+       PassengerDTO passenger = passengerMapper.entityToDto(user.getPassengers().stream().findFirst().get());
        return "";
-    }
+    }*/
 
     @RequestMapping(value = "/userSchedule",method = RequestMethod.GET)
     public String userSchedule(Model model){
-        model.addAttribute("stationList",stationService.listStations());
+        model.addAttribute("stationList",tripService.getAllStation());
 
         return "userSchedule";
     }
@@ -122,12 +120,18 @@ public class MainPageController {
         return "tripList";
     }
 
-    @RequestMapping(value = ("buyTicket"), method = RequestMethod.POST)
-    public String buyTicket(Model model,@ModelAttribute("ticketForm") TicketForm ticketForm){
+    @RequestMapping(value = ("buyTicket"), method = RequestMethod.POST) //seat
+    public String pickSeat(Model model,@ModelAttribute("ticketForm") TicketForm ticketForm){
         StationDTO departStation = stationService.getStationById(ticketForm.getDepartStationId());
         StationDTO arriveStation = stationService.getStationById(ticketForm.getArriveStationId());
         model.addAttribute("seatsList", seatService.getAvailableSeatForTrip(ticketForm.getTripId(),departStation,arriveStation));
         return "buyTicketSeat";
+    }
+    @RequestMapping(value = "/buyTicket/confirmation", method = RequestMethod.POST)
+    public String confirm(Model model,TicketForm ticketForm,SessionStatus status){
+        ticketService.buyTicket(ticketForm);
+        status.setComplete();
+        return "";
     }
 
 }

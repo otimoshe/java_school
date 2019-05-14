@@ -2,6 +2,7 @@ package com.tsystems.railway.DTO;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Time;
 
 public class TicketDTO {
     private int id;
@@ -11,6 +12,8 @@ public class TicketDTO {
     private StationDTO arrivalStation;
     private Date departureDate;
     private Date arrivalDate;
+    private Time arrivalTime;
+    private Time departTime;
     private SeatDTO seat;
     private BigDecimal price;
 
@@ -35,6 +38,50 @@ public class TicketDTO {
         this.arrivalDate = arrivalDate;
         this.seat = seat;
         this.price = price;
+    }
+
+    public TicketDTO(PassengerDTO passenger, TripDTO trip, StationDTO departureStation, StationDTO arrivalStation, Date departureDate, Date arrivalDate, Time arrivalTime, Time departTime, SeatDTO seat, BigDecimal price) {
+        this.passenger = passenger;
+        this.trip = trip;
+        this.departureStation = departureStation;
+        this.arrivalStation = arrivalStation;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.arrivalTime = arrivalTime;
+        this.departTime = departTime;
+        this.seat = seat;
+        this.price = price;
+    }
+
+    public TicketDTO(int id, PassengerDTO passengerDTO, TripDTO tripDTO, StationDTO departureStation, StationDTO arrivalStation, Date departureDate, Date arrivalDate,
+                     SeatDTO seatDTO, BigDecimal price, Time departTime, Time arriveTime) {
+        this.id = id;
+        this.passenger = passengerDTO;
+        this.trip = tripDTO;
+        this.departureStation = departureStation;
+        this.arrivalStation = arrivalStation;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.arrivalTime = arriveTime;
+        this.departTime = departTime;
+        this.seat = seatDTO;
+        this.price = price;
+    }
+
+    public Time getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(Time arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public Time getDepartTime() {
+        return departTime;
+    }
+
+    public void setDepartTime(Time departTime) {
+        this.departTime = departTime;
     }
 
     public TicketDTO() {

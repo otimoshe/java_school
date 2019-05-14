@@ -3,7 +3,7 @@ package com.tsystems.railway.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Set;
+
 
 @Entity
 @Table(name = "passengers")
@@ -23,8 +23,9 @@ public class Passenger {
     @Column(name = "date_of_birth")
     private Date birhtDate;
 
-    @ManyToMany(mappedBy = "passengers")
-    private Set<User> users;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
 
     public Passenger(int id, String name, String lastName, Date birhtDate) {
         this.id = id;
@@ -76,5 +77,13 @@ public class Passenger {
 
     public void setBirhtDate(Date birhtDate) {
         this.birhtDate = birhtDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

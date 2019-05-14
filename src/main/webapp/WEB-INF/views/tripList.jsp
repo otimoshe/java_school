@@ -77,5 +77,9 @@
         </c:forEach>
     </table>
 </c:if>
+
+<c:if test="${empty searchResult}">
+    Trips not found
+</c:if>
 </body>
 </html>
