@@ -6,8 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-
 import java.util.List;
 
 @Repository
@@ -38,7 +36,6 @@ public class SeatDaoImpl implements SeatDao {
     }
 
     @Override
-
     public List<Seat> listSeatsForTrip(int tripId) {
         Session session = sessionFactory.getCurrentSession();
         List<Seat> seats = session.createQuery("from Seat where trip_id=" + tripId).list();

@@ -4,7 +4,6 @@ import com.tsystems.railway.DAO.ScheduleDao;
 import com.tsystems.railway.DTO.ScheduleDTO;
 import com.tsystems.railway.DTO.StationDTO;
 import com.tsystems.railway.DTO.TripDTO;
-import com.tsystems.railway.entity.Schedule;
 import com.tsystems.railway.mappers.ScheduleMapper;
 import com.tsystems.railway.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;

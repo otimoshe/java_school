@@ -36,19 +36,10 @@ public class RouteServiceImpl implements RouteService {
     public void addRoute(RouteDTO route) {
         routeDao.addRoute(routeMapper.dtoToEntity(route));
     }
+
     @Override
     public void addRoute(AddRouteForm form){
-        RouteDTO route = new RouteDTO();
-        route.setName(form.getName());
-        route.setFirstStation(stationService.getStationById(form.getFirstStationId()));
-        route.setPrice(form.getPrice());
-        Set<PathDTO> paths = new HashSet<>();
-        for(String id:form.getPathIds()){
-            paths.add(pathService.getPathById(Integer.parseInt(id)));
-        }
-        route.setPaths(paths);
-        this.addRoute(route);
-
+        this.addRoute(this.routeDTOfromRouteFormDTO(form));
     }
 
     @Override
@@ -81,4 +72,18 @@ public class RouteServiceImpl implements RouteService {
         return this.routeMapper.listEntityToDtoList(this.getRouteList());
     }
 
+    @Override
+    public  RouteDTO routeDTOfromRouteFormDTO(AddRouteForm form){
+        RouteDTO route = new RouteDTO();
+        route.setName(form.getName());
+        route.setFirstStation(stationService.getStationById(form.getFirstStationId()));
+        route.setPrice(form.getPrice());
+        Set<PathDTO> paths = new HashSet<>();
+        for(String id:form.getPathIds()){
+            paths.add(pathService.getPathById(Integer.parseInt(id)));
+        }
+        route.setPaths(paths);
+
+        return route;
+    }
 }

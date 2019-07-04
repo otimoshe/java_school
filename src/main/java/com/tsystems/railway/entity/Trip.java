@@ -1,13 +1,7 @@
 package com.tsystems.railway.entity;
 
-
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
-
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,7 +30,7 @@ public class Trip {
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL)
     private Set<Seat> seats;
 
-    @OneToMany(mappedBy = "trip")
+    @OneToMany(mappedBy = "trip",cascade = CascadeType.REMOVE)
     private Set<Ticket>tickets;
 
     public Trip(int id,Route route, Date departure_date, Train train) {

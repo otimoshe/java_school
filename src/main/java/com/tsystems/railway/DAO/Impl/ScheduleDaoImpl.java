@@ -1,25 +1,16 @@
 package com.tsystems.railway.DAO.Impl;
 
 import com.tsystems.railway.DAO.ScheduleDao;
-import com.tsystems.railway.DTO.ScheduleDTO;
-import com.tsystems.railway.DTO.StationDTO;
-import com.tsystems.railway.DTO.TripDTO;
 import com.tsystems.railway.entity.Schedule;
-import com.tsystems.railway.entity.Trip;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.annotations.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.TemporalType;
 import java.sql.Date;
 import java.util.List;
 
 @Repository
-
 public class ScheduleDaoImpl implements ScheduleDao {
 
     @Autowired

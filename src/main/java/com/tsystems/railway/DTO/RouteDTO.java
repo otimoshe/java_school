@@ -29,7 +29,7 @@ public class RouteDTO {
         this.stationList = stationList;
     }
 
-    //TODO delete  pathsDTOSet ????
+
 
     public Set<PathDTO> getPaths() {
         return paths;

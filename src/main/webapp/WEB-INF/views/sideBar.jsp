@@ -52,6 +52,7 @@
         <li><a href="/routes"><i class="icon icon-fullscreen"></i> <span>Routes</span></a></li>
         <li><a href="/templates"><i class="icon icon-tint"></i> <span>Templates</span></a></li>
         <li><a href="/trips"><i class="icon icon-pencil"></i> <span>Trips</span></a></li>
+        <li><a href="/userSchedule"><i class="icon icon-pencil"></i> <span>Station schedule</span></a></li>
     </ul>
 </div>
 </body>

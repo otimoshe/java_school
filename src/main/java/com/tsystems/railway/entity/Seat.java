@@ -1,7 +1,5 @@
 package com.tsystems.railway.entity;
 
-
-
 import javax.persistence.*;
 import java.util.*;
 
@@ -94,7 +92,5 @@ public class Seat {
     public void setSeatStatuses(HashSet<SeatStatus> seatStatuses) {
         this.seatStatuses = seatStatuses;
     }
-
-
 }
 

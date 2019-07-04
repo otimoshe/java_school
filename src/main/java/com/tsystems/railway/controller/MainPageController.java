@@ -1,9 +1,8 @@
 package com.tsystems.railway.controller;
 
 import com.tsystems.railway.DTO.*;
+import com.tsystems.railway.entity.Passenger;
 import com.tsystems.railway.entity.User;
-import com.tsystems.railway.mappers.PassengerMapper;
-import com.tsystems.railway.mappers.RouteMapper;
 import com.tsystems.railway.mappers.StationMapper;
 import com.tsystems.railway.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,38 +45,34 @@ public class MainPageController {
     @Autowired
     PassengerService passengerService;
 
-  /*  @RequestMapping(value = "/tripList", method = RequestMethod.GET)
-    public String listTrips(Model model) {
-        model.addAttribute("ticket" , new TicketDTO());
-        model.addAttribute("listTrips", this.tripService.listTripDTOs());
-        model.addAttribute("stations",tripService.getAllStation());
-        return "tripList";
-    }*/
-
     @RequestMapping(value = ("/buyTicket/seat"), method = RequestMethod.POST) //passenger
     public String pickPassenger( Model model,TicketForm ticketForm) {
         String username =  SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
         model.addAttribute("passengerList",passengerService.getPassengerListForUser(user.getId()));
+        model.addAttribute("passenger",new Passenger());
 
         return "buyTicketPassenger";
     }
 
-
- /*   @RequestMapping(value = ("/buyForTrip/{id}"), method = RequestMethod.POST)
-    public String buyTicket( Model model,
-                             @PathVariable("id") int tripId,
-                             @ModelAttribute("seatId") Integer seatId,
-                             @ModelAttribute("departId") Integer departId,
-                             @ModelAttribute("arriveId") Integer arriveId) {
-
-
+    @RequestMapping(value = ("/passenger"), method = RequestMethod.POST) //passenger
+    public String  addPassenger( Model model,Passenger passenger) {
         String username =  SecurityContextHolder.getContext().getAuthentication().getName();
-       User user = userService.findByUsername(username);
-       PassengerDTO passenger = passengerMapper.entityToDto(user.getPassengers().stream().findFirst().get());
-       return "";
-    }*/
+        User user = userService.findByUsername(username);
+        passenger.setUser(user);
+        this.passengerService.addPassenger(passenger);
 
+        return "redirect:passenger";
+    }
+
+    @RequestMapping(value = ("/passenger"), method = RequestMethod.GET) //passenger
+    public String  pickPassenger( Model model) {
+        String username =  SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username);
+        model.addAttribute("passengerList",passengerService.getPassengerListForUser(user.getId()));
+        model.addAttribute("passenger",new Passenger());
+        return "buyTicketPassenger";
+    }
     @RequestMapping(value = "/userSchedule",method = RequestMethod.GET)
     public String userSchedule(Model model){
         model.addAttribute("stationList",tripService.getAllStation());
@@ -117,6 +111,7 @@ public class MainPageController {
         List<TripDTO> tripList = this.tripService.findRelevantTrips(departureStationName,arrivalStationName,date);
         model.addAttribute("searchResult",this.tripService.getScheduleBoardInfo(tripList,departureStationName,arrivalStationName));
         model.addAttribute("ticketForm", new TicketForm());
+
         return "tripList";
     }
 
@@ -131,7 +126,7 @@ public class MainPageController {
     public String confirm(Model model,TicketForm ticketForm,SessionStatus status){
         ticketService.buyTicket(ticketForm);
         status.setComplete();
-        return "";
+        return "successfulBuy";
     }
 
 }

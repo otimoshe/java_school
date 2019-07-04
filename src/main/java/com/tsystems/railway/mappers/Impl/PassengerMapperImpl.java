@@ -4,6 +4,7 @@ package com.tsystems.railway.mappers.Impl;
 
 import com.tsystems.railway.DTO.PassengerDTO;
 import com.tsystems.railway.entity.Passenger;
+import com.tsystems.railway.entity.User;
 import com.tsystems.railway.mappers.PassengerMapper;
 import org.springframework.stereotype.Component;
 

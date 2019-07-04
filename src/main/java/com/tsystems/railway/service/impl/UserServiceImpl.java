@@ -2,7 +2,9 @@ package com.tsystems.railway.service.impl;
 
 import com.tsystems.railway.DAO.RoleDao;
 import com.tsystems.railway.DAO.UserDao;
+import com.tsystems.railway.DTO.UserDTO;
 import com.tsystems.railway.entity.User;
+import com.tsystems.railway.mappers.UserMapper;
 import com.tsystems.railway.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +25,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     @Transactional
     public void addUser(User user) {
@@ -33,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        return userDao.findByUsername(username);
+        return  userDao.findByUsername(username);
     }
 
 }

@@ -31,6 +31,12 @@ public class StationDTO {
         this.name = name;
     }
 
+    public StationDTO(StationDTO stationDTO) {
+        this.id = stationDTO.id;
+        this.name = stationDTO.name;
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

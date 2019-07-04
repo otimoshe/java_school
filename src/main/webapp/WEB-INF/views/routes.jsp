@@ -96,7 +96,7 @@
                                     <label class="control-label"> First station:</label>
                                     <spring:bind path="firstStationId">
                                         <div class="controls">
-                                            <select name="firstStationId" onchange="getPaths()">
+                                            <select name="firstStationId" onchange="getPaths()" required="true">
                                                 <option value="" style="display:none;" selected></option>
                                                 <c:forEach items="${listStations}" var="station">
                                                     <option value="${station.id}">${station.name}</option>
@@ -107,17 +107,18 @@
                                 <div class="control-group">
                                     <label class="control-label"> Paths:</label>
                                     <div class="controls">
-                                        <select class="path" name="paths" required="true">
+                                        <select class="path" name="paths" required="true" id ="paths">
                                         </select>
                                         <button id="pathButton" type="button"> Add path</button>
                                     </div>
                                 </div>
+                                <form:errors path="pathIds" />
                                 <div class="form-actions">
                                     <button id="submit"type="submit" class="btn btn-success">Save</button>
                                 </div>
                                 <sec:csrfInput/>
                             </form:form>
-                            <div id="alert"></div>
+                            <div id="alert">${error}</div>
                         </div>
                     </div>
                 </div>
@@ -142,6 +143,7 @@
     }
 
     function validate_form() {
+        console.log("validate");
         var validate = true;
         document.getElementById('alert').innerHTML = "";
         var routes = getRouteList();
@@ -172,6 +174,7 @@
     }
     count = 0;
     $("#pathButton").click(function () {
+
         var selectBoxHtml = ["<select class =\"path\"> "];
         var pathList = [], path;
         <c:forEach var="path" items="${listPaths}">
@@ -188,6 +191,7 @@
     });
 
     $("#submit").click(function () {
+        console.log("submit");
         $('.path').each(function (index) {
             paths.push($(this).val());
         });
@@ -207,6 +211,14 @@
         var headers = {};
         headers[csrfHeader] = csrfToken;
         console.log()
+        //clear options from previous station
+        var sel = $("#paths");
+        sel.empty();
+        console.log(length);
+        for (i = 0; i < length; i++) {
+            console.log("trtrtrtr");
+            select.options[i] = null;
+        }
         $.ajax({
             type: "POST",
             contentType: "application/json",

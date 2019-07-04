@@ -8,19 +8,21 @@ import java.util.List;
 
 public interface RouteService {
 
-     void addRoute(RouteDTO route);
+    void addRoute(RouteDTO route);
 
-     void updateRoute(RouteDTO route);
+    void updateRoute(RouteDTO route);
 
-     void deleteRoute(int id);
+    void deleteRoute(int id);
 
-     Route getRouteById(int id);
+    Route getRouteById(int id);
 
-     RouteDTO getRouteDTOById(int id);
+    RouteDTO getRouteDTOById(int id);
 
-     List<Route>getRouteList();
+    List<Route> getRouteList();
 
-     List<RouteDTO> getDtoRouteList();
+    List<RouteDTO> getDtoRouteList();
 
-     void addRoute(AddRouteForm form);
+    void addRoute(AddRouteForm form);
+
+    RouteDTO routeDTOfromRouteFormDTO(AddRouteForm form);
 }

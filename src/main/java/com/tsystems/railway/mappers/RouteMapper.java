@@ -1,5 +1,6 @@
 package com.tsystems.railway.mappers;
 
+import com.tsystems.railway.DTO.AddRouteForm;
 import com.tsystems.railway.DTO.RouteDTO;
 import com.tsystems.railway.entity.Route;
 
@@ -14,4 +15,6 @@ public interface RouteMapper {
     List<RouteDTO> listEntityToDtoList(List<Route> routeList);
 
     List<Route> listDtoToEntityList(List<RouteDTO> dtoList);
+
+
 }

@@ -39,49 +39,46 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="${contextPath}/resources/css/fullcalendar.css"/>
+    <link rel="stylesheet" href="${contextPath}/resources/css/matrix-style.css"/>
+    <link rel="stylesheet" href="${contextPath}/resources/css/matrix-media.css"/>
 </head>
 
 <body>
+<div id="search">
+    <c:if test="${pageContext.request.userPrincipal.name != null}">
+        <form id="logoutForm" method="POST" action="${contextPath}/logout">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+
+        <buttom class="btn btn-success btn-large" onclick="document.forms['logoutForm'].submit()">Logout</buttom>
+    </c:if>
+</div>
 <div id="booking" class="section">
     <div class="section-center">
         <div class="container">
             <div class="row">
                 <div class="booking-form">
-                    <form action="/findTrips">
-                        <div class="form-group">
-                            <div class="form-checkbox">
-                                <label for="roundtrip">
-                                    <input type="radio" id="roundtrip" name="flight-type">
-                                    <span></span>Roundtrip
-                                </label>
-                                <label for="one-way">
-                                    <input type="radio" id="one-way" name="flight-type">
-                                    <span></span>One way
-                                </label>
-                                <label for="multi-city">
-                                    <input type="checkbox" id="multi-city" name="flight-type">
-                                    <span></span>Multi-City
-                                </label>
-                            </div>
-                        </div>
+                    <form action="/findTrips" onsubmit="return validate_form()">
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <span class="form-label">From</span>
-                                    <select name="departStation" class="js-example-basic-single">
+                                    <select name="departStation" class="js-example-basic-single"  id="departStation">
                                         <c:forEach items="${stations}" var="station">
                                             <option value="${station.name}">${station.name}</option>
                                         </c:forEach>
                                     </select>
-
                                     <%--   <input class="form-control" type="text" placeholder="City or station"> --%>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <span class="form-label">To</span>
-                                    <select name="arriveStation" class="js-example-basic-single">
+                                    <select name="arriveStation" class="js-example-basic-single"  id="arriveStation">
                                         <c:forEach items="${stations}" var="station">
                                             <option value="${station.name}">${station.name}</option>
                                         </c:forEach>
@@ -96,34 +93,6 @@
                                     <input class="form-control" type="date" required name="date">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <span class="form-label">Returning</span>
-                                    <input class="form-control" type="date">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <span class="form-label">Adults (18+)</span>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                    </select>
-                                    <span class="select-arrow"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <span class="form-label">Children (0-17)</span>
-                                    <select class="form-control">
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                    </select>
-                                    <span class="select-arrow"></span>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3">
@@ -132,6 +101,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="alert"></div>
                     </form>
                 </div>
             </div>
@@ -142,9 +112,26 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('.js-example-basic-single').prepend('<option selected></option>').select2({
-            placeholder: "Select a city or station",
+            placeholder: "Select a city or airport",
             allowClear: true
         });
     });
+    
+    function validate_form() {
+        var validate = true;
+        document.getElementById('alert').innerHTML = '';
+        console.log(" val = "+ $("#departStation").val());
+        if ($("#departStation").val()=="" ){
+            document.getElementById('alert').innerHTML += "<p style='color:red'>" + "Field \"FROM\"  should not be empty!!" + "</p>";
+            validate = false;
+        }
+        if ($("#arriveStation").val()=="" ){
+            document.getElementById('alert').innerHTML += "<p style='color:red'>" + "Field \"TO\"  should not be empty!!" + "</p>";
+            validate = false;
+        }
+        return validate;
+    }
 </script>
+
+
 </html>

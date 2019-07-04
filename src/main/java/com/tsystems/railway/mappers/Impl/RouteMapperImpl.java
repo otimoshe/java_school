@@ -1,5 +1,6 @@
 package com.tsystems.railway.mappers.Impl;
 
+import com.tsystems.railway.DTO.AddRouteForm;
 import com.tsystems.railway.DTO.PathDTO;
 import com.tsystems.railway.DTO.RouteDTO;
 import com.tsystems.railway.DTO.StationDTO;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -24,6 +24,8 @@ public class RouteMapperImpl implements RouteMapper {
 
     @Autowired
     private PathMapper pathMapper;
+
+
 
     @Override
     public Route dtoToEntity(RouteDTO routeDTO) {
@@ -64,4 +66,5 @@ public class RouteMapperImpl implements RouteMapper {
         }
         return list;
     }
+
 }

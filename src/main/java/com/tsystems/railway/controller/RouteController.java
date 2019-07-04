@@ -4,10 +4,12 @@ import com.tsystems.railway.DTO.*;
 import com.tsystems.railway.service.PathService;
 import com.tsystems.railway.service.RouteService;
 import com.tsystems.railway.service.StationService;
+import com.tsystems.railway.validator.RouteValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +26,9 @@ public class RouteController {
     @Autowired
     private PathService pathService;
 
+    @Autowired
+    private RouteValidator routeValidator;
+
     @RequestMapping(value = "routes", method = RequestMethod.GET)
     public String listRoutes(Model model) {
         model.addAttribute("route", new RouteDTO());
@@ -35,7 +40,14 @@ public class RouteController {
     }
 
     @RequestMapping(value = "/route", method = RequestMethod.POST)
-    public String addRoute(@ModelAttribute("dto") AddRouteForm form,@RequestParam MultiValueMap body ) {
+    public String addRoute(@ModelAttribute("dto") AddRouteForm form,Model model,BindingResult bindingResult) {
+        model.addAttribute("listRoutes", this.routeService.getRouteList());
+        model.addAttribute("listPaths",this.pathService.getPathList());
+        model.addAttribute("listStations",this.stationService.listStations());
+         routeValidator.validate(this.routeService.routeDTOfromRouteFormDTO(form),bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "routes";
+        }
         routeService.addRoute(form);
         return "redirect:/routes";
     }

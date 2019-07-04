@@ -23,7 +23,7 @@
         <div class="row-fluid">
             <div class="span6">
                 <div class="widget-box">
-                    <table class="table table-bordered data-table">
+                    <table class="table table-bordered data-table" id="tableData">
                         <thead>
                         <tr>
                             <th>Station</th>
@@ -33,24 +33,28 @@
                         </thead>
                         <tbody>
                         <form:form action="/template/{id}/times" modelAttribute="times" method="post"
-                                   class="form-horizontal">
+                                   class="form-horizontal" onsubmit="return valdate_time_template_form()">
                         <c:forEach items="${times.templateStationMap}" var="template">
                             <tr>
-                                <td><input type="text" readonly value="${template.key}" class="span11"/></td>
-                                <td><form:input path="templateStationMap['${template.key}'][0]" type="text"
-                                                class="timepicker span11"
-                                                value="${template.value.get(0)}"/></td>
-                                <td><form:input path="templateStationMap['${template.key}'][1]" type="text"
-                                                class="timepicker span11"
-                                                value="${template.value.get(1)}"/></td>
+                                <td class="tdvalue"><input type="text" readonly value="${template.key}" class="span11"/>
+                                </td>
+                                <td class="tdvalue"><form:input path="templateStationMap['${template.key}'][0]"
+                                                                type="text"
+                                                                class="timepicker span11"
+                                                                value="${template.value.get(0)}"/></td>
+                                <td class="tdvalue"><form:input path="templateStationMap['${template.key}'][1]"
+                                                                type="text"
+                                                                class="timepicker span11"
+                                                                value="${template.value.get(1)}"/></td>
                             </tr>
                         </c:forEach>
                         <tr><form:input path="templateId" value="${times.templateId}" type="hidden"/></tr>
-                        <div id="alert"></div>
-                        </tr>
+
+
                         </tbody>
                     </table>
                 </div>
+                <div id="alert"></div>
                 <button type="submit" class="btn btn-info">Edit</button>
             </div>
             <sec:csrfInput/>
@@ -66,12 +70,34 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.timepicker').timepicker({
             timeFormat: 'HH:mm:ss',
             interval: 60
         });
     });
+
+    function valdate_time_template_form() {
+        var validate = true;
+        var rows = [];
+        $("#tableData tr").each(function () {
+            $tr = $(this);
+            var row = [];
+            $tr.find(".tdvalue").each(function () {
+                row.push($(this).children('input').val());
+            });
+            rows.push(row);
+        });
+        for (var i = 1; i < rows.length - 1; i++) {
+            if (((rows[i][1] == "") && (rows[i][2] !== "")) || ((rows[i][1] !== "") && (rows[i][2] == ""))) {
+                validate = false;
+                document.getElementById('alert').innerHTML = "<p>" + "Arrival or departure time should not be empty!" + "</p>";
+                break;
+            }
+        }
+        return validate;
+    }
+
 </script>
 
 </html>

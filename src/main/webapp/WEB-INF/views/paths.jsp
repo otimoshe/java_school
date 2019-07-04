@@ -34,7 +34,7 @@
             var validate = true;
             document.getElementById('alert').innerHTML = "";
             if (document.getElementById('station').value == document.getElementById('nextStation').value) {
-                document.getElementById('alert').innerHTML += "<p>" + "Stations must not be the same" + "</p>";
+                document.getElementById('alert').innerHTML += "<p>" + "Airpots must not be the same" + "</p>";
                 validate = false;
             }
             var paths = getPathList();
@@ -69,8 +69,8 @@
                             <thead>
                             <tr>
                                 <th >ID</th>
-                                <th >Station</th>
-                                <th >Station</th>
+                                <th >Airport</th>
+                                <th >Airport</th>
                                 <th >Distance</th>
                                 <th >Edit</th>
                                 <th >Delete</th>
@@ -116,7 +116,7 @@
                                     </div>
                                 </spring:bind>
                                 <div class="control-group">
-                                    <label class="control-label">Stations:</label>
+                                    <label class="control-label">Airports:</label>
                                     <div class="controls">
                                         <select name="stationId" id="station">
                                             <c:forEach items="${listStations}" var="station">

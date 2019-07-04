@@ -23,7 +23,7 @@
             <div class="span6">
                 <div class="widget-box">
                     <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
-                        <h5>Trains list</h5>
+                        <h5>Train list</h5>
                     </div>
                     <c:if test="${!empty listTrains}">
                         <table class="table table-bordered data-table">

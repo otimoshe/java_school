@@ -1,7 +1,4 @@
 package com.tsystems.railway.entity;
-
-
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -36,6 +33,15 @@ public class User {
     private Set<Passenger> passengers;*/
    @OneToMany
    private Set<Passenger> passengers;
+
+    public User(int id ,String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
+    public User() {
+    }
 
     public Role getRole() {
         return role;

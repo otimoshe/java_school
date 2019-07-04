@@ -7,7 +7,7 @@
 <jsp:include page="sideBar.jsp"/>
 <html>
 <head>
-    <title>Staions Page</title>
+    <title>Stations Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
         function getStationNameList() {
@@ -79,7 +79,7 @@
                 <div class="span6">
                     <div class="widget-box">
                         <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
-                            <h5>Add Station</h5>
+                            <h5>Add a Station</h5>
                         </div>
                         <div class="widget-content nopadding">
                             <form:form action="/station" modelAttribute="station" method="post"

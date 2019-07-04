@@ -1,5 +1,7 @@
 package com.tsystems.railway.DTO;
 
+import com.tsystems.railway.entity.User;
+
 import java.sql.Date;
 
 public class PassengerDTO {
@@ -8,6 +10,7 @@ public class PassengerDTO {
     private String name;
     private String lastName;
     private Date birthday;
+
 
     public PassengerDTO(int id, String name, String lastName, Date birthday) {
         this.id = id;
@@ -51,4 +54,8 @@ public class PassengerDTO {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
+
+
+
+
 }

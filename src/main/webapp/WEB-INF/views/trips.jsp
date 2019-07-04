@@ -38,7 +38,7 @@
                                 <th>ID</th>
                                 <th>Route name</th>
                                 <th>Departure Date</th>
-                                <th>Train id</th>
+                                <th>Airplane id</th>
                                 <th>Schedule</th>
                                 <th>Tickets</th>
                                 <th>Delete</th>
@@ -102,7 +102,7 @@
                             </div>
 
                             <div class="control-group">
-                                <label class="control-label">Train:</label>
+                                <label class="control-label">Airplane:</label>
                                 <div class="controls">
                                     <select name="trainId" class="span11">
                                         <c:forEach items="${trainList}" var="train">

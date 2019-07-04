@@ -2,8 +2,10 @@ package com.tsystems.railway.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "routes")
@@ -33,7 +35,7 @@ public class Route {
     @OneToMany(mappedBy = "route")
     private Set<Trip> trips;
 
-    @OneToMany(mappedBy = "route")
+    @OneToMany(mappedBy = "route",cascade = CascadeType.REMOVE)
     private Set<TimeTemplate> templates;
 
     public Route(String name, BigDecimal price, Station firstStation, Set<Path> paths) {
@@ -89,15 +91,6 @@ public class Route {
         return stationList;
     }
 
-    public List<Station> getSubRoute(Station start, Station end) {
-        List<Station> stationList = this.getStationList();
-        int startIndex = stationList.indexOf(start);
-        int endIndec = stationList.indexOf(end);
-        List<Station> subRoute = stationList.subList(startIndex, endIndec);
-        subRoute.add(end);
-        return subRoute;
-    }
-
     public int getId() {
         return id;
     }
@@ -134,50 +127,14 @@ public class Route {
         return paths;
     }
 
-    public Station getLastStation(){
-        List<Station>stations = this.getStationList();
-        return stations.get(stations.size()-1);
+    public Station getLastStation() {
+        List<Station> stations = this.getStationList();
+        return stations.get(stations.size() - 1);
     }
 
     public void setPaths(Set<Path> paths) {
         this.paths = paths;
     }
 
-    public BigDecimal priceCalculate(Station departStation, Station arriveStation) {
-        List<Station> subRoute = getSubRoute(departStation, arriveStation);
-        if (subRoute.get(0).equals(this.firstStation) && (subRoute.get(subRoute.size()-1).equals(this.getLastStation()))){
-            return this.price;
-        }
-        double subRouteDistance = 0;
-        double routeDistance = 0;
-        for (Path path : paths) {
-            routeDistance += path.getDistance();
-        }
-        HashSet<Path> paths = new HashSet<Path>(this.getPaths());
-        Station currentStation = subRoute.get(0);
-        Station nextStation = subRoute.get(1);
-        int i = 1;
-        while( i < subRoute.size( ) ) {
-            Iterator<Path> iterator = paths.iterator();
-            while (iterator.hasNext()) {
-                Path path = iterator.next();
-                if ((path.getStation().equals(currentStation) && (path.getNextStation().equals(nextStation))) ||
-                        (path.getStation().equals(nextStation) && path.getNextStation().equals(currentStation))) {
-                    subRouteDistance += path.getDistance();
-                    iterator.remove();
-                    i++;
-                    currentStation = nextStation;
-                    if (i != subRoute.size()){
-                        nextStation = subRoute.get(i);
-                    }else
-                        break;
 
-                }
-            }
-        }
-
-        BigDecimal price =  (this.getPrice().multiply(new BigDecimal(subRouteDistance))).divide(new BigDecimal(routeDistance), RoundingMode.HALF_UP);
-
-        return price;
-    }
 }

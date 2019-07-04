@@ -2,7 +2,6 @@ package com.tsystems.railway.service.impl;
 
 import com.tsystems.railway.DTO.*;
 import com.tsystems.railway.entity.Route;
-import com.tsystems.railway.entity.Schedule;
 import com.tsystems.railway.entity.Station;
 import com.tsystems.railway.mappers.RouteMapper;
 import com.tsystems.railway.mappers.StationMapper;

@@ -2,6 +2,7 @@ package com.tsystems.railway.service.impl;
 
 import com.tsystems.railway.DAO.PassengerDao;
 import com.tsystems.railway.DTO.PassengerDTO;
+import com.tsystems.railway.entity.Passenger;
 import com.tsystems.railway.mappers.PassengerMapper;
 import com.tsystems.railway.service.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class PassengerServiceImpl implements PassengerService {
     PassengerMapper passengerMapper;
 
     @Override
-    public void addPassenger(PassengerDTO passenger) {
-        this.passengerDao.addPassenger(passengerMapper.dtoToEntity(passenger));
+    public void addPassenger(Passenger passenger) {
+        this.passengerDao.addPassenger(passenger);
     }
 
     @Override

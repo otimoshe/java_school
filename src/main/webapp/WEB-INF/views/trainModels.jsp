@@ -33,7 +33,7 @@
             var trainModel = document.getElementById('trainModelName').value;
             for (var i = 0; i < trainModels.length; i++) {
                 if (trainModels[i] == trainModel) {
-                    document.getElementById('alert').innerHTML = "<p>" + "This train model already exist" + "</p>";
+                    document.getElementById('alert').innerHTML = "<p>" + "This plane model already exist" + "</p>";
                     validate = false;
                 }
             }
